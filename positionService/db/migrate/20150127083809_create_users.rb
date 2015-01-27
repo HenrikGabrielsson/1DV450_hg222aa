@@ -6,8 +6,6 @@ class CreateUsers < ActiveRecord::Migration
       t.string :appSite, :null => false
       t.text :appDescription, :null => false
       
-      t.string :key
-      t.integer :callCount, :null => false, :default => 0
       
       t.string :password, :null => false
       t.string :salt, :null => false      

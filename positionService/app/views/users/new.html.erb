@@ -1,0 +1,20 @@
+<h1>Registrera dig</h1>
+
+<%= form_for @user do |f| %>
+<%= f.label :email, "Email: " %> 
+<%= f.text_field :email %>
+
+<%= f.label :appSite, "Your application URL: " %>
+<%= f.text_field :appSite %>
+
+<%= f.label :appDescription, "Describe your application with a few words: " %>
+<%= f.text_area :appDescription %>
+
+<%= f.submit %>
+
+<%end%>
+
+
+
+
+
