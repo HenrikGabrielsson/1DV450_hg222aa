@@ -1,3 +1,15 @@
 <p>
-  <%= link_to("Regitrera dig",new_user_path) %>
+  <%= form_tag login_path, method: "post" do %>
+  
+  <%= label_tag :email, "Email: " %>
+  <%= text_field_tag :email %>
+  
+  <%= label_tag :password, "Lösenord: " %>
+  <%= password_field_tag :password %>
+  
+  <%= submit_tag("Logga in") %>
+  
+  <% end %> 
+  
+  <%= link_to("Registrera dig",new_user_path) %>
 </p>

@@ -7,7 +7,15 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+  
+<% if flash[:notice] %>
+    <div class="notice"><%= flash[:notice] %></div>
+<% end %>
 
+<% if session[:userId] != nil %>
+  <%= link_to "Logga ut", logout_path %>
+<% end %>
+  
 <%= yield %>
 
 </body>

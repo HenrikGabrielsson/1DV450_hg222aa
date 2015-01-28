@@ -1,19 +1,22 @@
 <h1>Registrera dig</h1>
 
 <%= form_for @user do |f| %>
-<%= f.label :email, "Email: " %> 
-<%= f.text_field :email %>
+  <%= f.label :email, "Email: " %> 
+  <%= f.text_field :email %>
 
-<%= f.label :appSite, "URL till din applikation: " %>
-<%= f.text_field :appSite %>
+  <%= f.label :appSite, "URL till din applikation: " %>
+  <%= f.text_field :appSite %>
 
-<%= f.label :appDescription, "Beskriv din applikation: " %>
-<%= f.text_area :appDescription %>
+  <%= f.label :appDescription, "Beskriv din applikation: " %>
+  <%= f.text_area :appDescription %>
 
-<%= f.label :password_digest, "Lösenord: " %>
-<%= f.password_field :password_digest %>
+  <%= f.label :password, "Lösenord: " %>
+  <%= f.password_field :password %>
 
-<%= f.submit %>
+<%= f.label :password_confirmation, "Lösenord igen: " %>
+  <%= f.password_field :password_confirmation %>
+
+  <%= f.submit %>
 
 <%end%>
 

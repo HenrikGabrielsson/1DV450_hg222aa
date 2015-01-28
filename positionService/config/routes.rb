@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get "key" => "key#show", as: "key"
   
   post "login" => "users#login", as: "login"
+  get "logout" => "users#logout", as: "logout"
   
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
