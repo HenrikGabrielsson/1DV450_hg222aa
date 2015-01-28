@@ -4,11 +4,14 @@
 <%= f.label :email, "Email: " %> 
 <%= f.text_field :email %>
 
-<%= f.label :appSite, "Your application URL: " %>
+<%= f.label :appSite, "URL till din applikation: " %>
 <%= f.text_field :appSite %>
 
-<%= f.label :appDescription, "Describe your application with a few words: " %>
+<%= f.label :appDescription, "Beskriv din applikation: " %>
 <%= f.text_area :appDescription %>
+
+<%= f.label :password_digest, "Lösenord: " %>
+<%= f.password_field :password_digest %>
 
 <%= f.submit %>
 

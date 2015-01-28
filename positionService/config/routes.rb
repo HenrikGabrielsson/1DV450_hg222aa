@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   
   resources :users
   
+  get "key" => "key#show", as: "key"
+  
   post "login" => "users#login", as: "login"
   
   # You can have the root of your site routed with "root"

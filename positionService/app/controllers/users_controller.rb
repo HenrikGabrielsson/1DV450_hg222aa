@@ -11,15 +11,16 @@ class UsersController < ApplicationController
     
     if @user.save
       session[:userId] = @user.id
+      redirect_to key_path
     else
+      redirect_to action: "new" 
     end
-    
   end
   
   private
   
   def user_params
-    params.require(:user).permit(:email, :appSite, :appDescription, :password)
+    params.require(:user).permit(:email, :appSite, :appDescription, :password_digest)
   end
 
 end
