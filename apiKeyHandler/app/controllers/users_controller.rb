@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
   
   def login
-    user = User.find_by_email(params[:email])
-    test = params[:password]
+    user = User.find_by_email(params[:email].downcase)
+
     if user && user.authenticate(params[:password])
       session[:userId] = user.id
       redirect_to key_path(user.id)

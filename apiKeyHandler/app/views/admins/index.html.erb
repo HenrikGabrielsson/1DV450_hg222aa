@@ -1,0 +1,15 @@
+<%= form_tag controller: "admins", action: "index", method: "post" do %>
+  
+<%= label_tag :userName, "Användarnamn: " %>
+  <%= text_field_tag :userName %>
+  
+  <%= label_tag :password, "Lösenord: " %>
+  <%= password_field_tag :password %>
+  
+  <%= submit_tag("Logga in") %>
+  
+  <% end %> 
+
+<p>
+  <%= link_to "Logga in som användare", root_path %>
+</p>
