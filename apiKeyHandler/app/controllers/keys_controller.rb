@@ -1,9 +1,9 @@
 class KeysController < ApplicationController
-  
+  before_action: check_login
   def show 
     
     if session[:userId] != nil    
-      @user = User.find(session[:userId])      
+      @key = User.find(session[:userId]).key      
 
     else
       redirect_to root_path
