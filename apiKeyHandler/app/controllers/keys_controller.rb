@@ -1,15 +1,9 @@
 class KeysController < ApplicationController
-  before_action: check_login
+  include KeysHelper
+  
+  before_action :check_login
   def show 
-    
-    if session[:userId] != nil    
-      @key = User.find(session[:userId]).key      
-
-    else
-      redirect_to root_path
-      return false
-    end
-
+    @key = User.find(session[:userId]).key      
   end
   
   def destroy
@@ -18,6 +12,4 @@ class KeysController < ApplicationController
     
     redirect_to root_path
   end
-
-
 end
