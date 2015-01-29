@@ -1,6 +1,4 @@
 class UsersController < ApplicationController
-  def index
-  end
   
   def login
     user = User.find_by_email(params[:email])
@@ -22,7 +20,7 @@ class UsersController < ApplicationController
   end
   
   def new
-    @user = User.new
+    @user ||= User.new
   end
   
   def create 
@@ -38,9 +36,7 @@ class UsersController < ApplicationController
       
       redirect_to key_path(@user.key.id)
     else
-      flash[:notice] = @user.errors[:password]
-
-      redirect_to action: "new" 
+      render :new 
     end
   end
   

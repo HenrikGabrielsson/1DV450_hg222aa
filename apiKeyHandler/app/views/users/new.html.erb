@@ -1,5 +1,13 @@
 <h1>Registrera dig</h1>
 
+<% if @user.errors.full_messages.any? %>
+  <% @user.errors.each do | attr, msg| %>
+    <p>
+      <%= msg  %>
+    </p>
+  <% end %>
+<% end %>
+
 <%= form_for @user do |f| %>
   <%= f.label :email, "Email: " %> 
   <%= f.text_field :email %>
