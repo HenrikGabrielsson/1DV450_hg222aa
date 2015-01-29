@@ -7,7 +7,7 @@ class UsersController < ApplicationController
     test = params[:password]
     if user && user.authenticate(params[:password])
       session[:userId] = user.id
-      redirect_to key_path
+      redirect_to key_path(user.key.id)
     
     else
       flash[:notice] = "Inloggningen misslyckades"
@@ -30,7 +30,13 @@ class UsersController < ApplicationController
     
     if @user.save
       session[:userId] = @user.id
-      redirect_to key_path
+      
+      userKey = Key.new
+      userKey.generate_new_key
+      @user.key = userKey
+      userKey.save
+      
+      redirect_to key_path(@user.key.id)
     else
       flash[:notice] = @user.errors[:password]
 

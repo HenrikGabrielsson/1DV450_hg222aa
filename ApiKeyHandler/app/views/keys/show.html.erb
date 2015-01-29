@@ -1,0 +1,14 @@
+<p>
+  Din nyckel:
+  <%= @user.key.key %>
+</p>
+
+<p>
+  Nyckeln har använts 
+  <%= @user.key.callCount %>
+   gånger.
+</p>
+
+<p>
+  <%= link_to "Ta bort nyckel", key_path(key: @user.key), :method => :delete %>
+</p>

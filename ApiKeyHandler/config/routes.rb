@@ -5,8 +5,9 @@ Rails.application.routes.draw do
   root "users#index"
   
   resources :users
+  resources :keys
   
-  get "key" => "key#show", as: "key"
+  #get "key" => "key#show", as: "key"
   
   post "login" => "users#login", as: "login"
   get "logout" => "users#logout", as: "logout"
