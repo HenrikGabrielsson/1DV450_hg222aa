@@ -1,0 +1,23 @@
+
+<table>
+  <tr>
+    <th></th>
+    <th>Email</th>
+    <th>Nyckel</th>
+    <th>Webbplats</th>
+    <th>Beskrivning av applikation</th>
+  </tr>
+  
+  <% @keys.each do |key| %>
+
+    <tr>
+      <td><%= link_to "ta bort",key_path(key.id), method: :delete %></td>
+      <td><%= key.user.email %></td> 
+      <td><%= key.key %></td>
+      <td><%= key.callCount %></td>
+      <td><%= key.user.appSite %></td>
+      <td><%= key.user.appDescription %></td>
+    </tr>
+
+  <% end %>  
+</table>

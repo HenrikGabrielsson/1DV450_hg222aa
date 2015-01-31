@@ -17,7 +17,7 @@ class AdminsController < ApplicationController
   end
   
   def logout
-    session.delete(:userId)
+    session.delete(:adminId)
     redirect_to root_path
   end
   

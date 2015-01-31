@@ -1,5 +1,5 @@
 class Key < ActiveRecord::Base
-  
+  before_create :generate_new_key 
   validate :key, uniqueness: true
   
   belongs_to :user 

@@ -29,8 +29,7 @@ class UsersController < ApplicationController
     if @user.save
       session[:userId] = @user.id
       
-      userKey = Key.new
-      userKey.generate_new_key
+      userKey = Key.create
       @user.key = userKey
       userKey.save
       

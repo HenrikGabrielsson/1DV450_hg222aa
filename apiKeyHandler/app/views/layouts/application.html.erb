@@ -12,7 +12,7 @@
     <div class="notice"><%= flash[:notice] %></div>
 <% end %>
 
-<% if session[:userId] != nil %>
+  <% if session[:userId] || session[:adminId] %>
   <%= link_to "Logga ut", logout_path %>
 <% end %>
   
