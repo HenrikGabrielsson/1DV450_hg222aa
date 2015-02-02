@@ -14,6 +14,9 @@
     <%= link_to "Ta bort nyckel", key_path(id: @key), :method => :delete %>
   </p>
 
+<%
+  # om ingen nyckel finns så har den troligtvis blivit borttagen
+%>
 <% else %>
   <p>Din nyckel har blivit borttagen.</p>
 <% end %>

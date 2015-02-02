@@ -14,5 +14,9 @@ module KeysHelper
     end
   end
   
+  def get_user_id
+    session[:userId]
+  end
+  
   
 end

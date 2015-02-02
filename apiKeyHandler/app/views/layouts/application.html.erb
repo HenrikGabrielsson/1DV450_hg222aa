@@ -8,15 +8,30 @@
 </head>
 <body>
   
-<% if flash[:notice] %>
-    <div class="notice"><%= flash[:notice] %></div>
-<% end %>
+  <div id="container">
 
-  <% if session[:userId] || session[:adminId] %>
-  <%= link_to "Logga ut", logout_path %>
-<% end %>
+    <div id="header">
+      <p id="logo-text">API-nyckel</p>
+    </div>
+
+    
+    <%
+      # meddelanden skrivs ut om det finns några
+    %>
+    <% if flash[:notice] %>
+      <div class="notice"><%= flash[:notice] %></div>
+    <% end %>
+
+    <%
+      # utloggning
+    %>  
+    <% if session[:userId] || session[:adminId] %>
+      <%= link_to "Logga ut", logout_path %>
+    <% end %>
+
+    <%= yield %>
+
+  </div>
   
-<%= yield %>
-
 </body>
 </html>

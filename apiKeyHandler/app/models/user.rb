@@ -19,7 +19,6 @@ class User < ActiveRecord::Base
       length: {maximum: 1000, message: "Beskrivningen får inte vara längre än 1000 tecken"}
       
   validates :password,
-      presence: {message: "Skriv lösenordet två gånger"},
       length: {minimum: 6, message: "Lösenordet måste vara minst 6 tecken långt."}
 
   

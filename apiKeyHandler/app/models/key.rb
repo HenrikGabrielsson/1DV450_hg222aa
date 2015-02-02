@@ -8,7 +8,7 @@ class Key < ActiveRecord::Base
     random = ""
     loop do
       random = SecureRandom.urlsafe_base64(25)
-      break if (Key.exists?(key: random) == false)
+      break if Key.find_by_key(random) == nil
     end  
     self.key = random
   end
