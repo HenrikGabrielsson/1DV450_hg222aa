@@ -1,12 +1,24 @@
 class UsersController < ApplicationController
   
+  #inloggningssida
+  def index
+    if get_user_id
+      redirect_to user_path(get_user_id)
+    end
+  end
+  
+  #visa användarens "profilsida"
+  def show
+    @user = User.find(params[:id])    
+  end
+  
   def login
     user = User.find_by_email(params[:email].downcase)
 
     #om användaren finns och lösenord stämmer.
     if user && user.authenticate(params[:password])
       session[:userId] = user.id
-      redirect_to key_path(user.id)
+      redirect_to user_path(user.id)
     
     else
       flash[:notice] = "Inloggningen misslyckades"

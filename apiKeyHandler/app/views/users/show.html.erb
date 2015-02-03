@@ -1,0 +1,13 @@
+<h1>Du är inloggad</h1>
+
+<p>Du är inloggad på email-adress <%= @user.email%>.</p>
+
+<p><%= link_to "Se din nyckel", key_path(@user.key.id)%></p>
+
+<dl>
+  <dt>Din applikations webbsida</dt>
+  <dd><%= @user.appSite%></dd>
+  
+  <dt>Beskrivning av applikation</dt>
+  <dd><%= @user.appDescription%></dd>
+</dl>
