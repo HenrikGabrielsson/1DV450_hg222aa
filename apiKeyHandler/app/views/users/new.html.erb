@@ -1,16 +1,11 @@
+
+<div id="menu">
+  <%= link_to("Tillbaka",root_path) %>
+</div>
+
 <h1>Registrera dig</h1>
 
-    <%
-      # alla meddelanden skrivs ut om det finns några
-    %>
-<% if @user.errors.full_messages.any? %>
-  <% @user.errors.each do | attr, msg| %>
-    <p>
-      <%= msg  %>
-    </p>
-  <% end %>
-<% end %>
-
+<div id="reg_form">
 <%= form_for @user do |f| %>
   <%= f.label :email, "Email: " %> 
   <%= f.text_field :email %>
@@ -24,14 +19,25 @@
   <%= f.label :password, "Lösenord: " %>
   <%= f.password_field :password %>
 
-<%= f.label :password_confirmation, "Lösenord igen: " %>
+  <%= f.label :password_confirmation, "Lösenord igen: " %>
   <%= f.password_field :password_confirmation %>
 
-  <%= f.submit %>
+  <%= f.submit "Registrera", class: "submit_button" %>
+</div>
+<% end %>
 
-<%end%>
-
-
+    <%
+      # alla meddelanden skrivs ut om det finns några
+    %>
+<% if @user.errors.full_messages.any? %>
+  <ul class="errors">
+    <% @user.errors.each do | attr, msg| %>
+      <li class="notice">
+        <%= msg  %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
 
 
 

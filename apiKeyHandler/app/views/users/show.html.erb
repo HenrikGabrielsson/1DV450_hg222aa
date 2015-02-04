@@ -2,7 +2,12 @@
 
 <p>Du är inloggad på email-adress <%= @user.email%>.</p>
 
-<p><%= link_to "Se din nyckel", key_path(@user.key.id)%></p>
+<% if @user.key %>
+  <p><%= link_to "Se din nyckel", key_path(@user.key.id)%></p>
+
+<% else %>
+  <p class="notice">Din nyckel har blivit borttagen </p>
+<% end %>
 
 <dl>
   <dt>Din applikations webbsida</dt>

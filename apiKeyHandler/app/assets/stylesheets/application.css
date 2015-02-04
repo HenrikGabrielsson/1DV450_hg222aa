@@ -17,6 +17,11 @@
 html, body, #container {
   width:100%;
   height:100%;
+  
+  margin:0;
+  padding:0;
+  
+  background-color:#EEEEEE;
 }
 
 #header {
@@ -32,14 +37,54 @@ html, body, #container {
   font-size: 40pt;
   font-family:verdana, arial;
   font-weight:bold;
-
-
+  
+  margin:50px;
+  padding-top:20px;
   
 }
 
+#main_content {
+  
+  font-family:arial;
+  
+  max-width:800px;
+  min-height:500px;
+  
+  margin:auto;
+  padding:100px;
+  
+  background-color:white; 
+}
 
+.notice {
+  background-color: #EE5454;
+  display:block;
+  
+  color:white;
+  padding:3px;
+  
+  max-width:300px;
+}
 
+.submit_button {
+  background-color: #34BBF4;
+  
+  padding:10px 20px 10px 20px;
+  
+  margin-top:5px;
+  
+  border:none;
+  border-radius:5px;
+  
+  font-family:arial;
+  font-size:12pt;
+  color: white;
+}
 
+#menu {
+  background-color:#EEEEEE;
+  display:inline;
+}
 
 
 

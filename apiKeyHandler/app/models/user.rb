@@ -19,10 +19,7 @@ class User < ActiveRecord::Base
       length: {maximum: 1000, message: "Beskrivningen får inte vara längre än 1000 tecken"}
       
   validates :password,
-      length: {minimum: 6, message: "Lösenordet måste vara minst 6 tecken långt."}
-
-  
-  validates :password,
+      length: {minimum: 6, message: "Lösenordet måste vara minst 6 tecken långt."},
       confirmation: {message: "Lösenorden matchade inte."}
   
   has_one :key 

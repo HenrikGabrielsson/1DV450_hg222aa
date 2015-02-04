@@ -1,4 +1,11 @@
-  
+
+<div id="menu">
+  <%= link_to("Registrera dig",new_user_path) %>
+  <%= link_to("Logga in som administratör",admins_path) %>
+</div>
+
+<h1>Logga in</h1>
+
   <%= form_tag login_path, method: "post" do %>
   
   <%= label_tag :email, "Email: " %>
@@ -7,9 +14,8 @@
   <%= label_tag :password, "Lösenord: " %>
   <%= password_field_tag :password %>
   
-  <%= submit_tag("Logga in") %>
+  <%= submit_tag("Logga in", {class: "submit_button"}) %>
   
   <% end %> 
   
-  <%= link_to("Registrera dig",new_user_path) %>
-  <%= link_to("Logga in som administratör",admins_path) %>
+  

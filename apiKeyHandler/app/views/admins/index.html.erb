@@ -1,3 +1,9 @@
+<div id="menu">
+  <%= link_to "Logga in som användare", root_path %>
+</div>
+
+<h1>Logga in som administratör</h1>
+
 <%= form_tag controller: "admins", action: "index", method: "post" do %>
   
 <%= label_tag :userName, "Användarnamn: " %>
@@ -6,10 +12,7 @@
   <%= label_tag :password, "Lösenord: " %>
   <%= password_field_tag :password %>
   
-  <%= submit_tag("Logga in") %>
+  <%= submit_tag("Logga in", {class: "submit_button"}) %>
   
   <% end %> 
 
-<p>
-  <%= link_to "Logga in som användare", root_path %>
-</p>

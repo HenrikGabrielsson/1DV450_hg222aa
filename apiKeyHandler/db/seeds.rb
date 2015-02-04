@@ -9,3 +9,4 @@
 Admin.create(userName: "admin", password: "password", password_confirmation: "password")
 
 User.create(email: "henrik@test.se", password: "password", password_confirmation: "password", appSite: "www.henrik.se", appDescription: "bla bla bla", key: Key.create)
+User.create(email: "random@user.se", password: "password", password_confirmation: "password", appSite: "www.random.se", appDescription: "such random", key: Key.create)
