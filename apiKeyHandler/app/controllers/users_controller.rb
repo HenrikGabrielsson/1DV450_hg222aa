@@ -45,12 +45,14 @@ class UsersController < ApplicationController
     
     #om det går att spara. Annars tillbaka och visa felmeddelanden.
     if @user.save
+      
+      #inloggning
       session[:userId] = @user.id
       
       #nyckel skapas och sparas (nyckel slumpas fram)
       @user.key = Key.create
       
-      redirect_to key_path(@user.key.id) #visa nyckel
+      redirect_to key_path(@user.key.id)
     else
       render :new 
     end
