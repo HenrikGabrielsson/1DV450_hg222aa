@@ -54,7 +54,6 @@ GEM
     mime-types (1.25.1)
     minitest (5.5.1)
     multi_json (1.10.1)
-    pg (0.18.1)
     polyglot (0.3.5)
     rack (1.5.2)
     rack-test (0.6.3)
@@ -77,9 +76,6 @@ GEM
     rake (10.4.2)
     rdoc (4.2.0)
       json (~> 1.4)
-    rest-client (1.6.8)
-      mime-types (~> 1.16)
-      rdoc (>= 2.4.2)
     sass (3.2.19)
     sass-rails (4.0.5)
       railties (>= 4.0.0, < 5.0)
@@ -89,9 +85,6 @@ GEM
     sdoc (0.4.1)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
-    sequel (3.20.0)
-    sinatra (1.0)
-      rack (>= 1.0)
     spring (1.2.0)
     sprockets (2.12.3)
       hike (~> 1.2)
@@ -103,11 +96,6 @@ GEM
       activesupport (>= 3.0)
       sprockets (>= 2.8, < 4.0)
     sqlite3 (1.3.10)
-    taps (0.3.24)
-      rack (>= 1.0.1)
-      rest-client (>= 1.4.0, < 1.7.0)
-      sequel (~> 3.20.0)
-      sinatra (~> 1.0.0)
     thor (0.19.1)
     thread_safe (0.3.4)
     tilt (1.4.1)
@@ -132,13 +120,12 @@ DEPENDENCIES
   coffee-rails (~> 4.0.0)
   jbuilder (~> 2.0)
   jquery-rails
-  pg
   rails (= 4.1.0)
+  railties
   sass-rails (~> 4.0.3)
   sdoc (~> 0.4.0)
   spring
   sqlite3
-  taps
   turbolinks
   uglifier (>= 1.3.0)
   validates_email_format_of
