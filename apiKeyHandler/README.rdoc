@@ -1,28 +1,32 @@
-== README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+#Api - Nyckelgenerator
 
-Things you may want to cover:
+##För att installera och köra applikationen:
 
-* Ruby version
+1. Öppna upp projektet i din utvecklingsmiljö
 
-* System dependencies
+2. Skriv **cd 1DV450_hg222aa/apiKeyHandler** i console för att gå till applikationen.
 
-* Configuration
+3. Skriv **bundle install** för att installera alla nödvändiga gems.
 
-* Database creation
+4. Skriv **rake db:setup** för att göra iordning databasen.
 
-* Database initialization
+5. Skriv **rails server** för att starta servern.
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+6. Gå till localhost:3000.
 
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+##Inloggning
+
+Det finns två vanliga användare från början som du kan logga in med:<br />
+
+Email: henrik@test.se<br />
+Lösenord: password
+
+Email: random@user.se<br />
+Lösenord: password
+
+Det finns också en administratör:<br />
+
+Användarnamn: admin <br />
+Lösenord: password
