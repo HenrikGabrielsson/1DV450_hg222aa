@@ -35,4 +35,6 @@ class ApplicationController < ActionController::Base
     flash[:notice] = "Hittades inte"
     redirect_to root_url
   end
+  
+ 
 end
