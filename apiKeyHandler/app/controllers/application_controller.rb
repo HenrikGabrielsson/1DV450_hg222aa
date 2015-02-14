@@ -7,6 +7,25 @@ class ApplicationController < ActionController::Base
     
   around_filter :catch_not_found
 
+  
+  #kollar så man är inloggad som user. Annars redirect till startsida
+  def authenticate_user(id)
+    if get_user_id.nil? || get_user_id.to_s != id.to_s
+
+      flash[:notice] = "Du måste vara inloggad först."
+      redirect_to root_path
+    end  
+  end
+  
+  #kollar så man är inloggad som admin. Annars redirect till startsida
+  def authenticate_admin
+    if get_admin_id.nil?
+      flash[:notice] = "Du måste vara inloggad som administratör först."
+      redirect_to root_path
+    end
+  end
+  
+  
   private
 
   #om ett objekt inte hittas skickas man till root.

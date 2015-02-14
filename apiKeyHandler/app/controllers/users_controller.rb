@@ -1,10 +1,13 @@
 class UsersController < ApplicationController
   
+  before_filter -> { authenticate_user params[:id] }, only: [:show]
+  
   #inloggningssida
   def index
-    if get_user_id
-      redirect_to user_path(get_user_id)
+    if get_user_id.nil? == false
+      redirect_to user_path get_user_id
     end
+    
   end
   
   #visa användarens "profilsida"
