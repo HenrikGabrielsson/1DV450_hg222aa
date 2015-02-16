@@ -1,21 +1,28 @@
 
-<table id="keys_table">
-  <tr>
-    <th></th>
-    <th>Email</th>
-    <th>Nyckel</th>
-    <th>Nyckelanvändningar</th>
-    <th>Webbplats</th>
-    <th>Beskrivning av applikation</th>
-  </tr>
-  
-  <% 
-  #skriver ut alla nycklar som finns 
-  %>
-  <% @keys.each do |key| %>
 
+
+<% 
+#skriver ut alla nycklar som finns 
+%>
+
+<% if(@keys.count == 0) %>
+
+<p>Det finns inga aktiva användare.</p>
+
+<% else %>
+  <table id="keys_table">
     <tr>
-      <td><%= link_to "ta bort",key_path(key.id), method: :delete %></td>
+      <th></th>
+      <th>Email</th>
+      <th>Nyckel</th>
+      <th>Nyckelanvändningar</th>
+      <th>Webbplats</th>
+      <th>Beskrivning av applikation</th>
+    </tr>
+
+  <% @keys.each do |key| %>
+    <tr>
+      <td><%= link_to "ta bort",key_path(key.id), data: { confirm: "Are you sure?" }, method: :delete %></td>
       <td><%= key.user.email %></td> 
       <td><%= key.key %></td>
       <td><%= key.callCount %></td>
@@ -25,3 +32,5 @@
 
   <% end %>  
 </table>
+
+<% end %>
