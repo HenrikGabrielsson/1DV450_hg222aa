@@ -11,12 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150215113015) do
+ActiveRecord::Schema.define(version: 20150216211241) do
 
   create_table "memories", force: :cascade do |t|
     t.string   "title",      limit: 100, null: false
     t.datetime "eventDate",              null: false
-    t.datetime "createDate",             null: false
     t.text     "memoryText", limit: 300, null: false
     t.integer  "user_id"
     t.datetime "created_at"
@@ -30,6 +29,14 @@ ActiveRecord::Schema.define(version: 20150215113015) do
 
   add_index "memories_positions", ["memory_id"], name: "index_memories_positions_on_memory_id"
   add_index "memories_positions", ["position_id"], name: "index_memories_positions_on_position_id"
+
+  create_table "memories_tags", id: false, force: :cascade do |t|
+    t.integer "memory_id", null: false
+    t.integer "tag_id",    null: false
+  end
+
+  add_index "memories_tags", ["memory_id"], name: "index_memories_tags_on_memory_id"
+  add_index "memories_tags", ["tag_id"], name: "index_memories_tags_on_tag_id"
 
   create_table "positions", force: :cascade do |t|
     t.decimal  "latitude",   precision: 7, scale: 4, null: false
