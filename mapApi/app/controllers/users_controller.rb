@@ -14,7 +14,7 @@ class UsersController < ApplicationController
   def create 
     @user = User.new(user_params)
     
-    #om det går att spara. Annars tillbaka och visa felmeddelanden.
+    #om det går att spara.
     if @user.save
       respond_with @user
     end    

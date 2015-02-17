@@ -1,11 +1,11 @@
 Rails.application.routes.draw do
   
-  resources :users, defaults: {format: :json}
-  resources :memories
+  resources :users, defaults: {format: :json}, except: [:new, :edit]
+  resources :memories, defaults: {format: :json}, except: [:new, :edit]
 
-  resources :tags
-  resources :positions
-  resources :memories
+  resources :tags, defaults: {format: :json}, except: [:new, :edit]
+  resources :positions, defaults: {format: :json}, except: [:new, :edit]
+  resources :memories, defaults: {format: :json}, except: [:new, :edit]
   
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
