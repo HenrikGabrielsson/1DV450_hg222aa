@@ -11,7 +11,7 @@ class Memory < ActiveRecord::Base
   length: { maximum: 400, message: "Minnet får inte vara längre än 400 tecken." }
   
   belongs_to :user
+  belongs_to :position
   has_and_belongs_to_many :tags
-  has_and_belongs_to_many :positions
   
 end

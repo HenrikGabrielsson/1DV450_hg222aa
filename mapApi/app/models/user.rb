@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   validates :userName, 
   presence: {message: "Du måste skriva ett användarnamn."},
   uniqueness: {message: "Detta användarnamn är redan upptagen."},
-  length: {maximum: 100, message: "Användarnamnet får inte vara mer än 100 tecken långt."},
+  length: {maximum: 100, message: "Användarnamnet får inte vara mer än 100 tecken långt."}
   
   validates :email, 
   presence: {message: "Du måste skriva en e-mailadress."},

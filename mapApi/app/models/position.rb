@@ -7,5 +7,5 @@ class Position < ActiveRecord::Base
   presence: {message: "Det måste finnas en latitud."},
   numericality: { greater_than_or_equal_to: -90.0, less_than_or_equal_to: 90.0, message: "Latitud måste ligga mellan -90 och 90." }
   
-  has_and_belongs_to_many :memories
+  has_many :memories
 end

@@ -5,6 +5,7 @@ class CreateMemories < ActiveRecord::Migration
       t.text :memoryText, null: false, limit: 400
       
       t.belongs_to :user
+      t.belongs_to :position
       
       t.timestamps
   end

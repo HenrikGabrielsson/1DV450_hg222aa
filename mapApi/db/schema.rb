@@ -14,21 +14,14 @@
 ActiveRecord::Schema.define(version: 20150216211241) do
 
   create_table "memories", force: :cascade do |t|
-    t.string   "title",      limit: 100, null: false
-    t.datetime "eventDate",              null: false
-    t.text     "memoryText", limit: 300, null: false
+    t.string   "title",       limit: 100, null: false
+    t.datetime "eventDate",               null: false
+    t.text     "memoryText",  limit: 400, null: false
     t.integer  "user_id"
+    t.integer  "position_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  create_table "memories_positions", id: false, force: :cascade do |t|
-    t.integer "memory_id",   null: false
-    t.integer "position_id", null: false
-  end
-
-  add_index "memories_positions", ["memory_id"], name: "index_memories_positions_on_memory_id"
-  add_index "memories_positions", ["position_id"], name: "index_memories_positions_on_position_id"
 
   create_table "memories_tags", id: false, force: :cascade do |t|
     t.integer "memory_id", null: false
