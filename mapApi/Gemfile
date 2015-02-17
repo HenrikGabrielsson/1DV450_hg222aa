@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+#behövs för respond_to
+gem 'responders'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.0'
@@ -44,5 +46,7 @@ group :development, :test do
   
   # Validate Email
   gem 'validates_email_format_of'
+  
+
 end
 
