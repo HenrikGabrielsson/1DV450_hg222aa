@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   post "login" => "users#login", as: "login"
   get "logout" => "users#logout", as: "logout"
   
-  
+  get "*path" => redirect("/")
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
 

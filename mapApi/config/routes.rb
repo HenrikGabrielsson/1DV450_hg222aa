@@ -7,6 +7,19 @@ Rails.application.routes.draw do
   resources :positions, defaults: {format: :json}, except: [:new, :edit]
   resources :memories, defaults: {format: :json}, except: [:new, :edit]
   
+  root "users#index"
+  
+  resources :users
+  resources :keys
+  
+  get "admins" => "admins#index"  
+  post "admins" => "admins#login" 
+  
+  post "login" => "users#login", as: "login"
+  get "logout" => "users#logout", as: "logout"
+  
+  get "*path" => redirect("/")
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

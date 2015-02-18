@@ -13,6 +13,28 @@
 
 ActiveRecord::Schema.define(version: 20150216211241) do
 
+  create_table "admins", force: :cascade do |t|
+    t.string   "userName",        null: false
+    t.string   "password_digest", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "creators", force: :cascade do |t|
+    t.string   "userName",   limit: 100, null: false
+    t.string   "email",                  null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "keys", force: :cascade do |t|
+    t.string   "key"
+    t.integer  "callCount",  default: 0, null: false
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "memories", force: :cascade do |t|
     t.string   "title",       limit: 100, null: false
     t.datetime "eventDate",               null: false
@@ -46,9 +68,10 @@ ActiveRecord::Schema.define(version: 20150216211241) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "userName",        limit: 100, null: false
-    t.string   "email",                       null: false
-    t.string   "password_digest",             null: false
+    t.string   "email",           null: false
+    t.string   "appSite",         null: false
+    t.text     "appDescription",  null: false
+    t.string   "password_digest", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -6,5 +6,15 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+
+#API
 Creator.create(userName: "henrik", email: "test@test.se")
 Creator.create(userName: "henrik2", email: "test@test2.se")
+
+
+
+#KeyReg
+Admin.create(userName: "admin", password: "password", password_confirmation: "password")
+
+User.create(email: "henrik@test.se", password: "password", password_confirmation: "password", appSite: "www.henrik.se", appDescription: "bla bla bla", key: Key.create)
+User.create(email: "random@user.se", password: "password", password_confirmation: "password", appSite: "www.random.se", appDescription: "such random", key: Key.create)
