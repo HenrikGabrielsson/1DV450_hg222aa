@@ -4,7 +4,7 @@ class CreateMemories < ActiveRecord::Migration
       t.datetime :eventDate, null: false
       t.text :memoryText, null: false, limit: 400
       
-      t.belongs_to :user
+      t.belongs_to :creator
       t.belongs_to :position
       
       t.timestamps

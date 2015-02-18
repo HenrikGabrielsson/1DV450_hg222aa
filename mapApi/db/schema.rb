@@ -17,7 +17,7 @@ ActiveRecord::Schema.define(version: 20150216211241) do
     t.string   "title",       limit: 100, null: false
     t.datetime "eventDate",               null: false
     t.text     "memoryText",  limit: 400, null: false
-    t.integer  "user_id"
+    t.integer  "creator_id"
     t.integer  "position_id"
     t.datetime "created_at"
     t.datetime "updated_at"

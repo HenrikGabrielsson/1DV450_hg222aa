@@ -10,7 +10,7 @@ class Memory < ActiveRecord::Base
   presence: {message: "Du måste skriva ner minnet också."},
   length: { maximum: 400, message: "Minnet får inte vara längre än 400 tecken." }
   
-  belongs_to :user
+  belongs_to :creator
   belongs_to :position
   has_and_belongs_to_many :tags
   
