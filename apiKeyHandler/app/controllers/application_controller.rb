@@ -4,6 +4,9 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   
   include ApplicationHelper
+  include AuthHelper
+  
+  before_action check_api_key
     
   around_filter :catch_not_found
 

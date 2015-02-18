@@ -1,5 +1,7 @@
 class PositionsController < ApplicationController
   respond_to :json, :xml
+  
+  before_action :authenticate_api_key
    
   def index
     @positions = Position.all

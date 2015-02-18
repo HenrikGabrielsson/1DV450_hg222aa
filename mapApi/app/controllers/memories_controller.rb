@@ -1,6 +1,8 @@
 class MemoriesController < ApplicationController
   respond_to :json, :xml
   
+  before_action :authenticate_api_key
+  
   def index
     @memories = Memory.all
   end

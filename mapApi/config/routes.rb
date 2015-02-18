@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   
-  resources :crators, defaults: {format: :json}, except: [:new, :edit]
+  resources :creators, defaults: {format: :json}, except: [:new, :edit]
   resources :memories, defaults: {format: :json}, except: [:new, :edit]
 
   resources :tags, defaults: {format: :json}, except: [:new, :edit]

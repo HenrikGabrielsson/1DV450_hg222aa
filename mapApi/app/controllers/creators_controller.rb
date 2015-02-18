@@ -1,6 +1,8 @@
 class CreatorsController < ApplicationController
   respond_to :json, :xml
   
+  before_action :authenticate_api_key
+  
   def index
     @creators = Creator.all
     respond_with @creators
