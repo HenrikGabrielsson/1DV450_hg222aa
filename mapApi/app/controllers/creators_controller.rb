@@ -1,17 +1,17 @@
 class CreatorsController < ApplicationController
-  respond_to :json, :xml
+  respond_to :json
   
   before_action :authenticate_api_token, only: [:show]
   before_action :authenticate_api_key
   
   def index
     @creators = Creator.all
-    respond_with @creators
+    respond_with @creators, except: [:password_digest]
   end
 
   def show
     @creator = Creator.find(params[:id])
-    respond_with @creator
+    respond_with @creator, except: [:password_digest]
   end
   
   def create 
@@ -19,7 +19,7 @@ class CreatorsController < ApplicationController
     
     #om det går att spara.
     if @creator.save
-      respond_with @creator
+      respond_with @creator, except: [:password_digest]
     end    
   end
 

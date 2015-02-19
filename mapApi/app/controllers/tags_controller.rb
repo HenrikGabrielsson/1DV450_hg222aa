@@ -1,5 +1,5 @@
 class TagsController < ApplicationController
-  respond_to :json, :xml
+  respond_to :json
   
   before_action :authenticate_api_key
   
