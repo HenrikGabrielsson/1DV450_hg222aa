@@ -8,8 +8,8 @@
 
 
 #API
-Creator.create(userName: "henrik", email: "test@test.se")
-Creator.create(userName: "henrik2", email: "test@test2.se")
+Creator.create(userName: "henrik", email: "test@test.se", password: "password", password_confirmation: "password")
+Creator.create(userName: "henrik2", email: "test@test2.se", password: "password", password_confirmation: "password")
 
 
 

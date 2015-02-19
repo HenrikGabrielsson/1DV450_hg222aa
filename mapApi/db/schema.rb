@@ -21,8 +21,9 @@ ActiveRecord::Schema.define(version: 20150216211241) do
   end
 
   create_table "creators", force: :cascade do |t|
-    t.string   "userName",   limit: 100, null: false
-    t.string   "email",                  null: false
+    t.string   "userName",        limit: 100, null: false
+    t.string   "email",                       null: false
+    t.string   "password_digest",             null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   
   before_filter -> { authenticate_user params[:id] }, only: [:show]
   
+  
   #inloggningssida
   def index
     if get_user_id.nil? == false

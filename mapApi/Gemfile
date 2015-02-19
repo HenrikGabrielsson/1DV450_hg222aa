@@ -12,6 +12,8 @@ gem 'validates_email_format_of'
 #Löser problem med tidzoner
 gem 'tzinfo-data'
 
+#json web token
+gem 'jwt'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'

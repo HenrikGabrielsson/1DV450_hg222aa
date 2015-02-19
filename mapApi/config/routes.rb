@@ -7,6 +7,14 @@ Rails.application.routes.draw do
   resources :positions, defaults: {format: :json}, except: [:new, :edit]
   resources :memories, defaults: {format: :json}, except: [:new, :edit]
   
+  post "apilogin" => "auth#api_login"
+  
+  
+  
+  
+  
+  
+  
   root "users#index"
   
   resources :users
