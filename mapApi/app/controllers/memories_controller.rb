@@ -5,6 +5,7 @@ class MemoriesController < ApplicationController
   
   def index
     @memories = Memory.all
+    respond_with @memories.sort_by {|m| m.updated_at}
   end
   
   def show

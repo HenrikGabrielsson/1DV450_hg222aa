@@ -10,11 +10,7 @@ Rails.application.routes.draw do
   post "apilogin" => "auth#api_login"
   
   
-  
-  
-  
-  
-  
+ 
   root "users#index"
   
   resources :users
