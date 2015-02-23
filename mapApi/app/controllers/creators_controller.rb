@@ -1,6 +1,7 @@
 class CreatorsController < ApplicationController
   respond_to :json
   
+  before_action :authenticate_api_key
   before_action :authenticate_api_token, only: [:destroy, :update]
   
   def index
@@ -46,7 +47,6 @@ class CreatorsController < ApplicationController
     else
       render json:{error: "Du får inte ändra denna användare"}, status: :forbidden
     end
-  
   end
   
   private 

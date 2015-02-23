@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   
   post "apilogin" => "auth#api_login"
   
+  get "findnear" => "memories#findnear"
  
   root "users#index"
   

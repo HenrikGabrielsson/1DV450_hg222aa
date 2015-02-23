@@ -6,7 +6,6 @@ class ApplicationController < ActionController::Base
   include ApplicationHelper
   include AuthHelper
   
-  before_action :authenticate_api_key
   around_filter :catch_not_found
 
   def authenticate_api_user

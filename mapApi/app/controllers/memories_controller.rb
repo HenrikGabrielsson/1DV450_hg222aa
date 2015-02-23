@@ -1,6 +1,7 @@
 class MemoriesController < ApplicationController
   respond_to :json
-  
+
+  before_action :authenticate_api_key
   before_action :authenticate_api_token, only: [:create, :destroy, :update]
   
   def index 
@@ -33,24 +34,49 @@ class MemoriesController < ApplicationController
   end
   
   def update
+    @memory = Memory.find(params[:id].to_i)
+    @creator = @memory.creator
     
-    @memory = Memory.find(params[:id])  
+    if get_auth_user_data["id"].to_i == @creator.id
 
-    if @memory.creator_id.to_s == get_auth_user_data["id"]
-      
       @memory.update(memory_params)
       @memory.save
-      respond_with status: :no_content
+
+      render json:{message: "Minnet uppdaterades"}, status: :ok
     else
-      render json: { error: 'Du får inte ändra detta minne.' }, status: :bad_request
-    
+      render json:{error: "Du får inte ändra detta minne"}, status: :forbidden
     end
 
   end
   
   def destroy
+    @memory = Memory.find(params[:id].to_i)
+    @creator = @memory.creator
+    
+    if get_auth_user_data["id"].to_i == @creator.id
+
+      @memory.destroy
+
+      render json:{message: "Minnet togs bort"}, status: :ok
+    else
+      render json:{error: "Du får inte ta bort detta minne"}, status: :forbidden
+    end
   end
   
+  def findnear
+    @range = params[:range]
+    
+    if params.has_key?(:location)
+      @location = params[:location]
+    else 
+      @location = [params[:lat].to_f, params[:long].to_f]
+    end
+    
+    @memories = Memory.near(@location, @range)
+    
+    respond_with @memories
+    
+  end
   
   private 
   

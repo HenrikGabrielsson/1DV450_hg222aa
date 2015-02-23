@@ -1,8 +1,9 @@
 module AuthHelper
   def authenticate_api_key
     
-    @key = Key.find_by(key: params[:api_key])
-    
+    if request.headers["ApiKey"].present?
+      @key = Key.find_by(key: request.headers["ApiKey"])
+    end
     if @key.nil?
       render json: { error: "Det gick inte att autentisera dig. Kolla din API-nyckel." }, status: :unauthorized 
     

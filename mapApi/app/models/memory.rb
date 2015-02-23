@@ -1,5 +1,7 @@
 class Memory < ActiveRecord::Base
     
+  reverse_geocoded_by :latitude, :longitude
+  
   validates :title, 
   presence: {message: "Du måste skriva en titel"},
   length: { maximum: 100, message: "Titeln får inte vara längre än 100 tecken." }
@@ -21,6 +23,16 @@ class Memory < ActiveRecord::Base
   
   belongs_to :creator
   has_and_belongs_to_many :tags
-  accepts_nested_attributes_for :tags
+  accepts_nested_attributes_for :tags, :reject_if => :tag_exists
+
+  private
+
+  def tag_exists(tag_attributes)
+    if Tag.find_by(tag: tag_attributes['tag'])
+        self.tags << Tag.find_by(tag: tag_attributes['tag'])
+        return true
+      end
+      return false
+    end
 
 end
