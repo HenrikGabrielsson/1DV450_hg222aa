@@ -5,7 +5,8 @@ class ApplicationController < ActionController::Base
   
   include ApplicationHelper
   include AuthHelper
-    
+  
+  before_action :authenticate_api_key
   around_filter :catch_not_found
 
   def authenticate_api_user
@@ -15,7 +16,6 @@ class ApplicationController < ActionController::Base
       render json: { error: "Det gick inte att autentisera användaren." }, status: :unauthorized
     end
   end
-  
   
   #kollar så man är inloggad som user. Annars redirect till startsida
   def authenticate_user(id)

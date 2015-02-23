@@ -2,13 +2,13 @@ class MemoriesController < ApplicationController
   respond_to :json
   
   before_action :authenticate_api_token, only: [:create, :destroy, :update]
-  before_action :authenticate_api_key
   
-  def index
-    
+  def index 
     #creators/{id}/memories
     if params[:creator_id].present?
       @memories = Creator.find(params[:creator_id]).memories
+    elsif params[:tag_id].present?
+      @memories = Tag.find(params[:tag_id]).memories
     else
       @memories = Memory.all
     end
@@ -55,7 +55,7 @@ class MemoriesController < ApplicationController
   private 
   
   def memory_params
-    params.require(:memory).permit(:title, :eventDate, :memoryText, :longitude, :latitude)
+    params.require(:memory).permit(:title, :eventDate, :memoryText, :longitude, :latitude, tags_attributes: [:tag])
   end
   
 end

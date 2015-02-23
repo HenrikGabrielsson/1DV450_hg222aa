@@ -1,8 +1,6 @@
 class TagsController < ApplicationController
   respond_to :json
-  
-  before_action :authenticate_api_key
-  
+
   def index
     @tags = Tag.all
     respond_with @tags

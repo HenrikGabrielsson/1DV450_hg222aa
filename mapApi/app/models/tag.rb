@@ -5,4 +5,5 @@ class Tag < ActiveRecord::Base
   length: { maximum: 50, message: "Taggen får inte vara längre än 50 tecken." }
   
   has_and_belongs_to_many :memories
+  accepts_nested_attributes_for :memories
 end

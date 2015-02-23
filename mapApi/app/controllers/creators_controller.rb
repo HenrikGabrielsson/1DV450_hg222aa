@@ -2,7 +2,6 @@ class CreatorsController < ApplicationController
   respond_to :json
   
   before_action :authenticate_api_token, only: [:destroy, :update]
-  before_action :authenticate_api_key
   
   def index
     @creators = Creator.all
@@ -24,19 +23,30 @@ class CreatorsController < ApplicationController
   end
 
   def destroy
-    @creator = Creator.find(get_auth_user_data["id"])  
-    @creator.destroy
+    if get_auth_user_data["id"].to_i == params[:id].to_i
+
+      @creator = Creator.find(get_auth_user_data["id"])  
+      @creator.destroy
     
-    render json:{message: "The creator was destroyed"}, status: :ok
+      render json:{message: "Användaren togs bort."}, status: :ok
+    else
+      render json:{error: "Du får inte ta bort denna användare"}, status: :forbidden
+    end
+  
   end
 
   def update
-    @creator = Creator.find(get_auth_user_data["id"])  
+    if get_auth_user_data["id"].to_i == params[:id].to_i
+
+      @creator = Creator.find(get_auth_user_data["id"])  
+      @creator.update(creator_params)
+      @creator.save
     
-    @creator.update(creator_params)
-    @creator.save
-    
-    render json:{message: "The creator was updated"}, status: :ok
+      render json:{message: "Användaren uppdaterades"}, status: :ok
+    else
+      render json:{error: "Du får inte ändra denna användare"}, status: :forbidden
+    end
+  
   end
   
   private 

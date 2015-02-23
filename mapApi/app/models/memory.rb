@@ -19,8 +19,8 @@ class Memory < ActiveRecord::Base
   presence: {message: "Det måste finnas en latitud."},
   numericality: { greater_than_or_equal_to: -90.0, less_than_or_equal_to: 90.0, message: "Latitud måste ligga mellan -90 och 90." }
   
-  
   belongs_to :creator
   has_and_belongs_to_many :tags
+  accepts_nested_attributes_for :tags
 
 end

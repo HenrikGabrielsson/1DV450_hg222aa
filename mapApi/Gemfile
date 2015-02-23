@@ -3,6 +3,8 @@ source 'https://rubygems.org'
 #behövs för respond_to
 gem 'responders'
 
+#gets positions and does magic
+gem 'geocoder'
 
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
