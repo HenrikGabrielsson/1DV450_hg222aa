@@ -11,8 +11,16 @@ class Memory < ActiveRecord::Base
   presence: {message: "Du måste skriva ner minnet också."},
   length: { maximum: 400, message: "Minnet får inte vara längre än 400 tecken." }
   
+  validates :longitude, 
+  presence: {message: "Det måste finnas en longitud."},
+  numericality: { greater_than_or_equal_to: -180.0, less_than_or_equal_to: 180.0, message: "Longitud måste ligga mellan -180 och 180." }
+
+  validates :latitude, 
+  presence: {message: "Det måste finnas en latitud."},
+  numericality: { greater_than_or_equal_to: -90.0, less_than_or_equal_to: 90.0, message: "Latitud måste ligga mellan -90 och 90." }
+  
+  
   belongs_to :creator
-  belongs_to :position
   has_and_belongs_to_many :tags
 
 end

@@ -24,16 +24,11 @@ class MemoriesController < ApplicationController
   
   def create
     @memory = Memory.new(memory_params)
-    @position = Position.new(longitude: params[:longitude], latitude: params[:latitude])
 
-    if @position.save 
-          
-      @memory.position = @position
-      @memory.creator_id = get_auth_user_data["id"]
+    @memory.creator_id = get_auth_user_data["id"]
 
-      if @memory.save
-        respond_with @memory
-      end
+    if @memory.save
+      respond_with @memory
     end
   end
   
@@ -60,7 +55,7 @@ class MemoriesController < ApplicationController
   private 
   
   def memory_params
-    params.require(:memory).permit(:title, :eventDate, :memoryText)
+    params.require(:memory).permit(:title, :eventDate, :memoryText, :longitude, :latitude)
   end
   
 end

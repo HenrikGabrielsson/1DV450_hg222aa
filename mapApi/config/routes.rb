@@ -7,16 +7,12 @@ Rails.application.routes.draw do
   resources :tags, defaults: {format: :json} do
     resources :memories, defaults: {format: :json}
   end
-  resources :positions, defaults: {format: :json} do
-    resources :memories, defaults: {format: :json}
-  end
   
   resources :memories, defaults: {format: :json} do
     resources :tags, defaults: {format: :json}
   end
   
   post "apilogin" => "auth#api_login"
-  
   
  
   root "users#index"

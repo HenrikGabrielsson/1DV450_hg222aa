@@ -37,11 +37,12 @@ ActiveRecord::Schema.define(version: 20150216211241) do
   end
 
   create_table "memories", force: :cascade do |t|
-    t.string   "title",       limit: 100, null: false
-    t.datetime "eventDate",               null: false
-    t.text     "memoryText",  limit: 400, null: false
+    t.string   "title",      limit: 100,                         null: false
+    t.datetime "eventDate",                                      null: false
+    t.text     "memoryText", limit: 400,                         null: false
+    t.decimal  "latitude",               precision: 7, scale: 4, null: false
+    t.decimal  "longitude",              precision: 7, scale: 4, null: false
     t.integer  "creator_id"
-    t.integer  "position_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -53,13 +54,6 @@ ActiveRecord::Schema.define(version: 20150216211241) do
 
   add_index "memories_tags", ["memory_id"], name: "index_memories_tags_on_memory_id"
   add_index "memories_tags", ["tag_id"], name: "index_memories_tags_on_tag_id"
-
-  create_table "positions", force: :cascade do |t|
-    t.decimal  "latitude",   precision: 7, scale: 4, null: false
-    t.decimal  "longitude",  precision: 7, scale: 4, null: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "tags", force: :cascade do |t|
     t.string   "tag",        limit: 50, null: false
