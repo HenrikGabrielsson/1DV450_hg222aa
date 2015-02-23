@@ -37,11 +37,11 @@ ActiveRecord::Schema.define(version: 20150216211241) do
   end
 
   create_table "memories", force: :cascade do |t|
-    t.string   "title",      limit: 100,                         null: false
-    t.datetime "eventDate",                                      null: false
-    t.text     "memoryText", limit: 400,                         null: false
-    t.decimal  "latitude",               precision: 7, scale: 4, null: false
-    t.decimal  "longitude",              precision: 7, scale: 4, null: false
+    t.string   "title",      limit: 100, null: false
+    t.datetime "eventDate",              null: false
+    t.text     "memoryText", limit: 400, null: false
+    t.float    "latitude",               null: false
+    t.float    "longitude",              null: false
     t.integer  "creator_id"
     t.datetime "created_at"
     t.datetime "updated_at"

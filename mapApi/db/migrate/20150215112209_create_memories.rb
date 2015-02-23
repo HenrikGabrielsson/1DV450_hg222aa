@@ -4,8 +4,8 @@ class CreateMemories < ActiveRecord::Migration
       t.datetime :eventDate, null: false
       t.text :memoryText, null: false, limit: 400
       
-      t.decimal :latitude, null: false, precision: 7, scale: 4
-      t.decimal :longitude, null: false, precision: 7, scale: 4      
+      t.float :latitude, null: false, precision: 7, scale: 4
+      t.float :longitude, null: false, precision: 7, scale: 4      
    
       t.belongs_to :creator
       

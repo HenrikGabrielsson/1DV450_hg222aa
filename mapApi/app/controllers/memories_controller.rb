@@ -67,13 +67,11 @@ class MemoriesController < ApplicationController
     @range = params[:range]
     
     if params.has_key?(:location)
-      @location = params[:location]
-    else 
-      @location = [params[:lat].to_f, params[:long].to_f]
+      @memories = Memory.near(params[:location], @range, :units => :km)
+    else  
+      @memories = Memory.near([params[:lat].to_f, params[:long].to_f], @range, :units => :km)
     end
-    
-    @memories = Memory.near(@location, @range)
-    
+
     respond_with @memories
     
   end
