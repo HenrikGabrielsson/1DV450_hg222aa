@@ -15,6 +15,8 @@ Memory.create(title: "Birthday", memoryText: "Good times...", eventDate: Date.pa
 Memory.create(title: "Wedding", memoryText: "Good times...", eventDate: Date.parse('31-12-2010')) 
 Memory.create(title: "Funeral", memoryText: "Bad times...", eventDate: Date.parse('30-11-2010')) 
 
+Tag.create(tag: "fun")
+Tag.create(tag: "sucks")
 
 
 #KeyReg
@@ -22,3 +24,4 @@ Admin.create(userName: "admin", password: "password", password_confirmation: "pa
 
 User.create(email: "henrik@test.se", password: "password", password_confirmation: "password", appSite: "www.henrik.se", appDescription: "bla bla bla", key: Key.create)
 User.create(email: "random@user.se", password: "password", password_confirmation: "password", appSite: "www.random.se", appDescription: "such random", key: Key.create)
+

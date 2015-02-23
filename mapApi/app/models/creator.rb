@@ -4,7 +4,7 @@ class Creator < ActiveRecord::Base
   
   #email sparas alltid som downcase
   before_save { self.email = email.downcase }
-  
+
   validates :userName, 
   presence: {message: "Du måste skriva ett användarnamn."},
   uniqueness: {message: "Detta användarnamn är redan upptagen."},
@@ -19,5 +19,6 @@ class Creator < ActiveRecord::Base
   length: {minimum: 6, message: "Lösenordet måste vara minst 6 tecken långt."},
   confirmation: {message: "Lösenorden matchade inte."}
 
-  has_many :memories
+  has_many :memories, dependent: :destroy
+
 end

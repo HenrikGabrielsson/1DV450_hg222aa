@@ -1,11 +1,19 @@
 Rails.application.routes.draw do
   
-  resources :creators, defaults: {format: :json}, except: [:new, :edit]
-  resources :memories, defaults: {format: :json}, except: [:new, :edit]
+  resources :creators, defaults: {format: :json} do
+    resources :memories, defaults: {format: :json}
+  end
 
-  resources :tags, defaults: {format: :json}, except: [:new, :edit]
-  resources :positions, defaults: {format: :json}, except: [:new, :edit]
-  resources :memories, defaults: {format: :json}, except: [:new, :edit]
+  resources :tags, defaults: {format: :json} do
+    resources :memories, defaults: {format: :json}
+  end
+  resources :positions, defaults: {format: :json} do
+    resources :memories, defaults: {format: :json}
+  end
+  
+  resources :memories, defaults: {format: :json} do
+    resources :tags, defaults: {format: :json}
+  end
   
   post "apilogin" => "auth#api_login"
   

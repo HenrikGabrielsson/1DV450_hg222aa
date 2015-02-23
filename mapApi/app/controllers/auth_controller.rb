@@ -7,7 +7,7 @@ class AuthController < ApplicationController
     creator = Creator.find_by(userName: params[:userName])
     if creator && creator.authenticate(params[:password])
       
-      render json: { token: encode(creator) }
+      render json: { token: encode(creator) }, status: :ok
     else
       render json: { error: 'Felaktigt användarnamn och/eller lösenord' }, status: :unauthorized
     end    

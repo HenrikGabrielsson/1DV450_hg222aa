@@ -21,10 +21,16 @@ module AuthHelper
       @payload = decode auth_header
       if !@payload
         render json: { error: "Problem med autentiseringssträngen." }, status: :bad_request 
+      else
+        @payload
       end
     else
       render json: { error: "En autentiseringssträng krävs."}, status: :forbidden # The header isn´t present
     end
+  end
+  
+  def get_auth_user_data
+    authenticate_api_token
   end
   
   #skapa jwt
@@ -39,7 +45,7 @@ module AuthHelper
     payload = JWT.decode(token, Rails.application.secrets.secret_key_base, "HS512")
     
     if payload[0]["expires"] >= Time.now.to_i
-      payload
+      payload[0]
     
     #gammal token
     else

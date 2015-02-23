@@ -9,7 +9,11 @@ class ApplicationController < ActionController::Base
   around_filter :catch_not_found
 
   def authenticate_api_user
-    authenticate_api_key
+    @payload = authenticate_api_key
+    
+    if @payload == false
+      render json: { error: "Det gick inte att autentisera användaren." }, status: :unauthorized
+    end
   end
   
   

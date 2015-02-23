@@ -10,6 +10,7 @@ class TagsController < ApplicationController
   
   def show
     @tag = Tag.find(params[:id])
+    respond_with @tag
   end
   
   def create
