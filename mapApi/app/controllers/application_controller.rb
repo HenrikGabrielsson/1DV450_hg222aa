@@ -8,6 +8,17 @@ class ApplicationController < ActionController::Base
   
   around_filter :catch_not_found
 
+  def pagination
+    if params[:offset].present?
+      @offset = params[:offset].to_i
+    end
+    if params[:limit].present?
+      @limit = params[:limit].to_i
+    end
+    @offset ||= 0
+    @limit  ||= 2
+  end
+  
   def authenticate_api_user
     @payload = authenticate_api_key
     

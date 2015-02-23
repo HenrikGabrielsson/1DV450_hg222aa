@@ -1,11 +1,12 @@
 class TagsController < ApplicationController
   respond_to :json
 
+  before_action :pagination, only: [:index]
   before_action :authenticate_api_key
   
   def index
     @tags = Tag.all
-    respond_with @tags
+    respond_with @tags.limit(@limit).offset(@offset)
   end
   
   def show

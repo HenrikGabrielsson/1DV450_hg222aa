@@ -3,10 +3,11 @@ class CreatorsController < ApplicationController
   
   before_action :authenticate_api_key
   before_action :authenticate_api_token, only: [:destroy, :update]
+  before_action :pagination, only:[:index]
   
   def index
     @creators = Creator.all
-    respond_with @creators, except: [:password_digest]
+    respond_with @creators.limit(@limit).offset(@offset), except: [:password_digest]
   end
 
   def show

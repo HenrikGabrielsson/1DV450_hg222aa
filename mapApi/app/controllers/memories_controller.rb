@@ -1,6 +1,7 @@
 class MemoriesController < ApplicationController
   respond_to :json
 
+  before_action :pagination, only:[:index, :findnear]
   before_action :authenticate_api_key
   before_action :authenticate_api_token, only: [:create, :destroy, :update]
   
@@ -14,7 +15,7 @@ class MemoriesController < ApplicationController
       @memories = Memory.all
     end
 
-    respond_with @memories.sort_by {|m| m.updated_at}
+    respond_with @memories.limit(@limit).offset(@offset).sort_by {|m| m.updated_at}
   end
   
   def show
@@ -72,7 +73,7 @@ class MemoriesController < ApplicationController
       @memories = Memory.near([params[:lat].to_f, params[:long].to_f], @range, :units => :km)
     end
 
-    respond_with @memories
+    respond_with @memories.limit(@limit).offset(@offset)
     
   end
   
