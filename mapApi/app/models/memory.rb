@@ -27,6 +27,7 @@ class Memory < ActiveRecord::Base
   has_and_belongs_to_many :tags
   accepts_nested_attributes_for :tags, :reject_if => :tag_exists
 
+  #used to decide what to display when responded with
   def serializable_hash (options={})
     options = {
       include: [:tags],
@@ -34,16 +35,15 @@ class Memory < ActiveRecord::Base
       
     }.update(options)
 
-    
-
     super(options)
   end  
   
-  
+  #url to the object
   def url
     "#{Rails.configuration.baseurl}#{memory_path(self)}"
   end
-  
+
+  #some info about the owner of the memory
   def creator_info
     creator = self.creator
     {
@@ -56,8 +56,11 @@ class Memory < ActiveRecord::Base
   
   private
 
+  #called when adding tags to avoid duplicate tags to be created
   def tag_exists(tag_attributes)
     if Tag.find_by(tag: tag_attributes['tag'])
+      
+        #add old tag to tags-collection and avoid creating new one
         self.tags << Tag.find_by(tag: tag_attributes['tag'])
         return true
       end

@@ -4,32 +4,21 @@ class TagsController < ApplicationController
   before_action :pagination, only: [:index]
   before_action :authenticate_api_key
   
+  #/tags
   def index
     @tags = Tag.all
     respond_with @tags.limit(@limit).offset(@offset)
   end
   
+  #/tags/{id}
   def show
     @tag = Tag.find(params[:id])
     respond_with @tag
   end
-  
-  def create
-    @tag = Tag.new(tag_params)
-    
-    if $tag.save
-      respond_with @tag
-    end
-  end
-  
-  def update
-  end
-  
-  def destroy
-  end
-  
+
   private 
-  
+
+  #strong params
   def tag_params
     params.require(:tag).permit(:tag)
   end

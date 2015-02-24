@@ -23,6 +23,7 @@ class Creator < ActiveRecord::Base
 
   has_many :memories, dependent: :destroy
 
+  #used to decide what to display when responded with
   def serializable_hash (options={})
     options = {
       except: [:password_digest],
@@ -33,6 +34,7 @@ class Creator < ActiveRecord::Base
     super(options)
   end    
   
+  #url to the object
   def url
     "#{Rails.configuration.baseurl}#{creator_path(self)}"
   end

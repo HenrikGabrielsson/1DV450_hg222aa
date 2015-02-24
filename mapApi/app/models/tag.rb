@@ -8,6 +8,7 @@ class Tag < ActiveRecord::Base
   
   has_and_belongs_to_many :memories
   
+  #used to decide what to display when responded with
   def serializable_hash (options={})
     options = {
       only: [:tag],
@@ -15,11 +16,10 @@ class Tag < ActiveRecord::Base
       
     }.update(options)
 
-    
-
     super(options)
   end  
   
+  #url to the object
   def url
     "#{Rails.configuration.baseurl}#{tag_path(self)}"
   end

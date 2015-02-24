@@ -5,16 +5,19 @@ class CreatorsController < ApplicationController
   before_action :authenticate_api_token, only: [:destroy, :update]
   before_action :pagination, only:[:index]
   
+  #/creators
   def index
     @creators = Creator.all
     respond_with @creators.limit(@limit).offset(@offset)
   end
 
+  #/creators/{id}
   def show
     @creator = Creator.find(params[:id])
     respond_with @creator
   end
   
+  #create new creator
   def create 
     @creator = Creator.new(creator_params)
     
@@ -24,7 +27,9 @@ class CreatorsController < ApplicationController
     end    
   end
 
+  #remove creator.
   def destroy
+    #creator must be logged in to be allowed to delete own account
     if get_auth_user_data["id"].to_i == params[:id].to_i
 
       @creator = Creator.find(get_auth_user_data["id"])  
@@ -37,7 +42,9 @@ class CreatorsController < ApplicationController
   
   end
 
+  #update creator information
   def update
+    #creator must be logged in to be allowed to update own account
     if get_auth_user_data["id"].to_i == params[:id].to_i
 
       @creator = Creator.find(get_auth_user_data["id"])  
@@ -52,6 +59,7 @@ class CreatorsController < ApplicationController
   
   private 
   
+  #strong params
   def creator_params
     params.require(:creator).permit(:userName, :email, :password, :password_confirmation)
   end
