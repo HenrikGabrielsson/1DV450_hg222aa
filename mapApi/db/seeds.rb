@@ -11,14 +11,12 @@
 Creator.create(userName: "henrik", email: "test@test.se", password: "password", password_confirmation: "password")
 Creator.create(userName: "henrik2", email: "test@test2.se", password: "password", password_confirmation: "password")
 
+Tag.create(tag: "fun")
+Tag.create(tag: "sucks")
+
 Memory.create(title: "Birthday", memoryText: "Good times...", eventDate: Date.parse('31-10-2010'), longitude: 1.1, latitude: 2.12, creator_id: 1)
 Memory.create(title: "Wedding", memoryText: "Good times...", eventDate: Date.parse('31-12-2010'), longitude: 1.1, latitude: 2.12, creator_id: 2)
 Memory.create(title: "Funeral", memoryText: "Bad times...", eventDate: Date.parse('30-11-2010'), longitude: 1.1, latitude: 2.12, creator_id: 2)
-
-
-
-Tag.create(tag: "fun")
-Tag.create(tag: "sucks")
 
 
 #KeyReg

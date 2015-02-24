@@ -64,6 +64,12 @@ class MemoriesController < ApplicationController
     end
   end
   
+  def search
+    @memories = Memory.where("title LIKE ?", "%"+params[:term]+"%")
+    
+    respond_with @memories.limit(@limit).offset(@offset)
+  end
+  
   def findnear
     @range = params[:range]
     
