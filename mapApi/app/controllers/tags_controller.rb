@@ -4,16 +4,23 @@ class TagsController < ApplicationController
   before_action :pagination, only: [:index]
   before_action :authenticate_api_key
   
+  skip_around_action :catch_not_found
+  
   #/tags
   def index
-    @tags = Tag.all
-    respond_with @tags.limit(@limit).offset(@offset)
+    tags = Tag.all
+    respond_with tags.limit(@limit).offset(@offset)
   end
   
   #/tags/{id}
   def show
-    @tag = Tag.find(params[:id])
-    respond_with @tag
+    tag = Tag.find_by_id(params[:id])
+    
+    if tag.present?
+      respond_with tag
+    else
+      render json:{error:"Ingen tagg med detta id hittades"},status: :not_found
+    end
   end
 
   private 
