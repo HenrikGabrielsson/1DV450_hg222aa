@@ -7,12 +7,12 @@ class CreatorsController < ApplicationController
   
   def index
     @creators = Creator.all
-    respond_with @creators.limit(@limit).offset(@offset), except: [:password_digest]
+    respond_with @creators.limit(@limit).offset(@offset)
   end
 
   def show
     @creator = Creator.find(params[:id])
-    respond_with @creator, except: [:password_digest]
+    respond_with @creator
   end
   
   def create 

@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
       @limit = params[:limit].to_i
     end
     @offset ||= 0
-    @limit  ||= 2
+    @limit  ||= 20
   end
   
   def authenticate_api_user

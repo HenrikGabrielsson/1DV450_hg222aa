@@ -1,5 +1,7 @@
 class Creator < ActiveRecord::Base
 
+  include Rails.application.routes.url_helpers
+  
   has_secure_password validations: false
   
   #email sparas alltid som downcase
@@ -21,4 +23,18 @@ class Creator < ActiveRecord::Base
 
   has_many :memories, dependent: :destroy
 
+  def serializable_hash (options={})
+    options = {
+      except: [:password_digest],
+      methods: [:url]
+      
+    }.update(options)
+
+    super(options)
+  end    
+  
+  def url
+    "#{Rails.configuration.baseurl}#{creator_path(self)}"
+  end
+  
 end

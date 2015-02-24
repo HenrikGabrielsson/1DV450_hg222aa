@@ -1,5 +1,7 @@
 class Memory < ActiveRecord::Base
-    
+   
+  include Rails.application.routes.url_helpers
+  
   reverse_geocoded_by :latitude, :longitude
   
   validates :title, 
@@ -25,6 +27,33 @@ class Memory < ActiveRecord::Base
   has_and_belongs_to_many :tags
   accepts_nested_attributes_for :tags, :reject_if => :tag_exists
 
+  def serializable_hash (options={})
+    options = {
+      include: [:tags],
+      methods: [:url, :creator_info]
+      
+    }.update(options)
+
+    
+
+    super(options)
+  end  
+  
+  
+  def url
+    "#{Rails.configuration.baseurl}#{memory_path(self)}"
+  end
+  
+  def creator_info
+    creator = self.creator
+    {
+      :userName => creator.userName,
+      :id => creator.id,
+      :link => "#{Rails.configuration.baseurl}#{creator_path(creator)}"
+    }
+  end
+    
+  
   private
 
   def tag_exists(tag_attributes)

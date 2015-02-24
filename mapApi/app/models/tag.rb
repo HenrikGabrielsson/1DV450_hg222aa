@@ -1,6 +1,6 @@
 class Tag < ActiveRecord::Base
-  
-  before_create :avoid_duplication
+
+  include Rails.application.routes.url_helpers
   
   validates :tag, 
   presence: {message: "Du måste skriva en text i taggen"},
@@ -8,15 +8,20 @@ class Tag < ActiveRecord::Base
   
   has_and_belongs_to_many :memories
   
-  private 
-  
-  def avoid_duplication
-    if Tag.find_by(tag: self.tag)
-      puts "test"
-      puts self.memories
-      puts "test2"
+  def serializable_hash (options={})
+    options = {
+      only: [:tag],
+      methods: [:url]
       
-    end
+    }.update(options)
+
+    
+
+    super(options)
+  end  
+  
+  def url
+    "#{Rails.configuration.baseurl}#{tag_path(self)}"
   end
   
 end
