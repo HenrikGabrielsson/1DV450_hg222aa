@@ -1,32 +1,6 @@
+#1DV450
 
-#Api - Nyckelgenerator
+I denna kurs ska jag skapa 3 projekt. Ett REST API där man kan logga in som användare och skriva ner minnen och spara dessa på en position (x,y) så att andra kan ta del av ens historier. Till denna skapar jag också en nyckelgenerator som kan användas av utvecklare som vill använda API:et. Till sist ska jag också skapa en webbtjänst som kan använda sig av API:et. API:et och nyckelgenerators utvecklas i Ruby on Rails och Webbtjänsten skapas i AngularJS.
 
-##För att installera och köra applikationen:
-
-1. Öppna upp projektet i din utvecklingsmiljö
-
-2. Skriv **cd 1DV450_hg222aa/apiKeyHandler** i console för att gå till applikationen.
-
-3. Skriv **bundle install** för att installera alla nödvändiga gems.
-
-4. Skriv **rake db:setup** för att göra iordning databasen.
-
-5. Skriv **rails server** för att starta servern.
-
-6. Gå till localhost:3000.
-
-
-##Inloggning
-
-Det finns två vanliga användare från början som du kan logga in med:<br />
-
-Email: henrik@test.se<br />
-Lösenord: password
-
-Email: random@user.se<br />
-Lösenord: password
-
-Det finns också en administratör:<br />
-
-Användarnamn: admin <br />
-Lösenord: password
+[Readme för nyckelgenerator](apiKeyHandler/README.md)
+[Readme för API](mapAPI/README.md)
