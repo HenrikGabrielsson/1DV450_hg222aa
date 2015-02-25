@@ -23,7 +23,7 @@ Tag.create(id: 7, tag: "beach")
 Memory.create(title: "Birthday", memoryText: "Hello, world!", eventDate: Date.parse('31-10-1930'), longitude: 1, latitude: 1, creator_id: 2, tags:[Tag.find(1), Tag.find(6)])
 Memory.create(title: "Wedding", memoryText: "Sand everywhere", eventDate: Date.parse('04-10-1960'), longitude: 8, latitude: 25, creator_id: 2, tags:[Tag.find(1)])
 Memory.create(title: "Funeral", memoryText: "...", eventDate: Date.parse('30-11-2010'), longitude: 16.20, latitude: 56.40, creator_id: 2, tags:[Tag.find(2), Tag.find(5)])
-Memory.create(title: "Swimming", memoryText: "I went swimming and almost got eaten by a shark.", longitude: 16.24, latitude: 56.38, creator_id:1, tags:[Tag.find(1), Tag.find(4),Tag.find(7)])
+Memory.create(title: "Swimming", memoryText: "I went swimming and almost got eaten by a shark.", eventDate: "05-05-2014",longitude: 16.24, latitude: 56.38, creator_id:1, tags:[Tag.find(1), Tag.find(4),Tag.find(7)])
 
 #KeyReg
 Admin.create(userName: "admin", password: "password", password_confirmation: "password")
