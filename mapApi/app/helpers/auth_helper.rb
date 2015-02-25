@@ -52,7 +52,7 @@ module AuthHelper
   def decode(token)
     payload = JWT.decode(token, Rails.application.secrets.secret_key_base, "HS512")
     
-    #check expiration time
+    #check expiration time and return if still fresh
     if payload[0]["expires"] >= Time.now.to_i
       payload[0]
     
