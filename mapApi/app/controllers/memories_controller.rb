@@ -44,7 +44,7 @@ class MemoriesController < ApplicationController
     memory = Memory.new(memory_params)
 
     #logged in creator
-    memory.creator_id = get_auth_user_data["id"]
+    memory.creator_id = @payload["id"]
 
     if memory.save
       respond_with memory
@@ -63,7 +63,7 @@ class MemoriesController < ApplicationController
     creator = memory.creator
     
     #check that user is authorized to update memory
-    if get_auth_user_data["id"].to_i == creator.id
+    if @payload["id"].to_i == creator.id
 
       memory.update(memory_params)
       memory.save
@@ -80,7 +80,7 @@ class MemoriesController < ApplicationController
     memory = Memory.find(params[:id].to_i)
     creator = memory.creator
     
-    if get_auth_user_data["id"].to_i == creator.id
+    if @payload["id"].to_i == creator.id
 
       memory.destroy
 

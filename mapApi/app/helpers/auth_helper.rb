@@ -4,16 +4,16 @@ module AuthHelper
   def authenticate_api_key
     
     if request.headers["ApiKey"].present?
-      @key = Key.find_by(key: request.headers["ApiKey"])
+      key = Key.find_by(key: request.headers["ApiKey"])
     end
     #key not valid
-    if @key.nil?
+    if key.nil?
       render json: { error: "Det gick inte att autentisera dig. Kolla din API-nyckel." }, status: :unauthorized 
     
     else
       #increment number of calls for the key.
-      @key.callCount += 1
-      @key.save
+      key.callCount += 1
+      key.save
     end
   end
   
@@ -37,11 +37,6 @@ module AuthHelper
     else
       render json: { error: "En autentiseringssträng krävs."}, status: :forbidden # The header isn´t present
     end
-  end
-  
-  #????
-  def get_auth_user_data
-    authenticate_api_token
   end
   
   #encode jwt token with some user info.
@@ -69,7 +64,6 @@ module AuthHelper
   #couldn't decode token
   rescue
     false
-
   end
     
 end

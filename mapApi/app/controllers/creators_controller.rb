@@ -37,9 +37,9 @@ class CreatorsController < ApplicationController
   #remove creator.
   def destroy
     #creator must be logged in to be allowed to delete own account
-    if get_auth_user_data["id"].to_i == params[:id].to_i
+    if @payload["id"].to_i == params[:id].to_i
 
-      creator = Creator.find(get_auth_user_data["id"])  
+      creator = Creator.find(@payload["id"])  
       creator.destroy
     
       render json:{message: "Användaren togs bort."}, status: :ok
@@ -52,9 +52,9 @@ class CreatorsController < ApplicationController
   #update creator information
   def update
     #creator must be logged in to be allowed to update own account
-    if get_auth_user_data["id"].to_i == params[:id].to_i
+    if @payload["id"].to_i == params[:id].to_i
 
-      creator = Creator.find(get_auth_user_data["id"])  
+      creator = Creator.find(@payload["id"])  
       creator.update(creator_params)
       creator.save
     
