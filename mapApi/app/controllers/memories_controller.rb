@@ -119,6 +119,7 @@ class MemoriesController < ApplicationController
   #also takes an array of tags to create/add to memory
   def memory_params
     params.require(:memory).permit(:title, :eventDate, :memoryText, :longitude, :latitude, tags_attributes: [:tag])
+
   end
   
 end

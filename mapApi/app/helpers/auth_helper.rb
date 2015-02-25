@@ -28,7 +28,7 @@ module AuthHelper
       
       #couldnt get data for whatever reason
       if !@payload
-        render json: { error: "Problem med autentiseringssträngen." }, status: :bad_request 
+        render json: { error: "Problem med autentiseringssträngen. Försök att logga in igen." }, status: :bad_request 
       #success!
       else
         @payload
