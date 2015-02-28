@@ -30,8 +30,11 @@ class CreatorsController < ApplicationController
     
     #om det går att spara.
     if creator.save
-      respond_with creator  
-    end    
+      respond_with creator   
+    else
+      render json:{error: creator.errors.full_messages}, status: :bad_request
+    end 
+    
   end
 
   #remove creator.
@@ -56,9 +59,11 @@ class CreatorsController < ApplicationController
 
       creator = Creator.find(@payload["id"])  
       creator.update(creator_params)
-      creator.save
-    
-      render json:{message: "Användaren uppdaterades"}, status: :ok
+      if creator.save
+        render json:{message: "Användaren uppdaterades"}, status: :ok
+      else
+        render json:{error: creator.errors.full_messages}, status: :bad_request
+      end
     else
       render json:{error: "Du får inte ändra denna användare"}, status: :forbidden
     end

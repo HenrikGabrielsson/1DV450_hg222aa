@@ -30,6 +30,8 @@ Rails.application.routes.draw do
   
   get "*path" => redirect("/")
   
+  match "*path", to: "application#routingError", via: :all
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

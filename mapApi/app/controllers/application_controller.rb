@@ -46,6 +46,10 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  #fångar upp routing errors
+  def routingError
+    render nothing: true, status: :not_found
+  end
   
   private
 

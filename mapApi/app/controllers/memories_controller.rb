@@ -48,6 +48,8 @@ class MemoriesController < ApplicationController
 
     if memory.save
       respond_with memory
+    else
+      render json:{error: memory.errors.full_messages}, status: :bad_request 
     end
   end
   
@@ -66,9 +68,11 @@ class MemoriesController < ApplicationController
     if @payload["id"].to_i == creator.id
 
       memory.update(memory_params)
-      memory.save
-
-      render json:{message: "Minnet uppdaterades"}, status: :ok
+      if memory.save
+        render json:{message: "Minnet uppdaterades"}, status: :ok
+      else
+        render json:{error: memory.errors.full_messages}, status: :bad_request 
+      end
     else
       render json:{error: "Du får inte ändra detta minne"}, status: :forbidden
     end
