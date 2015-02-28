@@ -48,7 +48,7 @@ class ApplicationController < ActionController::Base
   
   #fångar upp routing errors
   def routingError
-    render nothing: true, status: :not_found
+    render json:{error: "Felaktig förfrågan. Försök igen."}, status: :not_found
   end
   
   private
