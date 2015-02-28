@@ -27,9 +27,7 @@ Rails.application.routes.draw do
   
   post "login" => "users#login", as: "login"
   get "logout" => "users#logout", as: "logout"
-  
-  get "*path" => redirect("/")
-  
+
   match "*path", to: "application#routingError", via: :all
   
   # The priority is based upon order of creation: first created -> highest priority.
