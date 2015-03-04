@@ -1,0 +1,9 @@
+html, body
+{ 
+  height: 100%;
+}
+
+#mapDiv {
+  width:1000px;
+  height: 700px;
+}

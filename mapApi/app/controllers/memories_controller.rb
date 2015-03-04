@@ -96,7 +96,8 @@ class MemoriesController < ApplicationController
   
   #search for string in memory.title (/memories?search=term)
   def search
-    memories = Memory.where("title LIKE ?", "%"+params[:term]+"%")
+    puts "test"
+    Memory.all(:conditions => {:title => params[:term]})
     
     respond_with memories.limit(@limit).offset(@offset)
   end

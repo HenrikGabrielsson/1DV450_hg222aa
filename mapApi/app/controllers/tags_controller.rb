@@ -8,8 +8,7 @@ class TagsController < ApplicationController
   
   #/tags
   def index
-    tags = Tag.all
-    respond_with tags.limit(@limit).offset(@offset)
+    respond_with Tag.limit(@limit).offset(@offset)
   end
   
   #/tags/{id}

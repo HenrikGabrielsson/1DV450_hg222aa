@@ -9,8 +9,7 @@ class CreatorsController < ApplicationController
   
   #/creators
   def index
-    creators = Creator.all
-    respond_with creators.limit(@limit).offset(@offset)
+    respond_with Creator.limit(@limit).offset(@offset)
   end
 
   #/creators/{id}
