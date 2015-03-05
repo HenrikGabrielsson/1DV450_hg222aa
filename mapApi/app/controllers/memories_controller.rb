@@ -86,9 +86,12 @@ class MemoriesController < ApplicationController
     
     if @payload["id"].to_i == creator.id
 
-      memory.destroy
-
-      render json:{message: "Minnet togs bort"}, status: :ok
+      if memory.destroy
+        render json:{message: "Minnet togs bort"}, status: :ok
+      else
+        render json:{message: "Minnet gick inte att ta bort. Försök senare."}, status: :internal_server_error
+      end
+ 
     else
       render json:{error: "Du får inte ta bort detta minne"}, status: :forbidden
     end
@@ -96,8 +99,8 @@ class MemoriesController < ApplicationController
   
   #search for string in memory.title (/memories?search=term)
   def search
-    puts "test"
-    Memory.all(:conditions => {:title => params[:term]})
+    term = "%"+params[:term]+"%"
+    memories = Memory.where("title LIKE ?", term)
     
     respond_with memories.limit(@limit).offset(@offset)
   end
