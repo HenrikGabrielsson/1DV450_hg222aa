@@ -1,16 +1,23 @@
 var mapApp = angular.module('mapApp', ['ngRoute']);
 
-mapApp.config(function($routeProvider, $locationProvider)
-{
-  
-  $routeProvider
-  //index
-  .when('/',
-  {
-    controller:"MemoryController",
-    templateURL: "../partials/index.html"  
-  })
-  .otherwise({redirectTo: '/'});
-  
-  $locationProvider.html5Mode(true);
-});
+mapApp.config(
+  [
+  '$routeProvider',
+  '$locationProvider',
+  function($routeProvider, $locationProvider) 
+    {
+      $routeProvider.
+      when('/', {
+        templateUrl: 'partials/index.html',
+        controller: 'MemoryController'
+      })
+      .when('/login', {
+        templateUrl: 'partials/login.html',
+        controller: 'MemoryController'
+      })
+      .otherwise({
+        redirectTo: '/'
+      });
+      $locationProvider.html5Mode(true);
+      
+  }]);

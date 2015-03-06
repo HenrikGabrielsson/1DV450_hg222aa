@@ -1,12 +1,11 @@
-mapApp.controller("MemoryController", ['$scope', MemoryController]);
+mapApp.controller("MemoryController", MemoryController);
+
+MemoryController.$inject = ["$scope",'MemoryService'];
 
 function MemoryController($scope, MemoryService)
 {
-  var vm = this;
-  $scope.test = function()
-  {
-    return MemoryService.alerts();
-  }
+  
+  $scope.test =MemoryService.test;
   
 };
 

@@ -3,28 +3,32 @@
   <head>
     <title>Minneskarta</title>
     <link type="text/css" rel="stylesheet" href="style/memoryStyle.css">
+  
+    <base href="/">
   </head>
   <body>
-    
-    
     <div id="container">
-      <div id="mapDiv"></div>
-    
+      <h1>Minneskarta</h1>
       
-      <div ng-controller="MemoryController">
-        {{test}}
-      </div>  
+      <div ng-include="'partials/shared/map.html'"></div>
+      
+      <div ng-view></div>
+      
     </div>
     
-    
+        
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0/angular-route.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxcezqYVL3pbVmcYxTbRJNOm98VFwyNQU"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-route.js"></script>
+
+
     
     <script src="appStart.js"></script>
     <script src="controllers/memoryController.js"></script>
     <script src="services/memoryService.js"></script>
     
+
+    
     <script src="scripts/map.js"></script>
+    
   </body>
 </html>
