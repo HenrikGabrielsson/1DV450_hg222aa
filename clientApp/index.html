@@ -8,11 +8,13 @@
   </head>
   <body>
     <div id="container">
-      <h1>Minneskarta</h1>
-      
-      <div ng-include="'partials/shared/map.html'"></div>
-      
+      <div ng-include="'partials/shared/header.html'"></div>
+        
       <div ng-view></div>
+      
+      <div id="mapDiv"></div>
+
+      
       
     </div>
     
@@ -25,10 +27,11 @@
     <script src="appStart.js"></script>
     <script src="controllers/memoryController.js"></script>
     <script src="services/memoryService.js"></script>
-    
 
-    
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxcezqYVL3pbVmcYxTbRJNOm98VFwyNQU"></script>
     <script src="scripts/map.js"></script>
-    
+
+
+
   </body>
 </html>

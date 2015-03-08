@@ -4,6 +4,9 @@ class CreatorsController < ApplicationController
   before_action :authenticate_api_key
   before_action :authenticate_api_token, only: [:destroy, :update]
   before_action :pagination, only:[:index]
+    
+  #no csrf-crap for api!!
+  skip_before_filter  :verify_authenticity_token
   
   skip_around_action :catch_not_found
   

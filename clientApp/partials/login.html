@@ -1,1 +1,8 @@
-<p>Login</p>
+<h2>{{memory.test}}</h2>
+<form>
+  <input type="text" name="userName" ng-model="userName" />
+  <input type="password" name="password" ng-model="password" />
+  
+  <input type="button" value="Logga in" ng-click="memory.login(userName, password)" /> 
+  
+</form>

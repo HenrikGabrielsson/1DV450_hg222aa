@@ -3,6 +3,9 @@ class KeysController < ApplicationController
   #kollar hur man är inloggad innan nåt görs
   before_filter -> { authenticate_user Key.find(params[:id]).user.id}, only: [:show]
   before_action :authenticate_admin, only: [:index]
+
+  #no csrf-crap for api!!
+  skip_before_filter  :verify_authenticity_token  
   
   #visar alla nycklar för en admin
   def index

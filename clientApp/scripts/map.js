@@ -9,4 +9,4 @@ function loadMap() {
                                 mapOptions);
 }
 
-google.maps.event.addDomListener(mapDiv,'load', loadMap);
+google.maps.event.addDomListener(window,'load', loadMap);

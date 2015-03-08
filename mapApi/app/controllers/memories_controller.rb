@@ -5,7 +5,11 @@ class MemoriesController < ApplicationController
   before_action :authenticate_api_key
   before_action :authenticate_api_token, only: [:create, :destroy, :update]
   
+  #no csrf-crap for api!!
+  skip_before_filter  :verify_authenticity_token
+  
   skip_around_action :catch_not_found
+  
   
   #/memories
   def index 
