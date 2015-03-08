@@ -5,8 +5,15 @@ MemoryController.$inject = ['MemoryService'];
 function MemoryController(MemoryService)
 {
   var vm = this;
+
+  vm.loggedIn = localStorage.getItem("token") !== null;
   
-  vm.test = MemoryService.loggedIn;
+  
+  vm.logout = function()
+  {
+    localStorage.removeItem("token");
+    vm.loggedIn = false;
+  }
   
   vm.login = function(userName, password)
   {
@@ -14,19 +21,18 @@ function MemoryController(MemoryService)
     {
       if(loginSuccess)
       {
+        
         localStorage.setItem("token", jwt);
-      
-        vm.test = localStorage.getItem("token");
+        vm.loggedIn = true;
+
       }
       else
-      {
-        vm.test = "fail!";    
+      { 
+        //TODO: error message
       }
 
     });                      
   }
-  
 
-  
 }
 

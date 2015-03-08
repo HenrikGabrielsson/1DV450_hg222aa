@@ -2,7 +2,7 @@ class CreatorsController < ApplicationController
   respond_to :json
   
   before_action :authenticate_api_key
-  before_action :authenticate_api_token, only: [:destroy, :update]
+  before_action :authenticate_api_token, only: [:destroy, :update, :me]
   before_action :pagination, only:[:index]
     
   #no csrf-crap for api!!
@@ -25,7 +25,14 @@ class CreatorsController < ApplicationController
       render json:{error: "Det finns ingen användare med detta id"},status: :not_found
     end
   end
+
+  #show logged in user
+  def me
+    params[:id] = @payload["id"]
+    show
+  end
   
+
   #create new creator
   def create 
     creator = Creator.new(creator_params)

@@ -42,7 +42,7 @@ class MemoriesController < ApplicationController
     end
     
   end
-  
+
   #creates memory with tags 
   def create
     memory = Memory.new(memory_params)

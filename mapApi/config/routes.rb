@@ -12,6 +12,8 @@ Rails.application.routes.draw do
     resources :tags, defaults: {format: :json}
   end
   
+  get "me" => "creators#me"
+  
   post "apilogin" => "auth#api_login"
   
   get "findnear" => "memories#findnear"

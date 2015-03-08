@@ -1,8 +1,15 @@
-<h2>{{memory.test}}</h2>
-<form>
-  <input type="text" name="userName" ng-model="userName" />
-  <input type="password" name="password" ng-model="password" />
+<div ng-if="!memory.loggedIn">
+  <h2>Logga in</h2>
+  <form>
+    <input type="text" name="userName" ng-model="userName" />
+    <input type="password" name="password" ng-model="password" />
+
+    <input type="button" value="Logga in" ng-click="memory.login(userName, password)" /> 
+
+  </form>
+</div>
+
+<div ng-if="memory.loggedIn">
+  <input type="button" value="Logga ut" ng-click="memory.logout()" /> 
   
-  <input type="button" value="Logga in" ng-click="memory.login(userName, password)" /> 
-  
-</form>
+</div>

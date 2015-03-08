@@ -4,8 +4,6 @@ MemoryService.$inject = ['$http'];
 
 function MemoryService($http)
 {  
-
-  loggedIn = "not logged in";
   
   var login = function(userName, password, callback)
   {  
@@ -21,7 +19,6 @@ function MemoryService($http)
     })
     .success(function(data)
     {
-      console.log(data)
       callback(true, data)
     })
     .error(function()
@@ -32,8 +29,7 @@ function MemoryService($http)
 
  
   return {
-    login: login,
-    loggedIn: "not logged In"
+    login: login
   };
 }
 
