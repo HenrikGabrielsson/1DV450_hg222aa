@@ -6,8 +6,28 @@ function MemoryController(MemoryService)
 {
   var vm = this;
 
-  vm.loggedIn = localStorage.getItem("token") !== null;
+  vm.getAllMemories = function()
+  {
+    MemoryService.getAllMemories(function(success, positions)
+    {
+      if(success)
+      {
+            
+      }
+      else
+      {
+        //TODO :ERROR message    
+      }
+      
+    });
+  }
   
+  vm.getAllMemories();
+  
+  
+  
+  
+  vm.loggedIn = localStorage.getItem("token") !== null;
   
   vm.logout = function()
   {
@@ -20,15 +40,28 @@ function MemoryController(MemoryService)
     MemoryService.login(userName, password, function(loginSuccess, jwt)
     {
       if(loginSuccess)
-      {
-        
-        localStorage.setItem("token", jwt);
-        vm.loggedIn = true;
+      {   
+        MemoryService.getLoggedInUser(jwt.token, function(success, user)
+        {
+          if(success)
+          {
+            //save user and jwt token in localstorage.
+            localStorage.setItem("token", jwt.token);
+            localStorage.setItem("user", JSON.stringify(user))
+            
+            vm.loggedIn = true;
+          }
+          else
+          {
+            //TODO: Some other error occurredd
+          }
+
+        });
 
       }
       else
       { 
-        //TODO: error message
+        //TODO: error message (wrong user creds)
       }
 
     });                      
