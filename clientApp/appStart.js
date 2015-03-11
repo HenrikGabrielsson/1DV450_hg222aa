@@ -7,8 +7,8 @@ mapApp.config(
   '$httpProvider',
   function($routeProvider, $locationProvider, $httpProvider) 
     {
-      $routeProvider.
-      when('/', {
+      $routeProvider
+      .when('/', {
         templateUrl: 'partials/index_partial.html',
         controller: 'MemoryController',
         controllerAs: "memory"
@@ -29,7 +29,7 @@ mapApp.config(
       
       $locationProvider.html5Mode(true);
     
-      var apiKey = "kr7iOpDpMmEojVIMHdAYQPghA4SeM3QDZw";
+      var apiKey = "6up-EkZyhWovOPjMNxm_3whVOCV1rzN6hw";
 
       //always send apiKey by default (GET,POST,PUT,DELETE)
       $httpProvider.defaults.headers.common = { 'apikey' : apiKey };

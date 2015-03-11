@@ -2,6 +2,7 @@ mapApp.directive('memoryList', ['$compile','MemoryService', function($compile, M
     
     var getElementsAndCreateList = function(scope, element, attr)
     {
+
       var createOutput = function(success, memories)
       {
         if(success)
@@ -24,19 +25,23 @@ mapApp.directive('memoryList', ['$compile','MemoryService', function($compile, M
         }
       }
       
-      //user specified
       if(attr.user !== undefined)
       {
-        MemoryService.getMemoriesByCreator(attr.user, createOutput, attr.limit, attr.offset)
+        attr.$observe("user", function()
+        {
+          MemoryService.getMemoriesByCreator(attr.user, createOutput, attr.limit, attr.offset)
+        })        
       }
-      
-      //tag specified
+
       else if(attr.tag !== undefined)
       {
-        MemoryService.getMemoriesByTag(attr.tag, createOutput, attr.limit, attr.offset)
+        attr.$observe("tag", function()
+        {
+          MemoryService.getMemoriesByCreator(attr.user, createOutput, attr.limit, attr.offset)
+        })            
       }
+  
       
-      //all
       else
       {
         MemoryService.getAllMemories(createOutput, attr.limit, attr.offset)
