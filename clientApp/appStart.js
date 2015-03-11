@@ -1,4 +1,4 @@
-var mapApp = angular.module('mapApp', ['ngRoute']);
+var mapApp = angular.module("mapApp", ["ngRoute", "ngMap"]);
 
 mapApp.config(
   [
@@ -9,18 +9,18 @@ mapApp.config(
     {
       $routeProvider.
       when('/', {
-        templateUrl: 'partials/login.html',
+        templateUrl: 'partials/index_partial.html',
         controller: 'MemoryController',
         controllerAs: "memory"
       })
       .when('/user/:id', {
         templateUrl: 'partials/user.html',
-        controller: 'MemoryController',
-        controllerAs: "memory"
+        controller: 'UserController',
+        controllerAs: "user"
       })
-      .when('/login', {
-        templateUrl: 'partials/login.html',
-        controller: 'MemoryController',
+      .when('/memory/:id', {
+        templateUrl: "partials/memory.html",
+        controller: "MemoryController.html",
         controllerAs: "memory"
       })
       .otherwise({

@@ -7,33 +7,36 @@
     <base href="/">
   </head>
   <body>
-    <div id="container">
+    <div id="container" ng-controller="MemoryController as memory">
       <div ng-include="'partials/shared/header.html'"></div>
-        
-      <div ng-view></div>
+      <div ng-include="'partials/shared/login.html'"></div>
+      <div ng-include="'partials/shared/search.html'"></div>
       
-      <div id="mapDiv"></div>
+      <div ng-view></div>
+
+      <map center="56.66830, 16.35315" zoom="8" class="map"></map>
 
       
+      <ul memory-list limit="10"></ul>
       
     </div>
-   
     
-    
-    
-    
-        
+       
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-route.js"></script>
-
-
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxcezqYVL3pbVmcYxTbRJNOm98VFwyNQU"></script>
     
     <script src="appStart.js"></script>
     <script src="controllers/memoryController.js"></script>
+    <script src="controllers/loginController.js"></script>
+    <script src="controllers/userController.js"></script>
+    
+    <script src="services/loginService.js"></script>
     <script src="services/memoryService.js"></script>
-
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxcezqYVL3pbVmcYxTbRJNOm98VFwyNQU"></script>
-    <script src="scripts/map.js"></script>
+    <script src="services/mapService.js"></script>
+  
+    <script src="directives/memoryList.js"></script>
+    <script src="//rawgit.com/allenhwkim/angularjs-google-maps/master/build/scripts/ng-map.min.js"></script>
 
 
 

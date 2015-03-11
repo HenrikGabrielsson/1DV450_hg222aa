@@ -1,18 +1,60 @@
 mapApp.controller("MemoryController", MemoryController);
 
-MemoryController.$inject = ['MemoryService'];
+MemoryController.$inject = ["MemoryService", "MapService", "$rootScope"];
 
-function MemoryController(MemoryService)
+function MemoryController(MemoryService, MapService, $rootScope)
 {
   var vm = this;
 
-  vm.getAllMemories = function()
+  vm.tags = null;
+  vm.creators = null;
+  
+  vm.searchMemories = function(term)
   {
-    MemoryService.getAllMemories(function(success, positions)
+    
+    MemoryService.searchMemories(term, function(success, memories)
+    {     
+      if(success)
+      {
+        $rootScope.setMarkers(memories);
+      }
+      else
+      {
+        //TODO: IDONT KNOW
+      }
+    })
+  }
+  
+  $rootScope.markers = [];
+  
+  $rootScope.$on('mapInitialized', function(evt, evtMap) 
+  { 
+    $rootScope.map = evtMap;
+
+    $rootScope.setMarkers = function(memories) 
+    {
+      //remove all markers
+      $rootScope.markers.forEach(function(marker)
+      {
+        marker.setMap(null);
+      })
+      
+      memories.forEach(function(memory)
+      {
+        $rootScope.markers.push(new google.maps.Marker({position: new google.maps.LatLng(memory.latitude, memory.longitude), map: $rootScope.map}));  
+      })
+      
+    };
+  });
+
+
+  vm.getAllCreators = function()
+  {
+    MemoryService.getAllCreators(function(success, creators)
     {
       if(success)
       {
-            
+        vm.creators = creators;
       }
       else
       {
@@ -22,50 +64,48 @@ function MemoryController(MemoryService)
     });
   }
   
-  vm.getAllMemories();
-  
-  
-  
-  
-  vm.loggedIn = localStorage.getItem("token") !== null;
-  
-  vm.logout = function()
+  vm.getAllTags = function()
   {
-    localStorage.removeItem("token");
-    vm.loggedIn = false;
-  }
-  
-  vm.login = function(userName, password)
-  {
-    MemoryService.login(userName, password, function(loginSuccess, jwt)
+    MemoryService.getAllTags(function(success, tags)
     {
-      if(loginSuccess)
-      {   
-        MemoryService.getLoggedInUser(jwt.token, function(success, user)
-        {
-          if(success)
-          {
-            //save user and jwt token in localstorage.
-            localStorage.setItem("token", jwt.token);
-            localStorage.setItem("user", JSON.stringify(user))
-            
-            vm.loggedIn = true;
-          }
-          else
-          {
-            //TODO: Some other error occurredd
-          }
-
-        });
-
+      if(success)
+      {  
+        vm.tags = tags;
       }
       else
-      { 
-        //TODO: error message (wrong user creds)
+      {
+        //TODO :ERROR message    
       }
-
-    });                      
+      
+    });    
   }
+
+  vm.getAllMemories = function()
+  {
+    MemoryService.getAllMemories(function(success, memories)
+    {
+      if(success)
+      {
+        $rootScope.setMarkers(memories);
+      }
+      else
+      {
+        //TODO :ERROR message    
+      }
+      
+    });
+  }
+  
+  vm.init = function()
+  {
+    vm.getAllMemories();
+    vm.getAllTags();
+    vm.getAllCreators();
+  }
+  
+  vm.init();
+  
+  return vm;
 
 }
 

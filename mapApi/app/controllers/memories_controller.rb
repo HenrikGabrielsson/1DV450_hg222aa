@@ -103,6 +103,7 @@ class MemoriesController < ApplicationController
   
   #search for string in memory.title (/memories?search=term)
   def search
+
     term = "%"+params[:term]+"%"
     memories = Memory.where("title LIKE ?", term)
     
