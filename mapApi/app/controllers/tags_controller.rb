@@ -5,6 +5,9 @@ class TagsController < ApplicationController
   before_action :authenticate_api_key
   
   skip_around_action :catch_not_found
+
+  #no csrf-crap for api!!
+  skip_before_filter  :verify_authenticity_token
   
   #/tags
   def index

@@ -18,10 +18,30 @@ mapApp.config(
         controller: "UserController",
         controllerAs: "user"
       })
+      .when("/user/create", {
+        templateUrl: "partials/user_create.html",
+        controller: "UserController",
+        controllerAs: "user"
+      })
       .when('/user/:id', {
         templateUrl: 'partials/user.html',
         controller: 'UserController',
         controllerAs: "user"
+      })
+      .when("/memory/create", {
+        templateUrl: "partials/memory_create.html",
+        controller: "MemoryController",
+        controllerAs: "memory"
+      })
+      .when("/memory/edit/:id", {
+        templateUrl: "partials/memory_edit.html",
+        controller: "MemoryController",
+        controllerAs: "memory"
+      })
+      .when("/memory/search/:term", {
+        templateUrl: "partials/search_results",
+        controller: "MemoryController",
+        controllerAs: "memory"
       })
       .when('/memory/:id', {
         templateUrl: "partials/memory.html",

@@ -4,6 +4,33 @@ MemoryService.$inject = ['$http'];
 
 function MemoryService(http)
 {  
+  
+  var sendHTTP = function(url, method, params, headers, callback)
+  {
+    var config = {
+      url : url,
+      method: method
+    }
+    if(params !== null)
+    {
+      config.params = params;
+    }
+    if(headers !== null)
+    {
+      config.headers = headers;
+    }
+    
+    http(config)
+    .success(function(data)
+    {
+      callback(true, data);  
+    })
+    .error(function(data)
+    {
+      callback(false, data);
+    })
+    
+  }
 
   var getAllMemories = function(callback, limit, offset)
   {
@@ -18,109 +45,43 @@ function MemoryService(http)
       params.offset = offset;
     }
     
-
-    http(
-    {
-      url:"http://testapp-186134.euw1-2.nitrousbox.com:3000/memories",
-      method: "GET",
-      params: params
-    })
-    .success(function(data)
-    {
-      callback(true, data);  
-    })
-    .error(function(data)
-    {
-      callback(false, "error message");
-    })
+    sendHTTP("http://testapp-186134.euw1-2.nitrousbox.com:3000/memories", "GET", params, null, callback)
   }
   
   var getCreatorById = function(id, callback)
   {
-    http(
-    {
-      url:"http://testapp-186134.euw1-2.nitrousbox.com:3000/creators/" + id,
-      method: "GET"
-    })
-    .success(function(data)
-    {
-      callback(true, data);  
-    })
-    .error(function(data)
-    {
-      callback(false, "error message");
-    });       
+    sendHTTP("http://testapp-186134.euw1-2.nitrousbox.com:3000/creators/" + id, "GET", null, null, callback);    
   }
+  
+  
   
   var getMemoryById = function(id, callback)
   {
-    http(
-    {
-      url:"http://testapp-186134.euw1-2.nitrousbox.com:3000/memories/" + id,
-      method: "GET"
-    })
-    .success(function(data)
-    {
-      callback(true, data);  
-    })
-    .error(function(data)
-    {
-      callback(false, "error message");
-    });       
+    sendHTTP("http://testapp-186134.euw1-2.nitrousbox.com:3000/memories/" + id, "GET", null, null, callback);   
   }
-
+  
+  
   
   var getAllCreators = function(callback)
   {
-    http(
-    {
-      url:"http://testapp-186134.euw1-2.nitrousbox.com:3000/creators",
-      method: "GET"
-    })
-    .success(function(data)
-    {
-      callback(true, data);  
-    })
-    .error(function(data)
-    {
-      callback(false, "error message");
-    });        
+    sendHTTP("http://testapp-186134.euw1-2.nitrousbox.com:3000/creators", "GET", null, null, callback);     
   }
+  
+  
   
   var getAllTags = function(callback)
   {
-    http(
-    {
-      url:"http://testapp-186134.euw1-2.nitrousbox.com:3000/tags",
-      method: "GET"
-    })
-    .success(function(data)
-    {
-      callback(true, data);  
-    })
-    .error(function(data)
-    {
-      callback(false, "error message");
-    })       
+    sendHTTP("http://testapp-186134.euw1-2.nitrousbox.com:3000/tags", "GET", null, null, callback);   
   }
+  
+  
   
   var searchMemories = function(term, callback)
   {
-    http(
-    {
-      url:"http://testapp-186134.euw1-2.nitrousbox.com:3000/search",
-      method: "GET",
-      params: {term: term}
-    })
-    .success(function(data)
-    {
-      callback(true, data);  
-    })
-    .error(function(data)
-    {
-      callback(false, "error message");
-    })    
+    sendHTTP("http://testapp-186134.euw1-2.nitrousbox.com:3000/search", "GET", {term: term}, null, callback) 
   }
+  
+  
   
   var getMemoriesByTag = function(id, callback, limit, offset)
   {
@@ -131,25 +92,14 @@ function MemoryService(http)
       params.limit = limit;
     }
     if(offset !== undefined)
-      {
-        params.offset = offset;
-      }
+    {
+      params.offset = offset;
+    }
     
-    http(
-    {
-      url:"http://testapp-186134.euw1-2.nitrousbox.com/tags/"+id+"/memories",
-      method: "GET",
-      params: params
-    })
-    .success(function(data)
-    {
-      callback(true, data);  
-    })
-    .error(function(data)
-    {
-      callback(false, "error message");
-    }); 
+    sendHTTP("http://testapp-186134.euw1-2.nitrousbox.com/tags/"+id+"/memories", "GET", params, null, callback)
   }
+  
+  
   
   var getMemoriesByCreator = function(id, callback, limit, offset)
   {
@@ -160,42 +110,21 @@ function MemoryService(http)
       params.limit = limit;
     }
     if(offset !== undefined)
-      {
-        params.offset = offset;
-      }
+    {
+      params.offset = offset;
+    }
     
-    http(
-    {
-      url:"http://testapp-186134.euw1-2.nitrousbox.com/creators/"+id+"/memories",
-      method: "GET",
-      params: params
-    })
-    .success(function(data)
-    {
-      callback(true, data);  
-    })
-    .error(function(data)
-    {
-      callback(false, "error message");
-    }); 
+    sendHTTP("http://testapp-186134.euw1-2.nitrousbox.com/creators/"+id+"/memories","GET", params, null, callback)
   }
+  
+  
   
   var getTagById = function(id, callback)
   {
-    http(
-    {
-      url:"http://testapp-186134.euw1-2.nitrousbox.com:3000/tags/" + id,
-      method: "GET"
-    })
-    .success(function(data)
-    {
-      callback(true, data);  
-    })
-    .error(function(data)
-    {
-      callback(false, "error message");
-    })       
+    sendHTTP("http://testapp-186134.euw1-2.nitrousbox.com:3000/tags/" + id, "GET", null, null, callback)    
   }  
+  
+  
   
   var editUser = function(user, password, passwordConfirmation, token, callback)
   {
@@ -215,9 +144,28 @@ function MemoryService(http)
   
   var deleteUser = function(id, token, callback)
   {
+    sendHTTP("http://testapp-186134.euw1-2.nitrousbox.com:3000/creators/" + id, "DELETE", null, {Authorization: token}, callback)      
+  }
+  
+  
+  var createUser = function(creator, callback)
+  {
+    http.post("http://testapp-186134.euw1-2.nitrousbox.com:3000/creators", creator)
+    .success(function(data)
+    {
+      callback(true, data);  
+    })
+    .error(function(data)
+    {
+      callback(false, "error message");
+    })        
+  }  
+  
+  var deleteMemory = function(id, token, callback)
+  {
     http(
     {
-      url:"http://testapp-186134.euw1-2.nitrousbox.com:3000/creators/" + id,
+      url:"http://testapp-186134.euw1-2.nitrousbox.com:3000/memories/" + id,
       method: "DELETE",
       headers: {Authorization: token}
     })
@@ -231,6 +179,36 @@ function MemoryService(http)
     })        
   }
   
+  var editMemory = function(id, memory, token, callback)
+  {
+    var headers = {headers:{Authorization: token}};
+    
+    http.put("http://testapp-186134.euw1-2.nitrousbox.com:3000/memories/" + id, memory, headers)
+    .success(function(data)
+    {
+      callback(true, data);  
+    })
+    .error(function(data)
+    {
+      callback(false, "error message");
+    });    
+  }
+  
+  var createMemory = function(memory, token, callback)
+  {
+    var headers = {headers:{Authorization: token}};
+    
+    http.post("http://testapp-186134.euw1-2.nitrousbox.com:3000/memories", memory, headers)
+    .success(function(data)
+    {
+      callback(true, data);  
+    })
+    .error(function(data)
+    {
+      callback(false, "error message");
+    });
+  }
+  
   return {
     getAllMemories: getAllMemories,
     searchMemories: searchMemories,
@@ -242,7 +220,11 @@ function MemoryService(http)
     getMemoryById: getMemoryById,
     getTagById: getTagById,
     editUser: editUser,
-    deleteUser: deleteUser
+    deleteUser: deleteUser,
+    createUser: createUser,
+    deleteMemory: deleteMemory,
+    editMemory: editMemory,
+    createMemory: createMemory
   };
 }
 

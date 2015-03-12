@@ -1,3 +1,7 @@
 <p>This is the index partial</p>
 
+<h2>Senaste minnena</h2>
+
+<p ng-if="memory.loggedIn"><a ng-href="/memory/create">Skapa nytt minne</a></p>
+
 <ul memory-list limit="10"></ul>

@@ -6,17 +6,21 @@ mapApp.directive('tagList', ['$compile','MemoryService', function($compile, Memo
       {
         if(success)
         {
-          var li, link;
-          tags.forEach(function(tag)
-          {
-            li = document.createElement("li");
-            link = document.createElement("a");
-            link.setAttribute("href", "./tag/" + tag.id);
-            link.appendChild(document.createTextNode(tag.tag));
-            li.appendChild(link);
+          
+          if(tags !== undefined)
+          {          
+            var li, link;
+            tags.forEach(function(tag)
+            {
+              li = document.createElement("li");
+              link = document.createElement("a");
+              link.setAttribute("href", "./tag/" + tag.id);
+              link.appendChild(document.createTextNode(tag.tag));
+              li.appendChild(link);
 
-            element.append(li);       
-          })
+              element.append(li);       
+            })
+          }
         }
         else
         {

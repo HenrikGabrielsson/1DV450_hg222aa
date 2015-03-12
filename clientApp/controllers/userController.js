@@ -26,6 +26,23 @@ function UserController($routeParams, MemoryService)
     });
   }
   
+  vm.createUser = function(userName, email, password, passwordConfirmation)
+  {
+    var newUser = {creator: {userName: userName,  email: email, password: password, password_confirmation: passwordConfirmation}};
+    
+    MemoryService.createUser(newUser, function(success, data)
+    {
+      if(success)
+      {
+        //success
+      }
+      else
+      {
+        //error message
+      }
+    })
+  }
+  
   vm.deleteUser = function()
   {
     if(confirm("Vill du verkligen ta bort din profil?"))

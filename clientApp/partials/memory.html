@@ -1,13 +1,15 @@
 <h2>{{memory.thisMemory.title}}</h2>
 
+<a ng-href="memory/edit/{{memory.thisMemory.id}}" ng-if="memory.loggedInUser.id == memory.thisMemory.creator_id">Redigera detta minne</a>
 
-<p>Date:{{memory.thisMemory.eventDate}}</p>
+<p>Datum:{{memory.thisMemory.eventDate}}</p>
 
 <p><a ng-href="/user/{{memory.thisMemory.creator_id}}">{{memory.thisMemory.creator_info.userName}}</a></p>
 
 <p>
   {{memory.thisMemory.memoryText}}
 </p>
+
 
 <ul tag-list memory="{{memory.thisMemory.id}}">
 
