@@ -1,0 +1,14 @@
+<h2>{{memory.thisMemory.title}}</h2>
+
+
+<p>Date:{{memory.thisMemory.eventDate}}</p>
+
+<p><a ng-href="/user/{{memory.thisMemory.creator_id}}">{{memory.thisMemory.creator_info.userName}}</a></p>
+
+<p>
+  {{memory.thisMemory.memoryText}}
+</p>
+
+<ul tag-list memory="{{memory.thisMemory.id}}">
+
+</ul>

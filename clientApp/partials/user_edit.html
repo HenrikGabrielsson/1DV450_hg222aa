@@ -1,0 +1,21 @@
+<h2>Redigera profil</h2>
+
+<form ng-if="user.thisUser !== undefined && user.thisUser.id === user.loggedInUser.id">
+  
+  <input type="button" value="Ta bort användare" ng-click="user.deleteUser()"/>
+  
+  <label for="userName">Användarnamn:</label>
+  <input type="text" id="userName" ng-model="user.thisUser.userName" />
+  
+  <label for="email">Email: </label>
+  <input type="text" ng-model="user.thisUser.email" id="email" />
+  
+  <label for="password">Nytt lösenord: </label>
+  <input type="password" ng-model="password" id="password" />
+  
+  <label for="passwordConfirmation">Nytt lösenord igen: </label>
+  <input type="password" ng-model="passwordConfirmation" id="passwordConfirmation" />
+  
+  <input type="button" value="Redigera" ng-click="user.editUser(password, passwordConfirmation)"/>
+  
+</form>

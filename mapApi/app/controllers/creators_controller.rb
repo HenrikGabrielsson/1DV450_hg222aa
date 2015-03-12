@@ -63,11 +63,16 @@ class CreatorsController < ApplicationController
 
   #update creator information
   def update
+    
+    
+    
     #creator must be logged in to be allowed to update own account
     if @payload["id"].to_i == params[:id].to_i
-
-      creator = Creator.find(@payload["id"])  
+      
+      creator = Creator.find(params[:id])  
       creator.update(creator_params)
+      puts "test"
+      
       if creator.save
         render json:{message: "Användaren uppdaterades"}, status: :ok
       else

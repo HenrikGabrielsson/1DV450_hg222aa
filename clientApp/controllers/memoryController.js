@@ -1,14 +1,14 @@
 mapApp.controller("MemoryController", MemoryController);
 
-MemoryController.$inject = ["MemoryService", "MapService", "$rootScope"];
+MemoryController.$inject = ["MemoryService", "$rootScope", "$routeParams", "$location", "$scope"];
 
-function MemoryController(MemoryService, MapService, $rootScope)
+function MemoryController(MemoryService, $rootScope, $routeParams, $location, $scope)
 {
   var vm = this;
 
   vm.tags = null;
   vm.creators = null;
-  
+
   vm.searchMemories = function(term)
   {
     
@@ -24,15 +24,18 @@ function MemoryController(MemoryService, MapService, $rootScope)
       }
     })
   }
-  
-  $rootScope.markers = [];
-  
+
   $rootScope.$on('mapInitialized', function(evt, evtMap) 
   { 
     $rootScope.map = evtMap;
 
     $rootScope.setMarkers = function(memories) 
     {
+      if($rootScope.markers === undefined)
+      {
+        $rootScope.markers = [];
+      }
+      
       //remove all markers
       $rootScope.markers.forEach(function(marker)
       {
@@ -41,7 +44,19 @@ function MemoryController(MemoryService, MapService, $rootScope)
       
       memories.forEach(function(memory)
       {
-        $rootScope.markers.push(new google.maps.Marker({position: new google.maps.LatLng(memory.latitude, memory.longitude), map: $rootScope.map}));  
+        
+        var marker = new google.maps.Marker({position: new google.maps.LatLng(memory.latitude, memory.longitude), map: $rootScope.map});  
+        
+        marker.addListener('click', function()
+        {
+          $scope.$apply(function() 
+          {
+            $location.path('/memory/' + memory.id);
+          });
+        });
+        
+        
+        $rootScope.markers.push(marker);
       })
       
     };
@@ -96,14 +111,33 @@ function MemoryController(MemoryService, MapService, $rootScope)
     });
   }
   
-  vm.init = function()
+  vm.getMemoryById = function(id)
+  {
+    MemoryService.getMemoryById(id, function(success, memory)
+    {
+      if(success)
+      {
+        $rootScope.setMarkers(new Array(memory));
+        vm.thisMemory = memory;
+      }
+      else
+      {
+        //error.html
+      }
+    })    
+  }
+  
+  if($routeParams.id !== undefined)
+  {
+    vm.getMemoryById($routeParams.id);
+  }
+  
+  else
   {
     vm.getAllMemories();
     vm.getAllTags();
     vm.getAllCreators();
   }
-  
-  vm.init();
   
   return vm;
 

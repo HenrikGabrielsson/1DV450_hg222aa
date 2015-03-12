@@ -14,12 +14,11 @@ function MemoryService(http)
       params.limit = limit;
     }
     if(offset !== undefined)
-      {
-        params.offset = offset;
-      }
+    {
+      params.offset = offset;
+    }
     
-    
-    
+
     http(
     {
       url:"http://testapp-186134.euw1-2.nitrousbox.com:3000/memories",
@@ -52,6 +51,24 @@ function MemoryService(http)
       callback(false, "error message");
     });       
   }
+  
+  var getMemoryById = function(id, callback)
+  {
+    http(
+    {
+      url:"http://testapp-186134.euw1-2.nitrousbox.com:3000/memories/" + id,
+      method: "GET"
+    })
+    .success(function(data)
+    {
+      callback(true, data);  
+    })
+    .error(function(data)
+    {
+      callback(false, "error message");
+    });       
+  }
+
   
   var getAllCreators = function(callback)
   {
@@ -163,6 +180,57 @@ function MemoryService(http)
     }); 
   }
   
+  var getTagById = function(id, callback)
+  {
+    http(
+    {
+      url:"http://testapp-186134.euw1-2.nitrousbox.com:3000/tags/" + id,
+      method: "GET"
+    })
+    .success(function(data)
+    {
+      callback(true, data);  
+    })
+    .error(function(data)
+    {
+      callback(false, "error message");
+    })       
+  }  
+  
+  var editUser = function(user, password, passwordConfirmation, token, callback)
+  {
+    var params = {creator: {userName: user.userName, email: user.email, password: password, password_confirmation: passwordConfirmation}}
+    var headers = {headers:{Authorization: token}};
+    
+    http.put("http://testapp-186134.euw1-2.nitrousbox.com:3000/creators/" + user.id, params, headers) 
+    .success(function(data)
+    {
+      callback(true, data);  
+    })
+    .error(function(data)
+    {
+      callback(false, "error message");
+    }); 
+  }
+  
+  var deleteUser = function(id, token, callback)
+  {
+    http(
+    {
+      url:"http://testapp-186134.euw1-2.nitrousbox.com:3000/creators/" + id,
+      method: "DELETE",
+      headers: {Authorization: token}
+    })
+    .success(function(data)
+    {
+      callback(true, data);  
+    })
+    .error(function(data)
+    {
+      callback(false, "error message");
+    })        
+  }
+  
   return {
     getAllMemories: getAllMemories,
     searchMemories: searchMemories,
@@ -170,7 +238,11 @@ function MemoryService(http)
     getAllTags: getAllTags,
     getCreatorById: getCreatorById,
     getMemoriesByCreator: getMemoriesByCreator,
-    getMemoriesByTag: getMemoriesByTag
+    getMemoriesByTag: getMemoriesByTag,
+    getMemoryById: getMemoryById,
+    getTagById: getTagById,
+    editUser: editUser,
+    deleteUser: deleteUser
   };
 }
 

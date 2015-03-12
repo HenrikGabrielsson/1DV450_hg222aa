@@ -1,9 +1,12 @@
 <h2>{{user.thisUser.userName}}</h2>
 
+<p>Email: {{user.thisUser.email}}</p>
+
 <div ng-if="user.loggedIn && user.thisUser.id === user.loggedInUser.id">
-  <p>Email: {{user.thisUser.email}}</p>
+  <p><a ng-href="user/{{user.thisUser.id}}/edit">Redigera profil</a></p>  
 </div>
 
 <ul memory-list limit="10" user="{{user.thisUser.id}}"></ul>
+
 
 

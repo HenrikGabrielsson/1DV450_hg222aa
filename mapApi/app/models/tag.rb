@@ -11,7 +11,7 @@ class Tag < ActiveRecord::Base
   #used to decide what to display when responded with
   def serializable_hash (options={})
     options = {
-      only: [:tag],
+      only: [:tag, :id],
       methods: [:url]
       
     }.update(options)

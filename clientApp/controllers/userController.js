@@ -11,6 +11,39 @@ function UserController($routeParams, MemoryService)
   vm.loggedIn = localStorage.getItem("token") !== null;
   vm.loggedInUser = JSON.parse(localStorage.getItem("user"));
 
+  vm.editUser = function(password, passwordConfirmation)
+  {
+    MemoryService.editUser(vm.thisUser, password, passwordConfirmation, localStorage.getItem("token"), function(success,data)
+    {
+      if(success)
+      {
+        //edit succeded
+      }
+      else
+      {
+        //error
+      }
+    });
+  }
+  
+  vm.deleteUser = function()
+  {
+    if(confirm("Vill du verkligen ta bort din profil?"))
+    {
+      MemoryService.deleteUser(vm.thisUser.id, localStorage.getItem("token"),function(success,data)
+      {
+        if(success)
+        {
+          //success
+        }
+        else
+        {
+          //error
+        }
+      });
+    }
+  }
+  
   var getUser = function()
   {
 

@@ -7,12 +7,7 @@ class AuthController < ApplicationController
   
   #lets user login via api
   def api_login
-    
-    puts "test1"
-    puts params[:userName]
-    puts params[:password]
-    puts "tes2t"
-    
+
     #check credentials
     creator = Creator.find_by(userName: params[:userName])
     if creator && creator.authenticate(params[:password])

@@ -13,6 +13,11 @@ mapApp.config(
         controller: 'MemoryController',
         controllerAs: "memory"
       })
+      .when('/user/:id/edit', {
+        templateUrl: "partials/user_edit.html",
+        controller: "UserController",
+        controllerAs: "user"
+      })
       .when('/user/:id', {
         templateUrl: 'partials/user.html',
         controller: 'UserController',
@@ -20,8 +25,13 @@ mapApp.config(
       })
       .when('/memory/:id', {
         templateUrl: "partials/memory.html",
-        controller: "MemoryController.html",
+        controller: "MemoryController",
         controllerAs: "memory"
+      })
+      .when('/tag/:id', {
+        templateUrl: "partials/tag.html",
+        controller: "TagController",
+        controllerAs: "tag"
       })
       .otherwise({
         redirectTo: '/'
