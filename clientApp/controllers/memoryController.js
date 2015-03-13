@@ -1,11 +1,16 @@
 mapApp.controller("MemoryController", MemoryController);
 
-MemoryController.$inject = ["MemoryService", "$rootScope", "$routeParams", "$location", "$scope"];
+MemoryController.$inject = ["MemoryService", "$rootScope", "$routeParams", "$location", "$scope", "$timeout"];
 
-function MemoryController(MemoryService, $rootScope, $routeParams, $location, $scope)
+function MemoryController(MemoryService, $rootScope, $routeParams, $location, $scope, $timeout)
 {
   var vm = this;
 
+  if($routeParams.term !== undefined)
+  {
+    vm.term = $routeParams.term;
+  }
+    
   vm.tags = null;
   vm.creators = null;
   
@@ -37,7 +42,7 @@ function MemoryController(MemoryService, $rootScope, $routeParams, $location, $s
         latitude: $rootScope.setMarker.position.k, 
         longitude: $rootScope.setMarker.position.D,
         eventDate: vm.thisMemory.eventDate, 
-        tags_attributes: tagsArray
+        tags_attributes: vm.thisMemory.tags
       }
     }
 
@@ -112,17 +117,12 @@ function MemoryController(MemoryService, $rootScope, $routeParams, $location, $s
   
   vm.searchMemories = function(term)
   {
-    
-    MemoryService.searchMemories(term, function(success, memories)
-    {     
-      if(success)
+    $timeout(function()
+    {
+      $scope.$apply(function() 
       {
-        $rootScope.setMarkers(memories);
-      }
-      else
-      {
-        //TODO: IDONT KNOW
-      }
+        $location.path("/memory/search/" + term)
+      })
     })
   }
   

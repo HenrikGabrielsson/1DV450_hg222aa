@@ -41,8 +41,15 @@ mapApp.directive('memoryList', ['$compile','MemoryService','$rootScope' , functi
           MemoryService.getMemoriesByTag(attr.tag, createOutput, attr.limit, attr.offset)
         })            
       }
-  
       
+      else if(attr.search !== undefined)
+      {
+        attr.$observe("search", function()
+        {
+          MemoryService.searchMemories(attr.search, createOutput, attr.limit, attr.offset)
+        })
+      }
+   
       else
       {
         MemoryService.getAllMemories(createOutput, attr.limit, attr.offset)

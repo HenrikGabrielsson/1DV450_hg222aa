@@ -59,12 +59,12 @@ class Memory < ActiveRecord::Base
   #called when adding tags to avoid duplicate tags to be created
   def tag_exists(tag_attributes)
     if Tag.find_by(tag: tag_attributes['tag'])
-      
-        #add old tag to tags-collection and avoid creating new one
-        self.tags << Tag.find_by(tag: tag_attributes['tag'])
-        return true
-      end
-      return false
+
+      #add old tag to tags-collection and avoid creating new one
+      self.tags << Tag.find_by(tag: tag_attributes['tag'])
+      return true
     end
+    return false
+  end
 
 end

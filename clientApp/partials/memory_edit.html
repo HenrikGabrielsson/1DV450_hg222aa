@@ -1,0 +1,28 @@
+<h2>Redigera minne</h2>
+
+{{clearMarkers()}}
+{{memory.putMemoryOnMap(memory.thisMemory)}}
+
+<form id="memory_create_form"> 
+
+  <input type="button" value="Ta bort detta minne" ng-click="memory.deleteMemory()"/>
+  
+  <label for="title">Titel:</label>
+  <input type="text" ng-model="memory.thisMemory.title" id="title" />
+
+  <label for="memoryText">Berätta:</label>
+  <textarea id="memoryText" form="memory_create_form" ng-model="memory.thisMemory.memoryText">  
+  </textarea>
+  
+  <label for="eventDate">Datum:</label>
+  <input type="date" ng-model="eventDate" id="eventDate" />
+  
+  <label for="tags">Lägg till taggar(separera med kommatecken):</label>
+  <textarea id="tags" form="memory_create_form" ng-model="memory.thisMemoryTagsString">  
+  </textarea>
+  
+  
+
+  <input type="button" value="Redigera" ng-click="memory.editMemory(eventDate)"/>
+
+</form>

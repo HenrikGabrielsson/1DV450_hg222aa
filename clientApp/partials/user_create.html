@@ -1,0 +1,18 @@
+<h2>Registrera dig</h2>
+
+<form>
+  <label for="userName">Användarnamn:</label>
+  <input type="text" id="userName" ng-model="userName" />
+  
+  <label for="email">Email: </label>
+  <input type="text" ng-model="email" id="email" />
+  
+  <label for="password">Nytt lösenord: </label>
+  <input type="password" ng-model="password" id="password" />
+  
+  <label for="passwordConfirmation">Nytt lösenord igen: </label>
+  <input type="password" ng-model="passwordConfirmation" id="passwordConfirmation" />
+  
+  <input type="button" value="Registrera" ng-click="user.createUser(userName, email, password, passwordConfirmation)"/>
+  
+</form>

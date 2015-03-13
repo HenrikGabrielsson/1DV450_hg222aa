@@ -1,0 +1,25 @@
+<h2>Skapa ett nytt minne</h2>
+
+{{clearMarkers()}}
+
+<form id="memory_create_form"> 
+
+  <label for="title">Titel:</label>
+  <input type="text" ng-model="title" id="title" />
+
+  <label for="memoryText">Berätta:</label>
+  <textarea id="memoryText" form="memory_create_form" ng-model="memoryText">  
+  </textarea>
+  
+  <label for="eventDate">Datum:</label>
+  <input type="date" ng-model="eventDate" id="eventDate" />
+  
+  <label for="tags">Lägg till taggar(separera med kommatecken):</label>
+  <textarea id="tags" form="memory_create_form" ng-model="tags">  
+  </textarea>
+  
+  
+
+  <input type="button" value="Lägg till" ng-click="memory.createMemory(title, memoryText, eventDate, tags)"/>
+
+</form>

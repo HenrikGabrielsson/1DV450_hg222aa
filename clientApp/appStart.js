@@ -39,7 +39,7 @@ mapApp.config(
         controllerAs: "memory"
       })
       .when("/memory/search/:term", {
-        templateUrl: "partials/search_results",
+        templateUrl: "partials/search_results.html",
         controller: "MemoryController",
         controllerAs: "memory"
       })
