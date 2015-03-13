@@ -4,7 +4,6 @@ MemoryService.$inject = ['$http'];
 
 function MemoryService(http)
 {  
-  
   var sendHTTP = function(url, method, params, headers, callback)
   {
     var config = {
@@ -29,7 +28,6 @@ function MemoryService(http)
     {
       callback(false, data);
     })
-    
   }
 
   var getAllMemories = function(callback, limit, offset)
@@ -132,8 +130,8 @@ function MemoryService(http)
   
   var getTagById = function(id, callback)
   {
-    sendHTTP("http://testapp-186134.euw1-2.nitrousbox.com:3000/tags/" + id, "GET", null, null, callback)    
-  }  
+    sendHTTP("http://testapp-186134.euw1-2.nitrousbox.com:3000/tags/" + id, "GET", null, null, callback);
+  }
   
   
   
@@ -169,8 +167,8 @@ function MemoryService(http)
     .error(function(data)
     {
       callback(false, data);
-    })        
-  }  
+    });        
+  };
   
   var deleteMemory = function(id, token, callback)
   {

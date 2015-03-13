@@ -1,8 +1,8 @@
 mapApp.controller("MemoryController", MemoryController);
 
-MemoryController.$inject = ["MemoryService", "$rootScope", "$routeParams", "$location", "$scope", "$timeout"];
+MemoryController.$inject = ["MemoryService", "MapService", "$routeParams", "$location", "$scope", "$rootScope", "$timeout"];
 
-function MemoryController(MemoryService, $rootScope, $routeParams, $location, $scope, $timeout)
+function MemoryController(MemoryService, MapService, $routeParams, $location, $scope, $rootScope,  $timeout)
 {
   var vm = this;
 
@@ -128,74 +128,18 @@ function MemoryController(MemoryService, $rootScope, $routeParams, $location, $s
   
   vm.putMemoryOnMap = function(memory)
   {
-    $rootScope.setMarker = new google.maps.Marker({position: new google.maps.LatLng(memory.latitude, memory.longitude), map: $rootScope.map});
+    MapService.setMarker = new google.maps.Marker({position: new google.maps.LatLng(memory.latitude, memory.longitude), map: MapService.map});
   }
-  
-  $rootScope.setMemoryPosition = function(latLng)
-  {
-    $rootScope.clearMarkers();
-    
-    if($rootScope.setMarker !== undefined)
-    {
-      $rootScope.setMarker.setMap(null)
-    }
 
-    $rootScope.setMarker = new google.maps.Marker({position: latLng, map: $rootScope.map});     
-  }
 
   vm.getPosFromMapClick = function(e)
   {
     if($location.path() == "/memory/create" || $location.path().match(/\/memory\/edit\//) !== null)
     {
-      $rootScope.setMemoryPosition(e.latLng);
+      MapService.setMemoryPosition(e.latLng);
     }
-  }
-
-
-
-  $rootScope.$on('mapInitialized', function(evt, evtMap) 
-  { 
-    $rootScope.map = evtMap;
-
-    
-    //removes all markers
-    $rootScope.clearMarkers = function()
-    {  
-      if($rootScope.setMarker !== undefined)
-      {
-        $rootScope.setMarker.setMap(null);
-      }
-      
-      $rootScope.markers.forEach(function(marker)
-      {
-        marker.setMap(null);
-      });
-    }
-    
-    $rootScope.setMarkers = function(memories) 
-    {
-      if($rootScope.markers === undefined)
-      {
-        $rootScope.markers = [];
-      }
-
-      memories.forEach(function(memory)
-      {
-        var marker = new google.maps.Marker({position: new google.maps.LatLng(memory.latitude, memory.longitude), map: $rootScope.map});  
-        
-        marker.addListener('click', function()
-        {
-          $scope.$apply(function() 
-          {
-            $location.path('/memory/' + memory.id);
-          });
-        });
-              
-        $rootScope.markers.push(marker);
-      })
-      
-    };
-  });
+  };  
+  
 
   vm.getAllCreators = function()
   {
@@ -235,8 +179,8 @@ function MemoryController(MemoryService, $rootScope, $routeParams, $location, $s
     {
       if(success)
       {
-        $rootScope.clearMarkers();
-        $rootScope.setMarkers(memories);
+        MapService.clearMarkers();
+        MapService.setMarkers(memories);
       }
       else
       {
@@ -262,8 +206,8 @@ function MemoryController(MemoryService, $rootScope, $routeParams, $location, $s
     {
       if(success)
       {
-        $rootScope.clearMarkers();
-        $rootScope.setMarkers(new Array(memory));
+        MapService.clearMarkers();
+        MapService.setMarkers(new Array(memory));
         vm.thisMemory = memory;
         
         vm.thisMemoryTagsString = vm.createTagString(vm.thisMemory.tags);

@@ -1,10 +1,12 @@
-mapApp.directive('memoryList', ['$compile','MemoryService','$rootScope' , function($compile, MemoryService, $rootScope){
+mapApp.directive('memoryList', ['$compile','MemoryService','MapService' , function($compile, MemoryService, MapService){
     
     var getElementsAndCreateList = function(scope, element, attr)
     {
       var createOutput = function(success, memories)
       {
-        $rootScope.setMarkers(memories)
+
+        MapService.clearMarkers();
+        MapService.setMarkers(memories)
         
         if(success)
         {

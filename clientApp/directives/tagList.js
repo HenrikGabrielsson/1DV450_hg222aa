@@ -1,12 +1,11 @@
-mapApp.directive('tagList', ['$compile','MemoryService', function($compile, MemoryService){
+mapApp.directive('tagList', ['$compile','MemoryService', "MapService", function($compile, MemoryService, MapService){
     
     var getElementsAndCreateList = function(scope, element, attr)
     {
       var createOutput = function(success, tags)
       {
         if(success)
-        {
-          
+        { 
           if(tags !== undefined)
           {          
             var li, link;
