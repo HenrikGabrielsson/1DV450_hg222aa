@@ -20,7 +20,6 @@ function TagController(MemoryService, $rootScope, $routeParams)
       }
     })
   }
-  
 
   getTagById($routeParams.id);
 

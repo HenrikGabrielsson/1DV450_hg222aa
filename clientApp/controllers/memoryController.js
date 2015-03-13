@@ -132,7 +132,14 @@ function MemoryController(MemoryService, $rootScope, $routeParams, $location, $s
   }
   
   $rootScope.setMemoryPosition = function(latLng)
-  {    
+  {
+    $rootScope.clearMarkers();
+    
+    if($rootScope.setMarker !== undefined)
+    {
+      $rootScope.setMarker.setMap(null)
+    }
+
     $rootScope.setMarker = new google.maps.Marker({position: latLng, map: $rootScope.map});     
   }
 
@@ -171,9 +178,7 @@ function MemoryController(MemoryService, $rootScope, $routeParams, $location, $s
       {
         $rootScope.markers = [];
       }
-      
-      $rootScope.clearMarkers();
-      
+
       memories.forEach(function(memory)
       {
         var marker = new google.maps.Marker({position: new google.maps.LatLng(memory.latitude, memory.longitude), map: $rootScope.map});  
@@ -230,6 +235,7 @@ function MemoryController(MemoryService, $rootScope, $routeParams, $location, $s
     {
       if(success)
       {
+        $rootScope.clearMarkers();
         $rootScope.setMarkers(memories);
       }
       else
@@ -256,6 +262,7 @@ function MemoryController(MemoryService, $rootScope, $routeParams, $location, $s
     {
       if(success)
       {
+        $rootScope.clearMarkers();
         $rootScope.setMarkers(new Array(memory));
         vm.thisMemory = memory;
         
