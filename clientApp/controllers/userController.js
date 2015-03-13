@@ -8,12 +8,12 @@ function UserController($routeParams, MemoryService)
   
   vm.thisUser = null; 
   
-  vm.loggedIn = localStorage.getItem("token") !== null;
-  vm.loggedInUser = JSON.parse(localStorage.getItem("user"));
+  vm.loggedIn = sessionStorage.getItem("token") !== null;
+  vm.loggedInUser = JSON.parse(sessionStorage.getItem("user"));
 
   vm.editUser = function(password, passwordConfirmation)
   {
-    MemoryService.editUser(vm.thisUser, password, passwordConfirmation, localStorage.getItem("token"), function(success,data)
+    MemoryService.editUser(vm.thisUser, password, passwordConfirmation, sessionStorage.getItem("token"), function(success,data)
     {
       if(success)
       {
@@ -47,7 +47,7 @@ function UserController($routeParams, MemoryService)
   {
     if(confirm("Vill du verkligen ta bort din profil?"))
     {
-      MemoryService.deleteUser(vm.thisUser.id, localStorage.getItem("token"),function(success,data)
+      MemoryService.deleteUser(vm.thisUser.id, sessionStorage.getItem("token"),function(success,data)
       {
         if(success)
         {

@@ -14,8 +14,8 @@ function MemoryController(MemoryService, $rootScope, $routeParams, $location, $s
   vm.tags = null;
   vm.creators = null;
   
-  vm.loggedIn = localStorage.getItem("token") !== null;
-  vm.loggedInUser = JSON.parse(localStorage.getItem("user"));
+  vm.loggedIn = sessionStorage.getItem("token") !== null;
+  vm.loggedInUser = JSON.parse(sessionStorage.getItem("user"));
   
  
   vm.editMemory = function(eventDate)
@@ -46,7 +46,7 @@ function MemoryController(MemoryService, $rootScope, $routeParams, $location, $s
       }
     }
 
-    MemoryService.editMemory(vm.thisMemory.id, memory, localStorage.getItem("token"), function(success, data)
+    MemoryService.editMemory(vm.thisMemory.id, memory, sessionStorage.getItem("token"), function(success, data)
     {
       if(success)
       {
@@ -84,7 +84,7 @@ function MemoryController(MemoryService, $rootScope, $routeParams, $location, $s
     }
     
 
-    MemoryService.createMemory(memory, localStorage.getItem("token"), function(success, data)
+    MemoryService.createMemory(memory, sessionStorage.getItem("token"), function(success, data)
     {
       if(success)
       {
@@ -101,7 +101,7 @@ function MemoryController(MemoryService, $rootScope, $routeParams, $location, $s
   {
     if(confirm("Vill du verkligen ta bort detta minne?"))
         {
-          MemoryService.deleteMemory(vm.thisMemory.id, localStorage.getItem("token"), function(success,data)
+          MemoryService.deleteMemory(vm.thisMemory.id, sessionStorage.getItem("token"), function(success,data)
           {
             if(success)
             {

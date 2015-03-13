@@ -61,6 +61,6 @@ mapApp.config(
     
       var apiKey = "6up-EkZyhWovOPjMNxm_3whVOCV1rzN6hw";
 
-      //always send apiKey by default (GET,POST,PUT,DELETE)
+      //always send apiKey by default (needed for alla function in API)
       $httpProvider.defaults.headers.common = { 'apikey' : apiKey };
   }]);

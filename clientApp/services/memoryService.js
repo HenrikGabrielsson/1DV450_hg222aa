@@ -69,9 +69,20 @@ function MemoryService(http)
   
   
   
-  var getAllTags = function(callback)
+  var getAllTags = function(callback, limit, offset)
   {
-    sendHTTP("http://testapp-186134.euw1-2.nitrousbox.com:3000/tags", "GET", null, null, callback);   
+    params = {};
+    
+    if(limit !== undefined)
+    {
+      params.limit = limit;
+    }
+    if(offset !== undefined)
+    {
+      params.offset = offset;
+    }
+    
+    sendHTTP("http://testapp-186134.euw1-2.nitrousbox.com:3000/tags", "GET", params, null, callback);   
   }
   
   
@@ -138,7 +149,7 @@ function MemoryService(http)
     })
     .error(function(data)
     {
-      callback(false, "error message");
+      callback(false, data);
     }); 
   }
   
@@ -157,26 +168,13 @@ function MemoryService(http)
     })
     .error(function(data)
     {
-      callback(false, "error message");
+      callback(false, data);
     })        
   }  
   
   var deleteMemory = function(id, token, callback)
   {
-    http(
-    {
-      url:"http://testapp-186134.euw1-2.nitrousbox.com:3000/memories/" + id,
-      method: "DELETE",
-      headers: {Authorization: token}
-    })
-    .success(function(data)
-    {
-      callback(true, data);  
-    })
-    .error(function(data)
-    {
-      callback(false, "error message");
-    })        
+    sendHTTP("http://testapp-186134.euw1-2.nitrousbox.com:3000/memories/" + id, "DELETE", null, {Authorization: token}, callback)
   }
   
   var editMemory = function(id, memory, token, callback)
@@ -190,7 +188,7 @@ function MemoryService(http)
     })
     .error(function(data)
     {
-      callback(false, "error message");
+      callback(false, data);
     });    
   }
   
@@ -205,7 +203,7 @@ function MemoryService(http)
     })
     .error(function(data)
     {
-      callback(false, "error message");
+      callback(false, data);
     });
   }
   

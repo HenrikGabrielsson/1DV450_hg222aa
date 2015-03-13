@@ -6,15 +6,15 @@ function LoginController(LoginService)
 {
   var vm = this;
 
-  vm.loggedIn = localStorage.getItem("token") !== null;
+  vm.loggedIn = sessionStorage.getItem("token") !== null;
 
   vm.logout = function()
   {
-    localStorage.removeItem("token");
+    sessionStorage.removeItem("token");
     vm.loggedIn = false;
   }
   
-  vm.thisUser = JSON.parse(localStorage.getItem("user"));
+  vm.thisUser = JSON.parse(sessionStorage.getItem("user"));
   
   vm.login = function(userName, password)
   {
@@ -26,9 +26,9 @@ function LoginController(LoginService)
         {
           if(success)
           {
-            //save user and jwt token in localstorage.
-            localStorage.setItem("token", jwt.token);
-            localStorage.setItem("user", JSON.stringify(user))
+            //save user and jwt token in sessionStorage.
+            sessionStorage.setItem("token", jwt.token);
+            sessionStorage.setItem("user", JSON.stringify(user))
             
             vm.loggedIn = true;
           }

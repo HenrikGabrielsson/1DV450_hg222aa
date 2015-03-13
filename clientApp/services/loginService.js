@@ -22,7 +22,7 @@ function LoginService(http)
     })
     .error(function()
     {
-      callback(false, "nothing");
+      callback(false, data);
     })
   }
   
@@ -40,9 +40,12 @@ function LoginService(http)
     })
     .error(function(data)
     {
-      callback(false, "this should be an error message");
+      callback(false, data);
     });    
   }
+  
+  
+  
 
   return {
     login: login,
