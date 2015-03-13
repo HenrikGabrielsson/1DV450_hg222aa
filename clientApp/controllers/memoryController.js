@@ -105,7 +105,7 @@ function MemoryController(MemoryService, $rootScope, $routeParams, $location, $s
           {
             if(success)
             {
-              console.log("done")
+
             }
             else
             {
@@ -132,11 +132,7 @@ function MemoryController(MemoryService, $rootScope, $routeParams, $location, $s
   }
   
   $rootScope.setMemoryPosition = function(latLng)
-  {
-    if($rootScope.setMarker !== undefined)
-    {
-      $rootScope.setMarker.setMap(null);
-    }
+  {    
     $rootScope.setMarker = new google.maps.Marker({position: latLng, map: $rootScope.map});     
   }
 
@@ -158,6 +154,11 @@ function MemoryController(MemoryService, $rootScope, $routeParams, $location, $s
     //removes all markers
     $rootScope.clearMarkers = function()
     {  
+      if($rootScope.setMarker !== undefined)
+      {
+        $rootScope.setMarker.setMap(null);
+      }
+      
       $rootScope.markers.forEach(function(marker)
       {
         marker.setMap(null);
@@ -175,7 +176,6 @@ function MemoryController(MemoryService, $rootScope, $routeParams, $location, $s
       
       memories.forEach(function(memory)
       {
-        
         var marker = new google.maps.Marker({position: new google.maps.LatLng(memory.latitude, memory.longitude), map: $rootScope.map});  
         
         marker.addListener('click', function()
@@ -185,14 +185,12 @@ function MemoryController(MemoryService, $rootScope, $routeParams, $location, $s
             $location.path('/memory/' + memory.id);
           });
         });
-        
-        
+              
         $rootScope.markers.push(marker);
       })
       
     };
   });
-
 
   vm.getAllCreators = function()
   {

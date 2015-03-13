@@ -181,9 +181,6 @@ function MemoryService(http)
   
   var editMemory = function(id, memory, token, callback)
   {
-    console.log(memory);
-    
-    
     var headers = {headers:{Authorization: token}};
     
     http.put("http://testapp-186134.euw1-2.nitrousbox.com:3000/memories/" + id, memory, headers)
