@@ -1,10 +1,13 @@
 mapApp.directive('memoryList', ['$compile','MemoryService','MapService' , function($compile, MemoryService, MapService){
     
+    //creates list and puts markers on map.
     var getElementsAndCreateList = function(scope, element, attr)
     {
+      
+      //callback function that runs when memories has been recieved from API
       var createOutput = function(success, memories)
       {
-
+        //empties map and puts memories on map
         MapService.clearMarkers();
         MapService.setMarkers(memories)
         
@@ -13,6 +16,7 @@ mapApp.directive('memoryList', ['$compile','MemoryService','MapService' , functi
           var li, link;
           memories.forEach(function(memory)
           {
+            //creates link for each provided memory and adds to list
             li = document.createElement("li");
             link = document.createElement("a");
             link.setAttribute("href", "./memory/" + memory.id);
@@ -28,6 +32,7 @@ mapApp.directive('memoryList', ['$compile','MemoryService','MapService' , functi
         }
       }
       
+      //if a user is selected, only memories from that user will be recieved 
       if(attr.user !== undefined)
       {
         attr.$observe("user", function()
@@ -36,6 +41,7 @@ mapApp.directive('memoryList', ['$compile','MemoryService','MapService' , functi
         })        
       }
 
+      //if a tag is selected, only memories with that tag will be recieved 
       else if(attr.tag !== undefined)
       {
         attr.$observe("tag", function()
@@ -44,6 +50,7 @@ mapApp.directive('memoryList', ['$compile','MemoryService','MapService' , functi
         })            
       }
       
+      //creates list from given search term
       else if(attr.search !== undefined)
       {
         attr.$observe("search", function()
@@ -52,6 +59,7 @@ mapApp.directive('memoryList', ['$compile','MemoryService','MapService' , functi
         })
       }
    
+      //if nothing else is specified, get all Memories
       else
       {
         MemoryService.getAllMemories(createOutput, attr.limit, attr.offset)

@@ -6,6 +6,7 @@ function MemoryController(MemoryService, MapService, $routeParams, $location, $s
 {
   var vm = this;
 
+  //if a term is given...
   if($routeParams.term !== undefined)
   {
     vm.term = $routeParams.term;
@@ -14,10 +15,12 @@ function MemoryController(MemoryService, MapService, $routeParams, $location, $s
   vm.tags = null;
   vm.creators = null;
   
+  //check login status and user
   vm.loggedIn = sessionStorage.getItem("token") !== null;
   vm.loggedInUser = JSON.parse(sessionStorage.getItem("user"));
   
  
+  //edit a memory
   vm.editMemory = function(eventDate)
   {
     //split tags on ',' to create array of tags
@@ -29,11 +32,14 @@ function MemoryController(MemoryService, MapService, $routeParams, $location, $s
       vm.thisMemory.tags[i] = {tag: tag.trim()};
     });     
     
+    
+    //only change eventDate if new one is given
     if(eventDate !== null && eventDate !== undefined)
     {
       vm.thisMemory.eventDate = eventDate;
     }
     
+    //the memory object as the API wants it 
     var memory = {
       memory: 
       {
@@ -46,6 +52,7 @@ function MemoryController(MemoryService, MapService, $routeParams, $location, $s
       }
     }
 
+    //and off you go to server you filthy memory
     MemoryService.editMemory(vm.thisMemory.id, memory, sessionStorage.getItem("token"), function(success, data)
     {
       if(success)
@@ -60,6 +67,7 @@ function MemoryController(MemoryService, MapService, $routeParams, $location, $s
     
   }
   
+  //create a new memory
   vm.createMemory = function(title, memoryText, eventDate, tags)
   {
     //split tags on ',' to create array of tags
@@ -71,6 +79,7 @@ function MemoryController(MemoryService, MapService, $routeParams, $location, $s
       tags[i] = {tag: tag.trim()};
     }); 
 
+    //memory object
     var memory = {
       memory: 
       {
@@ -83,7 +92,7 @@ function MemoryController(MemoryService, MapService, $routeParams, $location, $s
       }
     }
     
-
+    //to server we go!
     MemoryService.createMemory(memory, sessionStorage.getItem("token"), function(success, data)
     {
       if(success)
@@ -97,8 +106,11 @@ function MemoryController(MemoryService, MapService, $routeParams, $location, $s
     });
   }
   
+  //delete this memory
   vm.deleteMemory = function()
   {
+    
+    //a beautiful box to confirm removal.
     if(confirm("Vill du verkligen ta bort detta minne?"))
         {
           MemoryService.deleteMemory(vm.thisMemory.id, sessionStorage.getItem("token"), function(success,data)
@@ -115,6 +127,7 @@ function MemoryController(MemoryService, MapService, $routeParams, $location, $s
         }
   }
   
+  //when users search, they are sent to the search result page.
   vm.searchMemories = function(term)
   {
     $timeout(function()
@@ -126,12 +139,13 @@ function MemoryController(MemoryService, MapService, $routeParams, $location, $s
     })
   }
   
+  //put a given memory on the map.
   vm.putMemoryOnMap = function(memory)
   {
     MapService.setMarker = new google.maps.Marker({position: new google.maps.LatLng(memory.latitude, memory.longitude), map: MapService.map});
   }
 
-
+  //only for create and edit view. Gets position from a map click
   vm.getPosFromMapClick = function(e)
   {
     if($location.path() == "/memory/create" || $location.path().match(/\/memory\/edit\//) !== null)
@@ -140,7 +154,7 @@ function MemoryController(MemoryService, MapService, $routeParams, $location, $s
     }
   };  
   
-
+  //gets all creators
   vm.getAllCreators = function()
   {
     MemoryService.getAllCreators(function(success, creators)
@@ -157,6 +171,7 @@ function MemoryController(MemoryService, MapService, $routeParams, $location, $s
     });
   }
   
+  //gets all tags
   vm.getAllTags = function()
   {
     MemoryService.getAllTags(function(success, tags)
@@ -173,6 +188,7 @@ function MemoryController(MemoryService, MapService, $routeParams, $location, $s
     });    
   }
 
+  //gets all memories
   vm.getAllMemories = function()
   {
     MemoryService.getAllMemories(function(success, memories)
@@ -190,6 +206,7 @@ function MemoryController(MemoryService, MapService, $routeParams, $location, $s
     });
   }
   
+  //creates a string of tags to put in a textarea
   vm.createTagString = function(tags)
   {
     var tagNames = [];   
@@ -200,6 +217,7 @@ function MemoryController(MemoryService, MapService, $routeParams, $location, $s
     return tagNames.join();
   }
   
+  //get one memory by id
   vm.getMemoryById = function(id)
   {
     MemoryService.getMemoryById(id, function(success, memory)
@@ -218,19 +236,13 @@ function MemoryController(MemoryService, MapService, $routeParams, $location, $s
       }
     })    
   }
-  
+
+  //if a specified memory is wanted.
   if($routeParams.id !== undefined)
   {
-    vm.getMemoryById($routeParams.id);
+    vm.getMemoryById($routeParams.id)
   }
-  
-  else
-  {
-    vm.getAllMemories();
-    vm.getAllTags();
-    vm.getAllCreators();
-  }
-  
+
   return vm;
 
 }

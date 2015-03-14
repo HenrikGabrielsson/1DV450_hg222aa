@@ -7,6 +7,7 @@ mapApp.config(
   '$httpProvider',
   function($routeProvider, $locationProvider, $httpProvider) 
     {
+      //routing 
       $routeProvider
       .when('/', {
         templateUrl: 'partials/index_partial.html',
@@ -57,8 +58,9 @@ mapApp.config(
         redirectTo: '/'
       });
       
+      //pretty url
       $locationProvider.html5Mode(true);
-    
+
       var apiKey = "6up-EkZyhWovOPjMNxm_3whVOCV1rzN6hw";
 
       //always send apiKey by default (needed for alla function in API)

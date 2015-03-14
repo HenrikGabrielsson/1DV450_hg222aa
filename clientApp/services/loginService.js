@@ -4,6 +4,7 @@ LoginService.$inject = ['$http'];
 
 function LoginService(http)
 {  
+  //Sends user credentials to API to login
   var login = function(userName, password, callback)
   {  
     http(
@@ -20,12 +21,13 @@ function LoginService(http)
     {
       callback(true, data)
     })
-    .error(function()
+    .error(function(data)
     {
       callback(false, data);
     })
   }
   
+  //get the logged in user information from given jwt
   var getLoggedInUser = function(jwt, callback)
   {
     http(
@@ -43,9 +45,6 @@ function LoginService(http)
       callback(false, data);
     });    
   }
-  
-  
-  
 
   return {
     login: login,
