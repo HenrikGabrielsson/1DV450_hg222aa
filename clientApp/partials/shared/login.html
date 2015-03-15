@@ -1,6 +1,18 @@
-<div ng-controller="LoginController as login">
+<div  ng-controller="LoginController as login">
 
-  <div  ng-if="!login.loggedIn">
+<div ng-if="login.errorMessage !== undefined && login.errorMessage !== null" class="alert alert-danger">
+    <a href="#" class="close" data-dismiss="alert">&times;</a>
+    {{login.errorMessage}}
+</div>
+  
+  
+  <div class="alert alert-success" ng-if="login.successMessage !== undefined && login.successMessage !== null">
+    <a href="#" class="close" data-dismiss="alert">&times;</a>
+    <p>{{login.successMessage}}</p>
+  </div>
+  
+  
+  <div ng-if="!login.loggedIn">
     <h2>Logga in</h2>
     <form>
       <input type="text" name="userName" ng-model="userName" />

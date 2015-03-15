@@ -1,5 +1,10 @@
 <h2>{{user.thisUser.userName}}</h2>
 
+<div ng-if="user.errorMessage !== undefined && user.errorMessage !== null" class="alert alert-danger">
+  <a href="#" class="close" data-dismiss="alert">&times;</a>
+  <p>{{user.errorMessage}}</p>
+</div>
+
 <p>Email: {{user.thisUser.email}}</p>
 
 <div ng-if="user.loggedIn && user.thisUser.id === user.loggedInUser.id">

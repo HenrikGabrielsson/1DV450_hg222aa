@@ -1,3 +1,8 @@
 <h2>{{tag.thisTag.tag}}</h2>
 
+<div ng-if="tag.errorMessage !== undefined && tag.errorMessage !== null" class="alert alert-danger">
+  <a href="#" class="close" data-dismiss="alert">&times;</a>
+  <p>{{tag.errorMessage}}</p>
+</div>
+
 <ul memory-list tag="{{tag.thisTag.id}}"></ul>

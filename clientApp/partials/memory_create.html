@@ -1,5 +1,23 @@
 <h2>Skapa ett nytt minne</h2>
 
+<div ng-if="memory.errorMessage !== undefined && memory.errorMessage !== null" class="alert alert-danger">
+  <a href="#" class="close" data-dismiss="alert">&times;</a>
+  <p>{{memory.errorMessage}}</p>
+</div>
+
+<div ng-if="memory.errorList !== undefined && memory.errorList !== null" class="alert alert-danger">
+  <a href="#" class="close" data-dismiss="alert">&times;</a>
+  <p>Minnet gick inte att skapa av följande anledningar:</p>
+  <ul>  
+    <li ng-repeat="error in memory.errorList">
+      {{error}}
+    </li>
+  </ul>
+</div>
+  
+  
+</div>
+
 <form id="memory_create_form"> 
 
   <label for="title">Titel:</label>
@@ -16,7 +34,7 @@
   <textarea id="tags" form="memory_create_form" ng-model="tags">  
   </textarea>
   
-  
+  <p>Klicka på kartan på den plats där händelsen inträffade.</p>
 
   <input type="button" value="Lägg till" ng-click="memory.createMemory(title, memoryText, eventDate, tags)"/>
 

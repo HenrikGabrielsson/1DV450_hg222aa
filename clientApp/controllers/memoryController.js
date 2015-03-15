@@ -31,12 +31,18 @@ function MemoryController(MemoryService, MapService, $routeParams, $location, $s
     {
       vm.thisMemory.tags[i] = {tag: tag.trim()};
     });     
-    
-    
+
     //only change eventDate if new one is given
     if(eventDate !== null && eventDate !== undefined)
     {
       vm.thisMemory.eventDate = eventDate;
+    }
+    
+    //no position change
+    if($rootScope.setMarker !== undefined)
+    {
+      vm.thisMemory.latitude = $rootScope.setMarker.position.k;
+      vm.thisMemory.longitude = $rootScope.setMarker.position.D;
     }
     
     //the memory object as the API wants it 
@@ -45,23 +51,45 @@ function MemoryController(MemoryService, MapService, $routeParams, $location, $s
       {
         title: vm.thisMemory.title, 
         memoryText: vm.thisMemory.memoryText, 
-        latitude: $rootScope.setMarker.position.k, 
-        longitude: $rootScope.setMarker.position.D,
+        latitude: vm.thisMemory.latitude,
+        longitude: vm.thisMemory.longitude,
         eventDate: vm.thisMemory.eventDate, 
-        tags_attributes: vm.thisMemory.tags
       }
     }
+    
+    //don't send array if no tags (i.e one empty tag)
+    if(vm.thisMemory.tags[0].tag !== "") 
+    {
+      memory.memory.tags_attributes = vm.thisMemory.tags
+    }
+    
 
     //and off you go to server you filthy memory
     MemoryService.editMemory(vm.thisMemory.id, memory, sessionStorage.getItem("token"), function(success, data)
     {
       if(success)
       {
-        
+        $location.path("/memory/" + vm.thisMemory.id)
       }
       else
       {
-        //error
+        if(data.error.constructor === Array)
+        {
+          vm.errorList = [];
+          
+          //remove the first word (Rails adds the name of the model for some reason)
+          data.error.forEach(function(error, index)
+          {
+            var tempArr = error.split(" ");
+            tempArr.shift(); //remove first word
+
+            vm.errorList.push(tempArr.join(" "))
+          });
+        }
+        else
+        {
+          vm.errorMessage = "Det gick inte att redigera minnet av okänd anledning. Försök igen senare.";
+        }
       }
     });    
     
@@ -97,11 +125,27 @@ function MemoryController(MemoryService, MapService, $routeParams, $location, $s
     {
       if(success)
       {
-        //success
+        $location.path("/user/" + vm.loggedInUser.id);
       }
       else
       {
-        //error
+        if(data.error.constructor === Array)
+        {
+          vm.errorList = [];
+          
+          //remove the first word (Rails adds the name of the model for some reason)
+          data.error.forEach(function(error, index)
+          {
+            var tempArr = error.split(" ");
+            tempArr.shift(); //remove first word
+
+            vm.errorList.push(tempArr.join(" "))
+          });
+        }
+        else
+        {
+          vm.errorMessage = "Det gick inte att skapa minnet av okänd anledning. Försök igen senare.";
+        }
       }
     });
   }
@@ -117,19 +161,20 @@ function MemoryController(MemoryService, MapService, $routeParams, $location, $s
           {
             if(success)
             {
-
+              $location.path("/user/" + vm.loggedInUser.id);
             }
             else
             {
-              //error
+              vm.errorMessage = "Det gick inte att ta bort minnet. Försök igen senare.";
             }
           });
         }
   }
   
-  //when users search, they are sent to the search result page.
+  //when users search, they are sent to the search result page. duh
   vm.searchMemories = function(term)
   {
+    //stupid angular stuff that works so I wont touch it.
     $timeout(function()
     {
       $scope.$apply(function() 
@@ -165,7 +210,7 @@ function MemoryController(MemoryService, MapService, $routeParams, $location, $s
       }
       else
       {
-        //TODO :ERROR message    
+        vm.errorMessage = "Kunde inte hämta användare vid detta tillfället.";
       }
       
     });
@@ -182,7 +227,7 @@ function MemoryController(MemoryService, MapService, $routeParams, $location, $s
       }
       else
       {
-        //TODO :ERROR message    
+        vm.errorMessage = "Kunde inte hämta taggar vid detta tillfället."; 
       }
       
     });    
@@ -195,12 +240,12 @@ function MemoryController(MemoryService, MapService, $routeParams, $location, $s
     {
       if(success)
       {
-        MapService.clearMarkers();
+        MapService.clearMarkers(); //removes old memories 
         MapService.setMarkers(memories);
       }
       else
       {
-        //TODO :ERROR message    
+        vm.errorMessage = "Kunde inte hämta minnen vid detta tillfället.";
       }
       
     });
@@ -232,7 +277,7 @@ function MemoryController(MemoryService, MapService, $routeParams, $location, $s
       }
       else
       {
-        //error.html
+        vm.errorMessage = "Kunde inte hämta minnet vid detta tillfället."
       }
     })    
   }

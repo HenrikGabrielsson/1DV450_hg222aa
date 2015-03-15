@@ -25,7 +25,7 @@ mapApp.directive('tagList', ['$compile','MemoryService', "MapService", function(
       }
       else
       {
-        //error
+        element.text("Det gick inte att hämta taggar just nu.");
       }
     }
 

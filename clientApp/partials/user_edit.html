@@ -1,5 +1,20 @@
 <h2>Redigera profil</h2>
 
+<div ng-if="user.errorMessage !== null && user.errorMessage !== undefined" class="alert alert-danger">
+  <a href="#" class="close" data-dismiss="alert">&times;</a>
+  {{user.errorMessage}}
+</div>
+
+<div ng-if="user.errorList !== undefined && user.errorList !== null" class="alert alert-danger">
+  <a href="#" class="close" data-dismiss="alert">&times;</a>
+  <p>Användaren gick inte att redigera av följande anledningar:</p>
+  <ul>  
+    <li ng-repeat="error in user.errorList">
+      {{error}}
+    </li>
+  </ul>
+</div>
+
 <form ng-if="user.thisUser !== undefined && user.thisUser.id === user.loggedInUser.id">
   
   <input type="button" value="Ta bort användare" ng-click="user.deleteUser()"/>

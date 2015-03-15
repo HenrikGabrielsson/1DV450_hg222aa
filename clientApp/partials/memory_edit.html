@@ -1,5 +1,20 @@
 <h2>Redigera minne</h2>
 
+<div ng-if="memory.errorMessage !== undefined && memory.errorMessage !== null" class="alert alert-danger">
+  <a href="#" class="close" data-dismiss="alert">&times;</a>
+  <p>{{memory.errorMessage}}</p>
+</div>
+
+<div ng-if="memory.errorList !== undefined && memory.errorList !== null" class="alert alert-danger">
+  <a href="#" class="close" data-dismiss="alert">&times;</a>
+  <p>Minnet gick inte att redigera av följande anledningar:</p>
+  <ul>  
+    <li ng-repeat="error in memory.errorList">
+      {{error}}
+    </li>
+  </ul>
+</div>
+
 <form id="memory_create_form"> 
 
   <input type="button" value="Ta bort detta minne" ng-click="memory.deleteMemory()"/>
@@ -17,7 +32,9 @@
   <label for="tags">Lägg till taggar(separera med kommatecken):</label>
   <textarea id="tags" form="memory_create_form" ng-model="memory.thisMemoryTagsString">  
   </textarea>
- 
+
+  <p>Klicka på kartan på den plats där händelsen inträffade.</p>
+  
   <input type="button" value="Redigera" ng-click="memory.editMemory(eventDate)"/>
 
 </form>

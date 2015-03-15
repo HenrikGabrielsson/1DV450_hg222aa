@@ -1,8 +1,8 @@
 mapApp.controller("UserController", UserController);
 
-UserController.$inject = ["$routeParams","MemoryService"];
+UserController.$inject = ["$routeParams","MemoryService", "$location"];
 
-function UserController($routeParams, MemoryService)
+function UserController($routeParams, MemoryService, $location)
 {
   var vm = this;
   
@@ -21,11 +21,27 @@ function UserController($routeParams, MemoryService)
     {
       if(success)
       {
-        //edit succeded
+        $location.path("/user/"+vm.thisUser.id)
       }
       else
       {
-        //error
+        if(data.error.constructor === Array)
+        {
+          vm.errorList = [];
+          
+          //remove the first word (Rails adds the name of the model for some reason)
+          data.error.forEach(function(error, index)
+          {
+            var tempArr = error.split(" ");
+            tempArr.shift(); //remove first word
+
+            vm.errorList.push(tempArr.join(" "))
+          });
+        }
+        else
+        {
+          vm.errorMessage = "Det gick inte att redigera användaren"
+        }
       }
     });
   }
@@ -40,11 +56,27 @@ function UserController($routeParams, MemoryService)
     {
       if(success)
       {
-        //success
+        vm.successMessage = "Du har registrerat dig som " +userName+ "."; 
       }
       else
       {
-        //error message
+        if(data.error.constructor === Array)
+        {
+          vm.errorList = [];
+          
+          //remove the first word (Rails adds the name of the model for some reason)
+          data.error.forEach(function(error, index)
+          {
+            var tempArr = error.split(" ");
+            tempArr.shift(); //remove first word
+
+            vm.errorList.push(tempArr.join(" "))
+          });
+        }
+        else
+        {
+          vm.errorMessage = "Det gick inte att registrera användaren av okänd anledning. Försök igen senare.";
+        }
       }
     })
   }
@@ -59,11 +91,16 @@ function UserController($routeParams, MemoryService)
       {
         if(success)
         {
-          //success
+          //log out
+          sessionStorage.removeItem("token");
+          sessionStorage.removeItem("user");
+          
+          //to da startpage!
+          $location.path("/");   
         }
         else
         {
-          //error
+          vm.errorMessage = "Det gick inte att ta bort användaren vid detta tillfället."
         }
       });
     }
@@ -80,11 +117,16 @@ function UserController($routeParams, MemoryService)
       }
       else
       {
-        //horrifying error message here
+        vm.errorMessage = "Kunde inte hämta användaren vid detta tillfället."
       }
     })
   }
 
-  getUser();
+  //not at create or edit
+  if($routeParams.id !== undefined)
+  {
+    getUser();
+  }
+  
   
 }

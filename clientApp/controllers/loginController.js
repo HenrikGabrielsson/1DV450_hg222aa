@@ -34,18 +34,19 @@ function LoginController(LoginService)
             sessionStorage.setItem("user", JSON.stringify(user))
             
             vm.loggedIn = true;
+            
+            vm.successMessage = "Du är nu inloggad som " + JSON.parse(sessionStorage.getItem("user")).userName;
           }
           else
           {
-            //TODO: Some other error occurredd
+            vm.errorMessage = "Något gick fel vid inloggningen. Försök igen senare";
           }
-
         });
 
       }
       else
       { 
-        //TODO: error message (wrong user creds)
+        vm.errorMessage = "Fel användarnamn och/eller lösenord";
       }
 
     });                      

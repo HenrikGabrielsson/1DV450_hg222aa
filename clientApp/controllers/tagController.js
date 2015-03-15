@@ -18,7 +18,7 @@ function TagController(MemoryService, $rootScope, $routeParams)
       }
       else
       {
-        //error
+        vm.errorMessage = "Det gick inte att hämta denna tagg för tillfället. Försök senare";
       }
     })
   }

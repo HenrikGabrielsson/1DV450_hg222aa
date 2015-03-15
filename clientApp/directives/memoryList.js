@@ -28,7 +28,7 @@ mapApp.directive('memoryList', ['$compile','MemoryService','MapService' , functi
         }
         else
         {
-          //error
+          element.text("Det gick inte att hämta minnen just nu.");
         }
       }
       

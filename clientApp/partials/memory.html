@@ -1,5 +1,10 @@
 <h2>{{memory.thisMemory.title}}</h2>
 
+<div ng-if="memory.errorMessage !== undefined && memory.errorMessage !== null" class="alert alert-danger">
+  <a href="#" class="close" data-dismiss="alert">&times;</a>
+  <p>{{memory.errorMessage}}</p>
+</div>
+
 <a ng-href="memory/edit/{{memory.thisMemory.id}}" ng-if="memory.loggedInUser.id == memory.thisMemory.creator_id">Redigera detta minne</a>
 
 <p>Datum:{{memory.thisMemory.eventDate}}</p>
