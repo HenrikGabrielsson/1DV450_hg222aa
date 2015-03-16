@@ -1,11 +1,14 @@
-<p ng-if="memory.loggedIn"><a class="btn btn-success" ng-href="/memory/create">Skapa nytt minne</a></p>
 
-<div class="col-md-3">
+<div class="row col-md-12">
+  <p ng-if="main.loggedIn"><a class="btn btn-success" ng-href="/memory/create">Skapa nytt minne</a></p>
+</div>
+
+<div class="col-md-6">
   <h2>Senaste minnena</h2>
   <ul memory-list limit="10"></ul>
 </div>
 
-<div class="col-md-3">
+<div class="col-md-6">
   <h2>Taggar</h2>
   <ul tag-list limit="10"></ul>
 </div>

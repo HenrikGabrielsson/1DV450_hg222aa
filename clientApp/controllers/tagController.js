@@ -1,9 +1,9 @@
 mapApp.controller("TagController", TagController);
 
-TagController.$inject = ["MemoryService", "$rootScope", "$routeParams"];
+TagController.$inject = ["MemoryService", "$routeParams"];
 
 
-function TagController(MemoryService, $rootScope, $routeParams)
+function TagController(MemoryService, $routeParams)
 {
   var vm = this;
 

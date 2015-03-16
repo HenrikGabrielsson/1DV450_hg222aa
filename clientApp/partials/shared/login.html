@@ -1,35 +1,30 @@
-<div ng-controller="LoginController as login">
-
-<div ng-if="login.errorMessage !== undefined && login.errorMessage !== null" class="alert alert-danger">
+<div ng-if="main.errorMessage !== undefined && main.errorMessage !== null" class="alert alert-danger">
     <a href="#" class="close" data-dismiss="alert">&times;</a>
-    {{login.errorMessage}}
+    {{main.errorMessage}}
 </div>
   
-  
-  <div class="alert alert-success" ng-if="login.successMessage !== undefined && login.successMessage !== null">
-    <a href="#" class="close" data-dismiss="alert">&times;</a>
-    <p>{{login.successMessage}}</p>
-  </div>
-  
-  
-  <div ng-if="!login.loggedIn">
-    <h2>Logga in</h2>
-    <form>
-      <input type="text" name="userName" ng-model="userName" />
-      <input type="password" name="password" ng-model="password" />
+<div class="alert alert-success" ng-if="main.successMessage !== undefined && main.successMessage !== null">
+  <a href="#" class="close" data-dismiss="alert">&times;</a>
+  <p>{{main.successMessage}}</p>
+</div>
 
-      <input type="button" value="Logga in" ng-click="login.login(userName, password)" /> 
-    </form>
 
-    <a ng-href="/user/create">Registrera dig</a>
+<div ng-if="!main.loggedIn">
+  <h2>Logga in</h2>
+  <form>
+    <input type="text" name="userName" ng-model="userName" />
+    <input type="password" name="password" ng-model="password" />
 
-  </div>
+    <input type="button" value="Logga in" ng-click="main.login(userName, password)" /> 
+  </form>
 
-  
-  <div ng-if="login.loggedIn">
-    <a ng-href="/user/{{login.thisUser.id}}">Gå till min profil</a>
-    <input type="button" value="Logga ut" ng-click="login.logout()" /> 
+  <a ng-href="/user/create">Registrera dig</a>
 
-  </div>
+</div>
+
+
+<div ng-if="main.loggedIn">
+  <a ng-href="/user/{{main.thisUser.id}}">Gå till min profil</a>
+  <input type="button" value="Logga ut" ng-click="main.logout()" /> 
 
 </div>

@@ -1,16 +1,10 @@
 mapApp.controller("MemoryController", MemoryController);
 
-MemoryController.$inject = ["MemoryService", "MapService", "$routeParams", "$location", "$scope", "$rootScope", "$timeout"];
+MemoryController.$inject = ["MemoryService", "MapService", "LoginService", "$routeParams", "$location", "$scope", "$rootScope", "$timeout"];
 
-function MemoryController(MemoryService, MapService, $routeParams, $location, $scope, $rootScope,  $timeout)
+function MemoryController(MemoryService, MapService, LoginService, $routeParams, $location, $scope, $rootScope,  $timeout)
 {
   var vm = this;
-
-  //if a term is given...
-  if($routeParams.term !== undefined)
-  {
-    vm.term = $routeParams.term;
-  }
     
   vm.tags = null;
   vm.creators = null;
@@ -18,7 +12,6 @@ function MemoryController(MemoryService, MapService, $routeParams, $location, $s
   //check login status and user
   vm.loggedIn = sessionStorage.getItem("token") !== null;
   vm.loggedInUser = JSON.parse(sessionStorage.getItem("user"));
-  
  
   //edit a memory
   vm.editMemory = function(eventDate)
@@ -43,7 +36,7 @@ function MemoryController(MemoryService, MapService, $routeParams, $location, $s
     {
       vm.thisMemory.latitude = $rootScope.setMarker.position.k;
       vm.thisMemory.longitude = $rootScope.setMarker.position.D;
-    }
+    }    
     
     //the memory object as the API wants it 
     var memory = {
@@ -277,9 +270,60 @@ function MemoryController(MemoryService, MapService, $routeParams, $location, $s
       }
       else
       {
-        vm.errorMessage = "Kunde inte hämta minnet vid detta tillfället."
+        vm.errorMessage = "Kunde inte hämta minnet vid detta tillfället.";
       }
-    })    
+    });   
+  }
+  
+  vm.logout = function()
+  {
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("user");
+    
+    vm.loggedIn = false;
+  }
+  
+  //logged in user
+  vm.thisUser = JSON.parse(sessionStorage.getItem("user"));
+  
+  //login with given credentials
+  vm.login = function(userName, password)
+  {
+    LoginService.login(userName, password, function(loginSuccess, jwt)
+    {
+      if(loginSuccess)
+      {   
+        LoginService.getLoggedInUser(jwt.token, function(success, user)
+        {
+          if(success)
+          {
+            //save user and jwt token in sessionStorage.
+            sessionStorage.setItem("token", jwt.token);
+            sessionStorage.setItem("user", JSON.stringify(user))
+            
+            vm.loggedIn = true;
+            
+            vm.successMessage = "Du är nu inloggad som " + JSON.parse(sessionStorage.getItem("user")).userName;
+          }
+          else
+          {
+            vm.errorMessage = "Något gick fel vid inloggningen. Försök igen senare";
+          }
+        });
+
+      }
+      else
+      { 
+        vm.errorMessage = "Fel användarnamn och/eller lösenord";
+      }
+
+    });                      
+  }
+
+  //if a term is given...
+  if($routeParams.term !== undefined)
+  {
+    vm.term = $routeParams.term;
   }
 
   //if a specified memory is wanted.
@@ -287,8 +331,7 @@ function MemoryController(MemoryService, MapService, $routeParams, $location, $s
   {
     vm.getMemoryById($routeParams.id)
   }
-
-  return vm;
-
+     
 }
+
 

@@ -7,3 +7,9 @@ map
 {
   height:500px;
 }
+
+#main_content
+{
+  min-height: 600px;
+}
+
