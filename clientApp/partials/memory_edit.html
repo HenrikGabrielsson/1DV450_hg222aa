@@ -17,24 +17,32 @@
 
 <form id="memory_create_form"> 
 
-  <input type="button" value="Ta bort detta minne" ng-click="memory.deleteMemory()"/>
+  <div class="form-group">
+    <input type="button" value="Ta bort detta minne" class="btn btn-danger" ng-click="memory.deleteMemory()"/>
+  </div>
   
-  <label for="title">Titel:</label>
-  <input type="text" ng-model="memory.thisMemory.title" id="title" />
-
-  <label for="memoryText">Berätta:</label>
-  <textarea id="memoryText" form="memory_create_form" ng-model="memory.thisMemory.memoryText">  
-  </textarea>
+  <div class="form-group">
+    <label for="title">Titel:</label><br />
+    <input type="text" ng-model="memory.thisMemory.title" id="title" />
+  </div>
+    
+  <div class="form-group">
+    <label for="memoryText">Berätta:</label><br />
+    <textarea id="memoryText" form="memory_create_form" ng-model="memory.thisMemory.memoryText"></textarea>
+  </div>
   
-  <label for="eventDate">Datum:</label>
-  <input type="date" ng-model="eventDate" id="eventDate" />
+  <div class="form-group">
+    <label for="eventDate">Datum:</label><br />
+    <input type="date" ng-model="eventDate" id="eventDate" />
+  </div>
+    
+  <div class="form-group">
+    <label for="tags">Lägg till taggar(separera med kommatecken):</label><br />
+    <textarea id="tags" form="memory_create_form" ng-model="memory.thisMemoryTagsString">  </textarea>
+  </div>
+    
+  <p><strong>Klicka på kartan på den plats där händelsen inträffade.</strong></p>
   
-  <label for="tags">Lägg till taggar(separera med kommatecken):</label>
-  <textarea id="tags" form="memory_create_form" ng-model="memory.thisMemoryTagsString">  
-  </textarea>
-
-  <p>Klicka på kartan på den plats där händelsen inträffade.</p>
-  
-  <input type="button" value="Redigera" ng-click="memory.editMemory(eventDate)"/>
+  <input type="button" value="Redigera" class="btn btn-success" ng-click="memory.editMemory(eventDate)"/>
 
 </form>

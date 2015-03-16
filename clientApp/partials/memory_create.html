@@ -15,27 +15,33 @@
   </ul>
 </div>
   
-  
-</div>
 
 <form id="memory_create_form"> 
 
-  <label for="title">Titel:</label>
-  <input type="text" ng-model="title" id="title" />
+  <div class="form-group">
+    <label for="title">Titel:</label><br />
+    <input type="text" ng-model="title" id="title" />
+  </div>
+  
+  <div class="form-group">
+    <label for="memoryText">Berätta:</label><br />
+    <textarea id="memoryText" form="memory_create_form" ng-model="memoryText">  
+    </textarea>
+  </div>
+    
+  <div class="form-group">
+    <label for="eventDate">Datum:</label><br />
+    <input type="date" ng-model="eventDate" id="eventDate" />
+  </div>
+  
+  <div class="form-group">
+    <label for="tags">Lägg till taggar(separera med kommatecken):</label><br />
+    <textarea id="tags" form="memory_create_form" ng-model="tags">  
+    </textarea>
+  </div>
+  
+  <p><strong>Klicka på kartan på den plats där händelsen inträffade.</strong></p>
 
-  <label for="memoryText">Berätta:</label>
-  <textarea id="memoryText" form="memory_create_form" ng-model="memoryText">  
-  </textarea>
-  
-  <label for="eventDate">Datum:</label>
-  <input type="date" ng-model="eventDate" id="eventDate" />
-  
-  <label for="tags">Lägg till taggar(separera med kommatecken):</label>
-  <textarea id="tags" form="memory_create_form" ng-model="tags">  
-  </textarea>
-  
-  <p>Klicka på kartan på den plats där händelsen inträffade.</p>
-
-  <input type="button" value="Lägg till" ng-click="memory.createMemory(title, memoryText, eventDate, tags)"/>
+  <input type="button" class="btn btn-success" value="Lägg till" ng-click="memory.createMemory(title, memoryText, eventDate, tags)"/>
 
 </form>

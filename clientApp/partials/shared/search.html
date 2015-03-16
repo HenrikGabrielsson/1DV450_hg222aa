@@ -1,6 +1,8 @@
 <form ng-controller="MemoryController as memory">
-  
-    <input type="text" name="term" ng-model="term" />
 
-    <input type="button" value="Sök" ng-click="memory.searchMemories(term)" /> 
+  <input type="text" name="term" ng-model="term" />
+
+  <button ng-click="memory.searchMemories(term)" >
+    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>  Sök 
+  </button>
 </form>

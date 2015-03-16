@@ -9,20 +9,27 @@
   </head>
   <body>
     <div id="container" class="col-md-12" ng-controller="MemoryController as memory">
-      <div id="header" class="row">
-        <h1><a ng-href="/">Minneskarta</a></h1>
+      <div id="header" class="row page-header">
+        <h1 class="col-md-4"><a ng-href="/">Minneskarta</a></h1>
+        <div class="col-md-2" ng-include="'partials/shared/search.html'"></div>      
+        
+        <div class="col-md-12" ng-include="'partials/shared/login.html'"></div>
+        
       </div>
       
-      <div id="main content" class="row">
-        <div class="col-md-6" ng-include="'partials/shared/login.html'"></div>
-        <div class="col-md-6" ng-include="'partials/shared/search.html'"></div>
 
+      <div id="main content" class="row">
         <div class="col-md-6">
           <map .map center="56.66830, 16.35315" zoom="2" class="map" on-click="memory.getPosFromMapClick()"></map>
         </div>
 
         <div class="col-md-6" ng-view></div>
       </div>
+      
+      <div id="footer" class="row">
+        <p>Grafik från <a href="http://glyphicons.com/">Glyphicon</a></p>
+      </div>
+      
     </div>
     
     
