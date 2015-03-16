@@ -45,7 +45,7 @@ mapApp.directive('tagList', ['$compile','MemoryService', "MapService", function(
             createOutput(false)
           }
         }, attr.limit, attr.offset)
-      })            
+      });            
     }
 
     //..otherwise, all tags.

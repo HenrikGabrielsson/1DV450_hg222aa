@@ -1,8 +1,8 @@
 mapApp.controller("MemoryController", MemoryController);
 
-MemoryController.$inject = ["MemoryService", "MapService", "LoginService", "$routeParams", "$location", "$scope", "$rootScope", "$timeout"];
+MemoryController.$inject = ["MemoryService", "MapService", "LoginService", "$routeParams", "$location", "$scope", "$timeout"];
 
-function MemoryController(MemoryService, MapService, LoginService, $routeParams, $location, $scope, $rootScope,  $timeout)
+function MemoryController(MemoryService, MapService, LoginService, $routeParams, $location, $scope, $timeout)
 {
   var vm = this;
     
@@ -32,10 +32,10 @@ function MemoryController(MemoryService, MapService, LoginService, $routeParams,
     }
     
     //no position change
-    if($rootScope.setMarker !== undefined)
+    if($scope.setMarker !== undefined)
     {
-      vm.thisMemory.latitude = $rootScope.setMarker.position.k;
-      vm.thisMemory.longitude = $rootScope.setMarker.position.D;
+      vm.thisMemory.latitude = $scope.setMarker.position.k;
+      vm.thisMemory.longitude = $scope.setMarker.position.D;
     }    
     
     //the memory object as the API wants it 
@@ -91,8 +91,15 @@ function MemoryController(MemoryService, MapService, LoginService, $routeParams,
   //create a new memory
   vm.createMemory = function(title, memoryText, eventDate, tags)
   {
-    //split tags on ',' to create array of tags
-    var tagsArray = tags.split(",");
+    //must choose position. 
+    if($scope.setMarker === undefined || $scope.setMarker === null)
+    {
+      vm.errorMessage = "Du måste välja en position genom att klicka på kartan";
+      return;
+    }
+    
+    //split tags on ',' to create array of tags   
+    var tagsArray = tags !== undefined ? tags.split(",") : [];
 
     //removes whitespace and creates "tag objects"
     tagsArray.forEach(function(tag, i, tags)
@@ -106,8 +113,8 @@ function MemoryController(MemoryService, MapService, LoginService, $routeParams,
       {
         title: title, 
         memoryText: memoryText, 
-        latitude: $rootScope.setMarker.position.k, 
-        longitude: $rootScope.setMarker.position.D,
+        latitude: $scope.setMarker.position.k, 
+        longitude: $scope.setMarker.position.D,
         eventDate: eventDate, 
         tags_attributes: tagsArray
       }

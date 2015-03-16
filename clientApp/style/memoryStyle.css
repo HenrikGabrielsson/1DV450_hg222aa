@@ -13,3 +13,17 @@ map
   min-height: 600px;
 }
 
+#logo
+{
+  height: 80px;
+}
+
+#search_box
+{
+  height:40px;
+}
+
+#login_form
+{
+  height:120px;
+}

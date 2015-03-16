@@ -3,7 +3,6 @@ mapApp.directive('memoryList', ['$compile','MemoryService','MapService' , functi
     //creates list and puts markers on map.
     var getElementsAndCreateList = function(scope, element, attr)
     {
-      
       //callback function that runs when memories has been recieved from API
       var createOutput = function(success, memories)
       {
