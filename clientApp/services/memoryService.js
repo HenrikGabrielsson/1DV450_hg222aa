@@ -5,11 +5,9 @@ MemoryService.$inject = ['$http', "RESTAPI"];
 function MemoryService(http, RESTAPI)
 {  
   
-  /*
-  a simple http function that sends a request via HTTP (with chosen method, params, headers) and then calls the provided
-  callback function that sends back the answer from the server and a bool that that tells the user if the request was successful
-  */
-  var sendHTTP = function(url, method, params, headers, callback)
+  
+  //a simple http function that sends a request via HTTP (with chosen method, params, headers) and then returns the promise
+  var sendHTTP = function(url, method, params, headers)
   {
     var config = {
       url : url,
@@ -26,20 +24,12 @@ function MemoryService(http, RESTAPI)
       config.headers = headers;
     }
     
-    //send request and run callback on response
-    http(config)
-    .success(function(data)
-    {
-      callback(true, data);  
-    })
-    .error(function(data)
-    {
-      callback(false, data);
-    })
+    //send request and return.
+    return http(config);
   }
 
   //get all memories, with optional limit,offset
-  var getAllMemories = function(callback, limit, offset)
+  var getAllMemories = function(limit, offset)
   {
     params = {};
     
@@ -52,32 +42,23 @@ function MemoryService(http, RESTAPI)
       params.offset = offset;
     }
     
-    sendHTTP(RESTAPI + "/memories", "GET", params, null, callback)
+    return sendHTTP(RESTAPI + "/memories", "GET", params, null)
   }
   
   //get one creator by id
-  var getCreatorById = function(id, callback)
+  var getCreatorById = function(id)
   {
-    sendHTTP(RESTAPI + "/creators/" + id, "GET", null, null, callback);    
+    return sendHTTP(RESTAPI + "/creators/" + id, "GET", null, null);    
   }
-  
   
   //get one memory by id
-  var getMemoryById = function(id, callback)
+  var getMemoryById = function(id)
   {
-    sendHTTP(RESTAPI + "/memories/" + id, "GET", null, null, callback);   
+    return sendHTTP(RESTAPI + "/memories/" + id, "GET", null, null);   
   }
-  
-  
-  //get all creators
-  var getAllCreators = function(callback)
-  {
-    sendHTTP(RESTAPI + "/creators", "GET", null, null, callback);     
-  }
-  
   
   //get all tags with optional limit, offset
-  var getAllTags = function(callback, limit, offset)
+  var getAllTags = function(limit, offset)
   {
     params = {};
     
@@ -90,19 +71,19 @@ function MemoryService(http, RESTAPI)
       params.offset = offset;
     }
     
-    sendHTTP(RESTAPI + "/tags", "GET", params, null, callback);   
+    return sendHTTP(RESTAPI + "/tags", "GET", params, null);   
   }
   
   
   //returns memories that matches given term
-  var searchMemories = function(term, callback)
+  var searchMemories = function(term)
   {
-    sendHTTP(RESTAPI + "/search", "GET", {term: term}, null, callback) 
+    return sendHTTP(RESTAPI + "/search", "GET", {term: term}, null);
   }
   
   
   //get memories that contains given tag, with optional limit and offset
-  var getMemoriesByTag = function(id, callback, limit, offset)
+  var getMemoriesByTag = function(id, limit, offset)
   {
     params = {};
     
@@ -115,12 +96,12 @@ function MemoryService(http, RESTAPI)
       params.offset = offset;
     }
     
-    sendHTTP(RESTAPI + "/tags/"+id+"/memories", "GET", params, null, callback)
+    return sendHTTP(RESTAPI + "/tags/"+id+"/memories", "GET", params, null)
   }
   
   
   //get all memories created by creator, with optional limit, offset
-  var getMemoriesByCreator = function(id, callback, limit, offset)
+  var getMemoriesByCreator = function(id, limit, offset)
   {
     params = {};
     
@@ -133,95 +114,62 @@ function MemoryService(http, RESTAPI)
       params.offset = offset;
     }
     
-    sendHTTP(RESTAPI + "/creators/"+id+"/memories","GET", params, null, callback)
+    return sendHTTP(RESTAPI + "/creators/"+id+"/memories","GET", params, null)
   }
   
   
   //get one tag
-  var getTagById = function(id, callback)
+  var getTagById = function(id)
   {
-    sendHTTP(RESTAPI + "/tags/" + id, "GET", null, null, callback);
+    return sendHTTP(RESTAPI + "/tags/" + id, "GET", null, null);
   }
   
   //edit Creator
-  var editUser = function(user, password, passwordConfirmation, token, callback)
+  var editUser = function(user, password, passwordConfirmation, token)
   {
     var params = {creator: {userName: user.userName, email: user.email, password: password, password_confirmation: passwordConfirmation}}
     var headers = {headers:{Authorization: token}};
     
-    http.put(RESTAPI + "/creators/" + user.id, params, headers) 
-    .success(function(data)
-    {
-      callback(true, data);  
-    })
-    .error(function(data)
-    {
-      callback(false, data);
-    }); 
+    return http.put(RESTAPI + "/creators/" + user.id, params, headers);
   }
   
   //delete given creator
-  var deleteUser = function(id, token, callback)
+  var deleteUser = function(id, token)
   {
-    sendHTTP(RESTAPI + "/creators/" + id, "DELETE", null, {Authorization: token}, callback)      
+    return sendHTTP(RESTAPI + "/creators/" + id, "DELETE", null, {Authorization: token});     
   }
   
   //create a new creator
-  var createUser = function(creator, callback)
+  var createUser = function(creator)
   {
-    http.post(RESTAPI + "/creators", creator)
-    .success(function(data)
-    {
-      callback(true, data);  
-    })
-    .error(function(data)
-    {
-      callback(false, data);
-    });        
+    return http.post(RESTAPI + "/creators", creator);       
   };
   
   //delete memory
-  var deleteMemory = function(id, token, callback)
+  var deleteMemory = function(id, token)
   {
-    sendHTTP(RESTAPI + "/memories/" + id, "DELETE", null, {Authorization: token}, callback)
+    return sendHTTP(RESTAPI + "/memories/" + id, "DELETE", null, {Authorization: token});
   }
   
   //edit memory
-  var editMemory = function(id, memory, token, callback)
+  var editMemory = function(id, memory, token)
   {
     var headers = {headers:{Authorization: token}};
     
-    http.put(RESTAPI + "/memories/" + id, memory, headers)
-    .success(function(data)
-    {
-      callback(true, data);  
-    })
-    .error(function(data)
-    {
-      callback(false, data);
-    });    
+    return http.put(RESTAPI + "/memories/" + id, memory, headers);   
   }
   
   //create new memory
-  var createMemory = function(memory, token, callback)
+  var createMemory = function(memory, token)
   {
     var headers = {headers:{Authorization: token}};
     
-    http.post(RESTAPI + "/memories", memory, headers)
-    .success(function(data)
-    {
-      callback(true, data);  
-    })
-    .error(function(data)
-    {
-      callback(false, data);
-    });
+    return http.post(RESTAPI + "/memories", memory, headers);
   }
   
   return {
     getAllMemories: getAllMemories,
     searchMemories: searchMemories,
-    getAllCreators: getAllCreators,
     getAllTags: getAllTags,
     getCreatorById: getCreatorById,
     getMemoriesByCreator: getMemoriesByCreator,

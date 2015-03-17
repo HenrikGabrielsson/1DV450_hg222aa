@@ -8,14 +8,15 @@ function MemoryController(MemoryService, MapService, LoginService, $routeParams,
     
   vm.tags = null;
   vm.creators = null;
-  
+
   //check login status and user
   vm.loggedIn = sessionStorage.getItem("token") !== null;
   vm.loggedInUser = JSON.parse(sessionStorage.getItem("user"));
+  vm.thisUser = JSON.parse(sessionStorage.getItem("user"));
  
   //edit a memory
   vm.editMemory = function(eventDate)
-  {
+  { 
     //split tags on ',' to create array of tags
     var tagsArray = vm.thisMemoryTagsString.split(",");
 
@@ -58,39 +59,37 @@ function MemoryController(MemoryService, MapService, LoginService, $routeParams,
     
 
     //and off you go to server you filthy memory
-    MemoryService.editMemory(vm.thisMemory.id, memory, sessionStorage.getItem("token"), function(success, data)
+    MemoryService.editMemory(vm.thisMemory.id, memory, sessionStorage.getItem("token"))
+    .success(function()
     {
-      if(success)
+      $location.path("/memory/" + vm.thisMemory.id) 
+    })
+    .error(function(data)
+    {
+      if(data.error.constructor === Array)
       {
-        $location.path("/memory/" + vm.thisMemory.id)
+        vm.errorList = [];
+
+        //remove the first word (Rails adds the name of the model for some reason)
+        data.error.forEach(function(error, index)
+                           {
+          var tempArr = error.split(" ");
+          tempArr.shift(); //remove first word
+
+          vm.errorList.push(tempArr.join(" "))
+        });
       }
       else
       {
-        if(data.error.constructor === Array)
-        {
-          vm.errorList = [];
-          
-          //remove the first word (Rails adds the name of the model for some reason)
-          data.error.forEach(function(error, index)
-          {
-            var tempArr = error.split(" ");
-            tempArr.shift(); //remove first word
-
-            vm.errorList.push(tempArr.join(" "))
-          });
-        }
-        else
-        {
-          vm.errorMessage = "Det gick inte att redigera minnet av okänd anledning. Försök igen senare.";
-        }
+        vm.errorMessage = "Det gick inte att redigera minnet av okänd anledning. Försök igen senare.";
       }
-    });    
-    
+    }); 
   }
+  
   
   //create a new memory
   vm.createMemory = function(title, memoryText, eventDate, tags)
-  {
+  { 
     //must choose position. 
     if(MapService.getSetMarker() === undefined || MapService.getSetMarker() === null)
     {
@@ -121,31 +120,29 @@ function MemoryController(MemoryService, MapService, LoginService, $routeParams,
     }
     
     //to server we go!
-    MemoryService.createMemory(memory, sessionStorage.getItem("token"), function(success, data)
+    MemoryService.createMemory(memory, sessionStorage.getItem("token"))
+    .success(function()
     {
-      if(success)
+      $location.path("/user/" + vm.loggedInUser.id);
+    })
+    .error(function(data)
+    {
+      if(data.error.constructor === Array)
       {
-        $location.path("/user/" + vm.loggedInUser.id);
+        vm.errorList = [];
+
+        //remove the first word (Rails adds the name of the model for some reason)
+        data.error.forEach(function(error, index)
+                           {
+          var tempArr = error.split(" ");
+          tempArr.shift(); //remove first word
+
+          vm.errorList.push(tempArr.join(" "))
+        });
       }
       else
       {
-        if(data.error.constructor === Array)
-        {
-          vm.errorList = [];
-          
-          //remove the first word (Rails adds the name of the model for some reason)
-          data.error.forEach(function(error, index)
-          {
-            var tempArr = error.split(" ");
-            tempArr.shift(); //remove first word
-
-            vm.errorList.push(tempArr.join(" "))
-          });
-        }
-        else
-        {
-          vm.errorMessage = "Det gick inte att skapa minnet av okänd anledning. Försök igen senare.";
-        }
+        vm.errorMessage = "Det gick inte att skapa minnet av okänd anledning. Försök igen senare.";
       }
     });
   }
@@ -153,22 +150,19 @@ function MemoryController(MemoryService, MapService, LoginService, $routeParams,
   //delete this memory
   vm.deleteMemory = function()
   {
-    
     //a beautiful box to confirm removal.
     if(confirm("Vill du verkligen ta bort detta minne?"))
-        {
-          MemoryService.deleteMemory(vm.thisMemory.id, sessionStorage.getItem("token"), function(success,data)
-          {
-            if(success)
-            {
-              $location.path("/user/" + vm.loggedInUser.id);
-            }
-            else
-            {
-              vm.errorMessage = "Det gick inte att ta bort minnet. Försök igen senare.";
-            }
-          });
-        }
+    {
+      MemoryService.deleteMemory(vm.thisMemory.id, sessionStorage.getItem("token"))
+        .success(function()
+                 {
+        $location.path("/user/" + vm.loggedInUser.id);
+      })
+        .error(function() 
+               {          
+        vm.errorMessage = "Det gick inte att ta bort minnet. Försök igen senare.";
+      })
+    }
   }
   
   //when users search, they are sent to the search result page. duh
@@ -205,57 +199,6 @@ function MemoryController(MemoryService, MapService, LoginService, $routeParams,
     MapService.setMap(evtMap);
   });
   
-  //gets all creators
-  vm.getAllCreators = function()
-  {
-    MemoryService.getAllCreators(function(success, creators)
-    {
-      if(success)
-      {
-        vm.creators = creators;
-      }
-      else
-      {
-        vm.errorMessage = "Kunde inte hämta användare vid detta tillfället.";
-      }
-      
-    });
-  }
-  
-  //gets all tags
-  vm.getAllTags = function()
-  {
-    MemoryService.getAllTags(function(success, tags)
-    {
-      if(success)
-      {  
-        vm.tags = tags;
-      }
-      else
-      {
-        vm.errorMessage = "Kunde inte hämta taggar vid detta tillfället."; 
-      }
-      
-    });    
-  }
-
-  //gets all memories
-  vm.getAllMemories = function()
-  {
-    MemoryService.getAllMemories(function(success, memories)
-    {
-      if(success)
-      {
-        MapService.clearMarkers(); //removes old memories 
-        MapService.setMarkers(memories, $scope);
-      }
-      else
-      {
-        vm.errorMessage = "Kunde inte hämta minnen vid detta tillfället.";
-      }
-      
-    });
-  }
   
   //creates a string of tags to put in a textarea
   vm.createTagString = function(tags)
@@ -271,21 +214,19 @@ function MemoryController(MemoryService, MapService, LoginService, $routeParams,
   //get one memory by id
   vm.getMemoryById = function(id)
   {
-    MemoryService.getMemoryById(id, function(success, memory)
+    MemoryService.getMemoryById(id)
+    .success(function(memory)
     {
-      if(success)
-      {
-        MapService.clearMarkers();
-        MapService.setMarkers(new Array(memory), $scope);
-        vm.thisMemory = memory;
-        
-        vm.thisMemoryTagsString = vm.createTagString(vm.thisMemory.tags);
-      }
-      else
-      {
-        vm.errorMessage = "Kunde inte hämta minnet vid detta tillfället.";
-      }
-    });   
+      MapService.clearMarkers();
+      MapService.setMarkers(new Array(memory), $scope);
+      vm.thisMemory = memory;
+
+      vm.thisMemoryTagsString = vm.createTagString(vm.thisMemory.tags);      
+    })
+    .error(function()
+    {
+      vm.errorMessage = "Kunde inte hämta minnet vid detta tillfället.";
+    });
   }
   
   vm.logout = function()
@@ -295,42 +236,33 @@ function MemoryController(MemoryService, MapService, LoginService, $routeParams,
     
     vm.loggedIn = false;
   }
-  
-  //logged in user
-  vm.thisUser = JSON.parse(sessionStorage.getItem("user"));
-  
+
   //login with given credentials
   vm.login = function(userName, password)
   {
-    LoginService.login(userName, password, function(loginSuccess, jwt)
+    LoginService.login(userName, password)
+    .success(function(jwt)
     {
-      if(loginSuccess)
-      {   
-        LoginService.getLoggedInUser(jwt.token, function(success, user)
-        {
-          if(success)
-          {
-            //save user and jwt token in sessionStorage.
-            sessionStorage.setItem("token", jwt.token);
-            sessionStorage.setItem("user", JSON.stringify(user))
-            
-            vm.loggedIn = true;
-            
-            vm.successMessage = "Du är nu inloggad som " + JSON.parse(sessionStorage.getItem("user")).userName;
-          }
-          else
-          {
-            vm.errorMessage = "Något gick fel vid inloggningen. Försök igen senare";
-          }
-        });
+      LoginService.getLoggedInUser(jwt.token)
+      .success(function(user)
+      {
+        //save user and jwt token in sessionStorage.
+        sessionStorage.setItem("token", jwt.token);
+        sessionStorage.setItem("user", JSON.stringify(user))
 
-      }
-      else
-      { 
-        vm.errorMessage = "Fel användarnamn och/eller lösenord";
-      }
+        vm.loggedIn = true;
 
-    });                      
+        vm.successMessage = "Du är nu inloggad som " + JSON.parse(sessionStorage.getItem("user")).userName;        
+      })
+      .error(function()
+      {
+        vm.errorMessage = "Något gick fel vid inloggningen. Försök igen senare";
+      })
+    })
+    .error(function()
+    { 
+      vm.errorMessage = "Fel användarnamn och/eller lösenord";
+    });                   
   }
 
   //if a term is given...
@@ -343,8 +275,7 @@ function MemoryController(MemoryService, MapService, LoginService, $routeParams,
   if($routeParams.id !== undefined)
   {
     vm.getMemoryById($routeParams.id)
-  }
-     
+  }    
 }
 
 

@@ -10,17 +10,15 @@ function TagController(MemoryService, $routeParams)
   //get one tag by id
   var getTagById = function(id)
   {
-    MemoryService.getTagById(id, function(success, tag)
+    MemoryService.getTagById(id)
+    .success(function(tag)
     {
-      if(success)
-      {
-        vm.thisTag = tag;
-      }
-      else
-      {
-        vm.errorMessage = "Det gick inte att hämta denna tagg för tillfället. Försök senare";
-      }
+      vm.thisTag = tag;
     })
+    .error(function()
+    {
+      vm.errorMessage = "Det gick inte att hämta denna tagg för tillfället. Försök senare";
+    });
   }
 
   //run on load

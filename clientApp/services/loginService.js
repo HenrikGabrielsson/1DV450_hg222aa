@@ -6,9 +6,8 @@ function LoginService(http, RESTAPI)
 {  
   //Sends user credentials to API to login
   var login = function(userName, password, callback)
-  {  
-    
-    http(
+  {     
+    return http(
     {
       url: RESTAPI+"/apilogin",
       method: "POST",
@@ -17,34 +16,18 @@ function LoginService(http, RESTAPI)
         userName: userName,
         password: password
       }
-    })
-    .success(function(data)
-    {
-      callback(true, data)
-    })
-    .error(function(data)
-    {
-      callback(false, data);
-    })
+    });
   }
   
   //get the logged in user information from given jwt
-  var getLoggedInUser = function(jwt, callback)
+  var getLoggedInUser = function(jwt)
   {
-    http(
+    return http(
     {
       url: RESTAPI + "/me",
       method: "GET",
       headers: {Authorization: jwt}
-    })
-    .success(function(data)
-    {
-      callback(true, data)
-    })
-    .error(function(data)
-    {
-      callback(false, data);
-    });    
+    });
   }
 
   return {

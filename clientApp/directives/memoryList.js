@@ -3,15 +3,16 @@ mapApp.directive('memoryList', ['$compile','MemoryService','MapService' , functi
     //creates list and puts markers on map.
     var getElementsAndCreateList = function(scope, element, attr)
     {
-      //callback function that runs when memories has been recieved from API
-      var createOutput = function(success, memories)
-      {
-        //empties map and puts memories on map
-        MapService.clearMarkers();
-        MapService.setMarkers(memories, scope);
-        
-        if(success)
+      //function that gets the memories and outputs them
+      var createOutput = function(data)
+      {        
+        data
+        .success(function(memories)
         {
+          //empties map and puts memories on map
+          MapService.clearMarkers();
+          MapService.setMarkers(memories, scope);
+          
           var li, link;
           memories.forEach(function(memory)
           {
@@ -23,12 +24,11 @@ mapApp.directive('memoryList', ['$compile','MemoryService','MapService' , functi
             li.appendChild(link);
 
             element.append(li);       
-          })
-        }
-        else
-        {
+          });          
+        })
+        .error(function(){
           element.text("Det gick inte att hämta minnen just nu.");
-        }
+        })
       }
       
       //if a user is selected, only memories from that user will be recieved 
@@ -36,7 +36,7 @@ mapApp.directive('memoryList', ['$compile','MemoryService','MapService' , functi
       {
         attr.$observe("user", function()
         {
-          MemoryService.getMemoriesByCreator(attr.user, createOutput, attr.limit, attr.offset)
+          createOutput(MemoryService.getMemoriesByCreator(attr.user, attr.limit, attr.offset));
         })        
       }
 
@@ -45,7 +45,7 @@ mapApp.directive('memoryList', ['$compile','MemoryService','MapService' , functi
       {
         attr.$observe("tag", function()
         {
-          MemoryService.getMemoriesByTag(attr.tag, createOutput, attr.limit, attr.offset)
+          createOutput(MemoryService.getMemoriesByTag(attr.tag,attr.limit, attr.offset));
         })            
       }
       
@@ -54,14 +54,14 @@ mapApp.directive('memoryList', ['$compile','MemoryService','MapService' , functi
       {
         attr.$observe("search", function()
         {
-          MemoryService.searchMemories(attr.search, createOutput, attr.limit, attr.offset)
+          createOutput(MemoryService.searchMemories(attr.search, attr.limit, attr.offset));
         })
       }
    
       //if nothing else is specified, get all Memories
       else
       {
-        MemoryService.getAllMemories(createOutput, attr.limit, attr.offset)
+        createOutput(MemoryService.getAllMemories(attr.limit, attr.offset));
       }
       
     }
