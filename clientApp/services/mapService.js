@@ -1,14 +1,14 @@
 mapApp.factory("MapService", MapService)
 
-MapService.$inject = ["$rootScope", "$location"];
+MapService.$inject = ["$location"];
 
-function MapService($rootScope, $location)
+function MapService($location)
 {
-  var map = null;
   var markers = [];
+  var map;
   
   //marker used when placing a marker on map, for edit or create
-  var setMarker = $rootScope.setMarker;
+  var setMarker;
   
   //puts the setMarker on provided position
   var setMemoryPosition = function(latLng)
@@ -17,20 +17,20 @@ function MapService($rootScope, $location)
     clearMarkers();
     
     //removes old marker if marker already has position
-    if($rootScope.setMarker !== undefined)
+    if(setMarker !== undefined)
     {
-      $rootScope.setMarker.setMap(null)
+      setMarker.setMap(null)
     }
 
-    $rootScope.setMarker = new google.maps.Marker({position: latLng, map: map});     
+    setMarker = new google.maps.Marker({position: latLng, map: map});     
   }
   
   //removes all markers
   var clearMarkers = function()
   {    
-    if($rootScope.setMarker !== undefined)
+    if(setMarker !== undefined)
     {
-      $rootScope.setMarker.setMap(null);
+      setMarker.setMap(null);
     }
 
     markers.forEach(function(marker)
@@ -40,7 +40,7 @@ function MapService($rootScope, $location)
   }
   
   //place markers on map, given an array of memories with positions
-  var setMarkers = function(memories) 
+  var setMarkers = function(memories, scope) 
   {
     //get position of each memory and put on map.
     memories.forEach(function(memory)
@@ -50,7 +50,7 @@ function MapService($rootScope, $location)
       //when a marker is clicked the user is relocated to that memory's page.
       marker.addListener('click', function()
       {
-        $rootScope.$apply(function() 
+        scope.$apply(function() 
         {
           $location.path('/memory/' + memory.id);
         });
@@ -61,17 +61,23 @@ function MapService($rootScope, $location)
 
   };  
 
-  //on map load. Sets map variable.
-  $rootScope.$on('mapInitialized', function(evt, evtMap) 
-  { 
-    map = evtMap;
-  });
+  var getSetMarker = function()
+  {
+    return setMarker;
+  }
   
+  var setMap = function(paramMap)
+  {
+    map = paramMap;
+  }
+
   return {
     setMemoryPosition: setMemoryPosition,
     clearMarkers: clearMarkers,
     setMarkers: setMarkers,
-    setMarker: setMarker
+    setMarker: setMarker,
+    setMap: setMap,
+    getSetMarker: getSetMarker
     
   }
   

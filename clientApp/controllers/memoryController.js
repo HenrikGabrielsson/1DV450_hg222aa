@@ -32,10 +32,10 @@ function MemoryController(MemoryService, MapService, LoginService, $routeParams,
     }
     
     //no position change
-    if($scope.setMarker !== undefined)
+    if(MapService.getSetMarker() !== undefined)
     {
-      vm.thisMemory.latitude = $scope.setMarker.position.k;
-      vm.thisMemory.longitude = $scope.setMarker.position.D;
+      vm.thisMemory.latitude = MapService.getSetMarker().position.k;
+      vm.thisMemory.longitude = MapService.getSetMarker().position.D;
     }    
     
     //the memory object as the API wants it 
@@ -92,7 +92,7 @@ function MemoryController(MemoryService, MapService, LoginService, $routeParams,
   vm.createMemory = function(title, memoryText, eventDate, tags)
   {
     //must choose position. 
-    if($scope.setMarker === undefined || $scope.setMarker === null)
+    if(MapService.getSetMarker() === undefined || MapService.getSetMarker() === null)
     {
       vm.errorMessage = "Du måste välja en position genom att klicka på kartan";
       return;
@@ -113,8 +113,8 @@ function MemoryController(MemoryService, MapService, LoginService, $routeParams,
       {
         title: title, 
         memoryText: memoryText, 
-        latitude: $scope.setMarker.position.k, 
-        longitude: $scope.setMarker.position.D,
+        latitude: MapService.getSetMarker().position.k, 
+        longitude:MapService.getSetMarker().position.D,
         eventDate: eventDate, 
         tags_attributes: tagsArray
       }
@@ -198,6 +198,12 @@ function MemoryController(MemoryService, MapService, LoginService, $routeParams,
       MapService.setMemoryPosition(e.latLng);
     }
   };  
+ 
+  //on map load. Sets map variable.
+  $scope.$on('mapInitialized', function(evt, evtMap) 
+  { 
+    MapService.setMap(evtMap);
+  });
   
   //gets all creators
   vm.getAllCreators = function()
@@ -241,7 +247,7 @@ function MemoryController(MemoryService, MapService, LoginService, $routeParams,
       if(success)
       {
         MapService.clearMarkers(); //removes old memories 
-        MapService.setMarkers(memories);
+        MapService.setMarkers(memories, $scope);
       }
       else
       {
@@ -270,7 +276,7 @@ function MemoryController(MemoryService, MapService, LoginService, $routeParams,
       if(success)
       {
         MapService.clearMarkers();
-        MapService.setMarkers(new Array(memory));
+        MapService.setMarkers(new Array(memory), $scope);
         vm.thisMemory = memory;
         
         vm.thisMemoryTagsString = vm.createTagString(vm.thisMemory.tags);

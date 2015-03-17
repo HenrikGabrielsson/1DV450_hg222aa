@@ -6,6 +6,4 @@ I denna kurs ska jag skapa 3 projekt. Ett REST API där man kan logga in som anv
 
 [Readme för API](mapApi/README.md)
 
-##rightclick-fix till nitrous.io
-document.oncontextmenu=function(){return false}
-
+[Readme för klientappen](clientApp/README.md)

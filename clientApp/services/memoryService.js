@@ -1,8 +1,8 @@
 mapApp.factory("MemoryService", MemoryService);
 
-MemoryService.$inject = ['$http'];
+MemoryService.$inject = ['$http', "RESTAPI"];
 
-function MemoryService(http)
+function MemoryService(http, RESTAPI)
 {  
   
   /*
@@ -52,27 +52,27 @@ function MemoryService(http)
       params.offset = offset;
     }
     
-    sendHTTP("http://testapp-186134.euw1-2.nitrousbox.com:3000/memories", "GET", params, null, callback)
+    sendHTTP(RESTAPI + "/memories", "GET", params, null, callback)
   }
   
   //get one creator by id
   var getCreatorById = function(id, callback)
   {
-    sendHTTP("http://testapp-186134.euw1-2.nitrousbox.com:3000/creators/" + id, "GET", null, null, callback);    
+    sendHTTP(RESTAPI + "/creators/" + id, "GET", null, null, callback);    
   }
   
   
   //get one memory by id
   var getMemoryById = function(id, callback)
   {
-    sendHTTP("http://testapp-186134.euw1-2.nitrousbox.com:3000/memories/" + id, "GET", null, null, callback);   
+    sendHTTP(RESTAPI + "/memories/" + id, "GET", null, null, callback);   
   }
   
   
   //get all creators
   var getAllCreators = function(callback)
   {
-    sendHTTP("http://testapp-186134.euw1-2.nitrousbox.com:3000/creators", "GET", null, null, callback);     
+    sendHTTP(RESTAPI + "/creators", "GET", null, null, callback);     
   }
   
   
@@ -90,14 +90,14 @@ function MemoryService(http)
       params.offset = offset;
     }
     
-    sendHTTP("http://testapp-186134.euw1-2.nitrousbox.com:3000/tags", "GET", params, null, callback);   
+    sendHTTP(RESTAPI + "/tags", "GET", params, null, callback);   
   }
   
   
   //returns memories that matches given term
   var searchMemories = function(term, callback)
   {
-    sendHTTP("http://testapp-186134.euw1-2.nitrousbox.com:3000/search", "GET", {term: term}, null, callback) 
+    sendHTTP(RESTAPI + "/search", "GET", {term: term}, null, callback) 
   }
   
   
@@ -115,7 +115,7 @@ function MemoryService(http)
       params.offset = offset;
     }
     
-    sendHTTP("http://testapp-186134.euw1-2.nitrousbox.com/tags/"+id+"/memories", "GET", params, null, callback)
+    sendHTTP(RESTAPI + "/tags/"+id+"/memories", "GET", params, null, callback)
   }
   
   
@@ -133,14 +133,14 @@ function MemoryService(http)
       params.offset = offset;
     }
     
-    sendHTTP("http://testapp-186134.euw1-2.nitrousbox.com/creators/"+id+"/memories","GET", params, null, callback)
+    sendHTTP(RESTAPI + "/creators/"+id+"/memories","GET", params, null, callback)
   }
   
   
   //get one tag
   var getTagById = function(id, callback)
   {
-    sendHTTP("http://testapp-186134.euw1-2.nitrousbox.com:3000/tags/" + id, "GET", null, null, callback);
+    sendHTTP(RESTAPI + "/tags/" + id, "GET", null, null, callback);
   }
   
   //edit Creator
@@ -149,7 +149,7 @@ function MemoryService(http)
     var params = {creator: {userName: user.userName, email: user.email, password: password, password_confirmation: passwordConfirmation}}
     var headers = {headers:{Authorization: token}};
     
-    http.put("http://testapp-186134.euw1-2.nitrousbox.com:3000/creators/" + user.id, params, headers) 
+    http.put(RESTAPI + "/creators/" + user.id, params, headers) 
     .success(function(data)
     {
       callback(true, data);  
@@ -163,13 +163,13 @@ function MemoryService(http)
   //delete given creator
   var deleteUser = function(id, token, callback)
   {
-    sendHTTP("http://testapp-186134.euw1-2.nitrousbox.com:3000/creators/" + id, "DELETE", null, {Authorization: token}, callback)      
+    sendHTTP(RESTAPI + "/creators/" + id, "DELETE", null, {Authorization: token}, callback)      
   }
   
   //create a new creator
   var createUser = function(creator, callback)
   {
-    http.post("http://testapp-186134.euw1-2.nitrousbox.com:3000/creators", creator)
+    http.post(RESTAPI + "/creators", creator)
     .success(function(data)
     {
       callback(true, data);  
@@ -183,7 +183,7 @@ function MemoryService(http)
   //delete memory
   var deleteMemory = function(id, token, callback)
   {
-    sendHTTP("http://testapp-186134.euw1-2.nitrousbox.com:3000/memories/" + id, "DELETE", null, {Authorization: token}, callback)
+    sendHTTP(RESTAPI + "/memories/" + id, "DELETE", null, {Authorization: token}, callback)
   }
   
   //edit memory
@@ -191,7 +191,7 @@ function MemoryService(http)
   {
     var headers = {headers:{Authorization: token}};
     
-    http.put("http://testapp-186134.euw1-2.nitrousbox.com:3000/memories/" + id, memory, headers)
+    http.put(RESTAPI + "/memories/" + id, memory, headers)
     .success(function(data)
     {
       callback(true, data);  
@@ -207,7 +207,7 @@ function MemoryService(http)
   {
     var headers = {headers:{Authorization: token}};
     
-    http.post("http://testapp-186134.euw1-2.nitrousbox.com:3000/memories", memory, headers)
+    http.post(RESTAPI + "/memories", memory, headers)
     .success(function(data)
     {
       callback(true, data);  

@@ -8,7 +8,7 @@ mapApp.directive('memoryList', ['$compile','MemoryService','MapService' , functi
       {
         //empties map and puts memories on map
         MapService.clearMarkers();
-        MapService.setMarkers(memories)
+        MapService.setMarkers(memories, scope);
         
         if(success)
         {

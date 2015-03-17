@@ -1,15 +1,16 @@
 mapApp.factory("LoginService", LoginService);
 
-LoginService.$inject = ['$http'];
+LoginService.$inject = ['$http', "RESTAPI"];
 
-function LoginService(http)
+function LoginService(http, RESTAPI)
 {  
   //Sends user credentials to API to login
   var login = function(userName, password, callback)
   {  
+    
     http(
     {
-      url:"http://testapp-186134.euw1-2.nitrousbox.com:3000/apilogin",
+      url: RESTAPI+"/apilogin",
       method: "POST",
       params:
       {
@@ -32,7 +33,7 @@ function LoginService(http)
   {
     http(
     {
-      url:"http://testapp-186134.euw1-2.nitrousbox.com:3000/me",
+      url: RESTAPI + "/me",
       method: "GET",
       headers: {Authorization: jwt}
     })

@@ -1,4 +1,4 @@
-mapApp.directive('tagList', ['$compile','MemoryService', "MapService", function($compile, MemoryService, MapService){
+mapApp.directive('tagList', ['$compile','MemoryService', function($compile, MemoryService){
     
   //Creates list of tags
   var getElementsAndCreateList = function(scope, element, attr)
