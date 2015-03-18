@@ -15,11 +15,11 @@ class MemoriesController < ApplicationController
   def index 
     #/creators/{id}/memories
     if params[:creator_id].present?
-      memories = Creator.find_by_id(params[:creator_id]).memories
+      memories = Creator.find_by_id(params[:creator_id]).memories.order("updated_at DESC")
     
     #/tags/{id}/memories
     elsif params[:tag_id].present?
-      memories = Tag.find_by_id(params[:tag_id]).memories
+      memories = Tag.find_by_id(params[:tag_id]).memories.order("updated_at DESC")
       
     #/memories  
     else
@@ -27,7 +27,7 @@ class MemoriesController < ApplicationController
     end
 
     #sorted by last update
-    respond_with memories.limit(@limit).offset(@offset).sort_by {|m| m.updated_at}
+    respond_with memories.order("updated_at DESC").limit(@limit).offset(@offset)
   end
   
   #/memories/{id}

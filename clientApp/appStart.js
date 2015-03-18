@@ -1,6 +1,6 @@
 var mapApp = angular.module("mapApp", ["ngRoute", "ngMap"]);
 
-mapApp.constant("RESTAPI", "http://testapp-186134.euw1-2.nitrousbox.com:3000" );
+mapApp.constant("RESTAPI", "http://46.101.51.190:3000" );
 
 mapApp.config(
   [
@@ -63,7 +63,7 @@ mapApp.config(
       //pretty url
       $locationProvider.html5Mode(true);
 
-      var apiKey = "6up-EkZyhWovOPjMNxm_3whVOCV1rzN6hw";
+      var apiKey = "testkey";
 
       //always send apiKey by default (needed for alla function in API)
       $httpProvider.defaults.headers.common = { 'apikey' : apiKey };

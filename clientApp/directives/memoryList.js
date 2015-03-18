@@ -26,9 +26,6 @@ mapApp.directive('memoryList', ['$compile','MemoryService','MapService' , functi
             element.append(li);       
           });          
         })
-        .error(function(){
-          element.text("Det gick inte att hämta minnen just nu.");
-        })
       }
       
       //if a user is selected, only memories from that user will be recieved 
@@ -62,8 +59,7 @@ mapApp.directive('memoryList', ['$compile','MemoryService','MapService' , functi
       else
       {
         createOutput(MemoryService.getAllMemories(attr.limit, attr.offset));
-      }
-      
+      }  
     }
   
     return {
