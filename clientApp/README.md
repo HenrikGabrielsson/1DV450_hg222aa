@@ -1,5 +1,10 @@
 #ClientApp - Minneskartan
 
+##Ändringar på API:et 
+
+Jag har inte gjort några större förändringar förutom att lägga till lite i config.ru för att tillåta CORS. Jag lade också till en metod för användare, *users/me* som skickar tillbaka den inloggade användaren. Inte jättenödvändigt kanske men fortfarande en användbar funktion. Jag såg också till så att sorteringen fungerade ordentligt när man skickar tillbaka alla minnen, vilket itne fungerade tidigare.
+
+
 ##Appen
 Detta är en app där användare som är registrerade på API:et kan skriva ner minnen från händelser i livet, och spara dessa kopplade till en position (longitud, latitud). De kan också ta bort/uppdatera sina egna minnen och lägga till taggar på dessa. 
 
