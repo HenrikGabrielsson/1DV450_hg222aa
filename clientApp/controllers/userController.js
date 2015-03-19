@@ -1,8 +1,8 @@
 mapApp.controller("UserController", UserController);
 
-UserController.$inject = ["$routeParams","MemoryService", "$location"];
+UserController.$inject = ["$routeParams","MemoryService", "MapService", "$location", "$scope", "$timeout"];
 
-function UserController($routeParams, MemoryService, $location)
+function UserController($routeParams, MemoryService, MapService, $location, $scope, $timeout)
 {
   var vm = this;
   
@@ -41,6 +41,28 @@ function UserController($routeParams, MemoryService, $location)
         vm.errorMessage = "Det gick inte att redigera användaren"
       }
     }); 
+  }
+
+  vm.getMemoriesByUser = function(id)
+  {
+    MemoryService.getMemoriesByCreator(id)
+    .success(function(memories)
+    {
+      $timeout(function()
+      {
+        $scope.$apply(function()
+        {      
+          //puts memories on map
+          MapService.setMarkers(memories, $scope);
+          
+          $scope.memories = memories;
+        })        
+      })
+    })
+    .error(function()
+    {
+      vm.errorMessage = "Kunde inte hämta minnen vid detta tillfället.";
+    })
   }
   
   //create new user.
@@ -116,7 +138,8 @@ function UserController($routeParams, MemoryService, $location)
   //not at create or edit
   if($routeParams.id !== undefined)
   {
-    getUser();
+    getUser(); 
+    vm.getMemoriesByUser($routeParams.id);
   }
   
   

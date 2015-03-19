@@ -9,6 +9,9 @@ function MemoryController(MemoryService, MapService, LoginService, $routeParams,
   vm.tags = null;
   vm.creators = null;
 
+  $scope.memories = null;
+  $scope.tags = null;
+  
   //check login status and user
   vm.loggedIn = sessionStorage.getItem("token") !== null;
   vm.loggedInUser = JSON.parse(sessionStorage.getItem("user"));
@@ -117,7 +120,7 @@ function MemoryController(MemoryService, MapService, LoginService, $routeParams,
         tags_attributes: tagsArray
       }
     }
-    
+        
     //to server we go!
     MemoryService.createMemory(memory, sessionStorage.getItem("token"))
     .success(function()
@@ -132,7 +135,7 @@ function MemoryController(MemoryService, MapService, LoginService, $routeParams,
 
         //remove the first word (Rails adds the name of the model for some reason)
         data.error.forEach(function(error, index)
-                           {
+        {
           var tempArr = error.split(" ");
           tempArr.shift(); //remove first word
 
@@ -145,6 +148,29 @@ function MemoryController(MemoryService, MapService, LoginService, $routeParams,
       }
     });
   }
+  
+  
+  vm.getAllMemories = function(limit, offset)
+  {
+    MemoryService.getAllMemories(limit, offset)
+    .success(function(memories)
+    {
+      //ugly solution to get memories to scope
+      $timeout(function()
+      {
+        $scope.$apply(function()
+        {
+          //puts memories on map
+          MapService.setMarkers(memories, $scope);
+          
+          $scope.memories = memories;  
+        });
+      })
+    })
+  };  
+
+  
+  
   
   //delete this memory
   vm.deleteMemory = function()
@@ -167,14 +193,22 @@ function MemoryController(MemoryService, MapService, LoginService, $routeParams,
   //when users search, they are sent to the search result page. duh
   vm.searchMemories = function(term)
   {
-    //stupid angular stuff that works so I wont touch it.
-    $timeout(function()
+    MemoryService.searchMemories(term)
+    .success(function(memories)
     {
-      $scope.$apply(function() 
+      $scope.memories = memories
+      
+      //stupid angular stuff that works so I wont touch it. Reroute to search results
+      $timeout(function()
       {
-        $location.path("/memory/search/" + term)
+        $scope.$apply(function() 
+        {
+          $location.path("/memory/search/" + term)
+        })
       })
     })
+    
+
   }
   
   //put a given memory on the map.
@@ -218,8 +252,10 @@ function MemoryController(MemoryService, MapService, LoginService, $routeParams,
     {
       MapService.clearMarkers();
       MapService.setMarkers(new Array(memory), $scope);
-      vm.thisMemory = memory;
 
+      $scope.tags = memory.tags;
+      
+      vm.thisMemory = memory;
       vm.thisMemoryTagsString = vm.createTagString(vm.thisMemory.tags);      
     })
     .error(function()
@@ -265,18 +301,76 @@ function MemoryController(MemoryService, MapService, LoginService, $routeParams,
       vm.errorMessage = "Fel användarnamn och/eller lösenord";
     });                   
   }
+  
+    var vm = this;
 
-  //if a term is given...
-  if($routeParams.term !== undefined)
+  //get one tag by id
+  var getTagById = function(id)
+  {
+    MemoryService.getTagById(id)
+    .success(function(tag)
+    {
+      vm.thisTag = tag;      
+    })
+    .error(function()
+    {
+      vm.errorMessage = "Det gick inte att hämta denna tagg för tillfället. Försök senare";
+    });
+  }
+  
+  var getMemoriesByTag = function(id)
+  {    
+    MemoryService.getMemoriesByTag(id)
+    .success(function(memories)
+    {  
+      $timeout(function()
+      {
+        $scope.$apply(function()
+        {
+          //puts memories on map
+          MapService.setMarkers(memories, $scope);
+          
+          $scope.memories = memories;
+        })
+      });
+    })
+  }
+  
+  vm.getAllTags = function(limit, offset)
+  {
+    MemoryService.getAllTags(limit, offset)
+    .success(function(tags)
+    {
+      $scope.tags = tags;
+    });
+  }
+
+  //if tag page
+  if($routeParams.tag_id !== undefined)
+  {
+    getTagById($routeParams.tag_id);
+    getMemoriesByTag($routeParams.tag_id)
+  }
+
+  //if a term is given a search should be done
+  else if($routeParams.term !== undefined)
   {
     vm.term = $routeParams.term;
+    vm.searchMemories(vm.term)
   }
 
   //if a specified memory is wanted.
-  if($routeParams.id !== undefined)
+  else if($routeParams.id !== undefined)
   {
     vm.getMemoryById($routeParams.id)
-  }    
+  }
+  //index partial
+  else
+  {
+    vm.getAllMemories(20);
+    vm.getAllTags(20);
+  }
+
 }
 
 

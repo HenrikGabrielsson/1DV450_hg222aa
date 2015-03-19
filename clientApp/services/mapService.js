@@ -42,6 +42,8 @@ function MapService($location)
   //place markers on map, given an array of memories with positions
   var setMarkers = function(memories, scope) 
   {
+    clearMarkers();
+    
     //get position of each memory and put on map.
     memories.forEach(function(memory)
     {

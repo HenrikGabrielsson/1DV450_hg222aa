@@ -51,9 +51,9 @@ mapApp.config(
         controller: "MemoryController",
         controllerAs: "memory"
       })
-      .when('/tag/:id', {
+      .when('/tag/:tag_id', {
         templateUrl: "partials/tag.html",
-        controller: "TagController",
+        controller: "MemoryController",
         controllerAs: "tag"
       })
       .otherwise({
