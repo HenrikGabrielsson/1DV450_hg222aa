@@ -36,12 +36,12 @@
   
   <div class="form-group">
     <label for="tags">Lägg till taggar(separera med kommatecken):</label><br />
-    <textarea id="tags" form="memory_create_form" ng-model="tags">  
+    <textarea id="tags" form="memory_create_form" ng-model="newTags">  
     </textarea>
   </div>
   
   <p><strong>Klicka på kartan på den plats där händelsen inträffade.</strong></p>
 
-  <input type="button" class="btn btn-success" value="Lägg till" ng-click="memory.createMemory(title, memoryText, eventDate, tags)"/>
+  <input type="button" class="btn btn-success" value="Lägg till" ng-click="memory.createMemory(title, memoryText, eventDate, newTags)"/>
 
 </form>
