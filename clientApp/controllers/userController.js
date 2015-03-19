@@ -9,10 +9,9 @@ function UserController($routeParams, MemoryService, $location)
   //user of this page
   vm.thisUser = null; 
   
-  //if user is logged in, and the user from the locaklstorage
+  //if user is logged in, and the user from the localstorage
   vm.loggedIn = sessionStorage.getItem("token") !== null;
-  vm.loggedInUser = JSON.parse(sessionStorage.getItem("user"));
-
+  
   //edit user
   vm.editUser = function(password, passwordConfirmation)
   {

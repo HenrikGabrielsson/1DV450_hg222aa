@@ -24,7 +24,7 @@
 
 
 <div ng-if="main.loggedIn">
-  <a ng-href="/user/{{main.thisUser.id}}">Gå till min profil</a>
+  <a ng-href="/user/{{main.loggedInUser.id}}">Gå till min profil</a>
   <input type="button" value="Logga ut" ng-click="main.logout()" /> 
 
 </div>

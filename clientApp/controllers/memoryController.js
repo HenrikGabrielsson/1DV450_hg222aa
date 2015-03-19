@@ -12,7 +12,6 @@ function MemoryController(MemoryService, MapService, LoginService, $routeParams,
   //check login status and user
   vm.loggedIn = sessionStorage.getItem("token") !== null;
   vm.loggedInUser = JSON.parse(sessionStorage.getItem("user"));
-  vm.thisUser = JSON.parse(sessionStorage.getItem("user"));
  
   //edit a memory
   vm.editMemory = function(eventDate)
@@ -235,6 +234,7 @@ function MemoryController(MemoryService, MapService, LoginService, $routeParams,
     sessionStorage.removeItem("user");
     
     vm.loggedIn = false;
+    vm.loggedInUser = null;
   }
 
   //login with given credentials
@@ -250,6 +250,7 @@ function MemoryController(MemoryService, MapService, LoginService, $routeParams,
         sessionStorage.setItem("token", jwt.token);
         sessionStorage.setItem("user", JSON.stringify(user))
 
+        vm.loggedInUser = user;        
         vm.loggedIn = true;
 
         vm.successMessage = "Du är nu inloggad som " + JSON.parse(sessionStorage.getItem("user")).userName;        
