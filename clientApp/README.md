@@ -8,9 +8,12 @@ Jag har inte gjort några större förändringar förutom att lägga till lite i
 ##Appen
 Detta är en app där användare som är registrerade på API:et kan skriva ner minnen från händelser i livet, och spara dessa kopplade till en position (longitud, latitud). De kan också ta bort/uppdatera sina egna minnen och lägga till taggar på dessa. 
 
-Du måste installera node.js för att köra appen!
+
+
+Appen finns 
 
 ##Instruktioner för att köra appen
+
 
 1. Installera [Node.js](https://nodejs.org/). Du kan också använda till exempel nitrous.io där Node redan finns installerat.
 
