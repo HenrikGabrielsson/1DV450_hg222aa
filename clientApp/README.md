@@ -10,7 +10,7 @@ Detta är en app där användare som är registrerade på API:et kan skriva ner 
 
 
 
-Appen finns 
+Appen finns här: http://henrikgabrielsson.se/
 
 ##Instruktioner för att köra appen
 
